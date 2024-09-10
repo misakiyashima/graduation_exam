@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :hotels, only: [:index, :show] do
+    collection do
+      get 'search'
+    end
+  end
+  
+  get "hotels/index"
+  get "hotels/show"
   resources :tasks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
