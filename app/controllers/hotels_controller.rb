@@ -8,7 +8,13 @@ class HotelsController < ApplicationController
   end
 
   def search
-    client = HotelService.new(ENV['RAKUTEN_API_KEY'])
-    @hotels = client.search_all_inclusive_hotels(params[:keyword])
+    client = HotelService.new('1092610730557101212')
+    response = client.search_all_inclusive_hotels(params[:keyword])
+    @hotels = response.map { |hotel| hotel['hotel'][0]['hotelBasicInfo'] } unless response.nil?
+    if @hotels.nil? || @hotels.empty?
+      flash[:alert] = "検索結果がありません。"
+      @hotels = []
+    end
+    render :index
   end
 end

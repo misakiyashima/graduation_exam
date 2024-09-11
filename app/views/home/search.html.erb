@@ -1,0 +1,8 @@
+<h1>検索結果</h1>
+<ul>
+  <% @hotels.each do |hotel| %>
+    <li>
+      <%= hotel['hotelBasicInfo']['hotelName'] %>
+    </li>
+  <% end %>
+</ul>

@@ -1,18 +1,27 @@
-<h1>Hotels#index</h1>
-<p>Find me in app/views/hotels/index.html.erb</p>
-<h1>オールインクルーシブの宿</h1>
-<%= form_with url: search_hotels_path, method: :get, local: true, data: { turbo_frame: "hotels" } do %>
-  <%= label_tag :keyword, "キーワード" %>
-  <%= text_field_tag :keyword %>
-  <%= submit_tag "検索" %>
+<%= form_with url: search_hotels_path, method: :get, local: true do %>
+  <div>
+    <%= label_tag :keyword, "キーワード" %>
+    <%= text_field_tag :keyword, params[:keyword] %>
+  </div>
+  <div>
+    <%= submit_tag "検索" %>
+  </div>
 <% end %>
 
 <turbo-frame id="hotels">
-  <ul>
-    <% @hotels.each do |hotel| %>
-      <li>
-        <%= link_to hotel['hotelBasicInfo']['hotelName'], hotel_path(hotel['hotelBasicInfo']['hotelNo']) %>
-      </li>
-    <% end %>
-  </ul>
+  <% if @hotels.present? %>
+    <ul>
+      <% @hotels.each do |hotel| %>
+        <li>
+          <%= link_to hotel['hotelName'], hotel_path(hotel['hotelNo']) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>検索結果がありません。</p>
+  <% end %>
 </turbo-frame>
+
+<div>
+  <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
+</div>

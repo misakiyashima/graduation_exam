@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'home#index'
-  get "home/index"
+  get 'search', to: 'home#search'
+  get 'test', to: 'home#test'
   resources :hotels, only: [:index, :show] do
     collection do
       get 'search'
