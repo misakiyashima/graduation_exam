@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
+  root to: 'home#index'
+  get "home/index"
   resources :hotels, only: [:index, :show] do
     collection do
       get 'search'
     end
   end
-  
+
   get "hotels/index"
   get "hotels/show"
   resources :tasks
