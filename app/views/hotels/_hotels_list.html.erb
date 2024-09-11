@@ -1,0 +1,9 @@
+<% if hotels.present? %>
+  <ul>
+    <% hotels.each do |hotel| %>
+      <li><%= hotel['hotelName'] %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>検索結果がありません。</p>
+<% end %>

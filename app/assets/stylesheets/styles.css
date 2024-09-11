@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    flex-direction: column; /* 縦方向に並べる */
+    justify-content: center; /* 中央寄せ（縦方向） */
+    align-items: center; /* 中央寄せ（横方向） */
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    margin-bottom: 20px; /* h1とフォームの間に余白を追加 */
+}
+
+form {
+    display: flex; /* フォーム内の要素を横並びにする */
+    justify-content: center; /* 中央寄せ（横方向） */
+    text-align: left; /* テキストを左寄せに変更（必要に応じて） */
+}
+
+ul {
+    list-style-type: none; /* リストのスタイルをリセット */
+    padding: 0; /* パディングをリセット */
+}
+
+li {
+    margin: 10px 0; /* リストアイテムの間に余白を追加 */
+}
