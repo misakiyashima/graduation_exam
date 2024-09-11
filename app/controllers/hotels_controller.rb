@@ -4,7 +4,12 @@ class HotelsController < ApplicationController
   end
 
   def show
-    @hotel = Hotel.find(params[:id])
+    client = HotelService.new('1092610730557101212')
+    @hotel = client.get_hotel_details(params[:id])
+    if @hotel.nil?
+      flash[:alert] = "ホテルの詳細情報が見つかりません。"
+      redirect_to hotels_path
+    end
   end
 
   def search

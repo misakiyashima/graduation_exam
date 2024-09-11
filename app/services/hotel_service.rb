@@ -20,6 +20,30 @@ class HotelService
     Rails.logger.info("Request Options: #{options}")
     Rails.logger.info("Status Code: #{response.code}")
     Rails.logger.info("Response Body: #{response.body}")
-    response.parsed_response['hotels']
+    parsed_response = response.parsed_response
+    Rails.logger.info("Parsed Response: #{parsed_response}")
+    parsed_response['hotels']
+  end
+
+  def get_hotel_details(hotel_no)
+    options = {
+      query: {
+        'applicationId' => @api_key,
+        'hotelNo' => hotel_no,
+        'format' => 'json'
+      }
+    }
+    response = self.class.get('', options)
+    Rails.logger.info("Request URL: #{self.class.base_uri}")
+    Rails.logger.info("Request Options: #{options}")
+    Rails.logger.info("Status Code: #{response.code}")
+    Rails.logger.info("Response Body: #{response.body}")
+    parsed_response = response.parsed_response
+    Rails.logger.info("Parsed Response: #{parsed_response}")
+    if parsed_response['hotels'] && parsed_response['hotels'][0] && parsed_response['hotels'][0]['hotel']
+      parsed_response['hotels'][0]['hotel'][0]['hotelBasicInfo']
+    else
+      nil
+    end
   end
 end
