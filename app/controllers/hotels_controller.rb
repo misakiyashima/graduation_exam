@@ -9,6 +9,8 @@ class HotelsController < ApplicationController
     if @hotel.nil?
       flash[:alert] = "ホテルの詳細情報が見つかりません。"
       redirect_to hotels_path
+    else
+      @hotel_information_url = @hotel['hotelInformationUrl']
     end
   end
 

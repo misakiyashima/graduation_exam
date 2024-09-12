@@ -2,7 +2,7 @@
   <%= stylesheet_link_tag 'styles', media: 'all' %>
 </head>
 <body>
-  <h1>オールインクルーシブの旅</h1>
+  <h1>オールインクルーシブの宿探し</h1>
   <br>
   <%= form_with url: search_hotels_path, method: :get, local: true do %>
     <div>
@@ -21,4 +21,9 @@
       <% end %>
     </ul>
   <% end %>
+
+  <footer>
+      <p>    <h2>オールインクルーシブについて</h2> <!-- 見出し -->
+    <a href="<%= url_for(controller: 'home', action: 'footer') %>" style="color: #fff;">オールインクルーシブとは</a>
+  </footer>
 </body>

@@ -12,8 +12,8 @@ class HomeController < ApplicationController
     render :index
   end
 
-  def test
-    @test_results = ["テスト結果1", "テスト結果2", "テスト結果3"]
-    render :test
-  end 
+  def footer
+    # フッターの内容を表示するためのアクション
+     render partial: 'home/footer/footer'
+  end
 end

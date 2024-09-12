@@ -5,11 +5,13 @@ body {
     align-items: center; /* 中央寄せ（横方向） */
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: #CCFFCC	;
 }
 
 h1 {
     margin-bottom: 20px; /* h1とフォームの間に余白を追加 */
+    font-family: 'GlimChe', sans-serif; /* GlimCheフォントを指定 */
+    color: #009933; /* フォントカラーを指定 */
 }
 
 form {
@@ -25,4 +27,23 @@ ul {
 
 li {
     margin: 10px 0; /* リストアイテムの間に余白を追加 */
+}
+
+footer {
+    background-color: #009933; /* フッターの背景色を#009933に変更 */
+    position: fixed; /* 固定する */
+    left: 0;
+    bottom: 0; /* 下に固定 */
+    width: 200%; /* 幅を倍に変更 */
+    color: #fff;
+    text-align: left; /* 左寄せに変更 */
+    padding: 10px 0;
+}
+
+footer h2 {
+    font-size: 0.9em; /* h2の文字の大きさを少し小さく */
+}
+
+footer a {
+    font-size: 0.8em; /* 0.9emより小さく設定（例: 0.8em） */
 }

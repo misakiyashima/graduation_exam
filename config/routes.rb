@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'home#index'
   get 'search', to: 'home#search'
-  get 'test', to: 'home#test'
+  get 'footer', to: 'home#footer' # footerアクションへのルートを追加
   resources :hotels, only: [:index, :show] do
     collection do
       get 'search'
