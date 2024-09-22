@@ -1,8 +1,16 @@
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= stylesheet_link_tag 'styles', media: 'all' %>
 </head>
 <body>
-  <h1>オールインクルーシブの宿探し</h1>
+   <div class="image-container">
+      <img src="app/images/pictures/IMG_1150.JPG" alt="写真1">
+      <img src="app/images/pictures/IMG_1179.JPG" alt="写真2">
+      <img src="app/images/pictures/IMG_3290.JPG" alt="写真3">
+   </div>
+  <h1 id="title">特別ステイで至福の時間を</h1>
+  <h2>オールインクルーシブホテル</h2>
   <br>
   <%= form_with url: search_hotels_path, method: :get, local: true do %>
     <div>
@@ -23,7 +31,9 @@
   <% end %>
 
   <footer>
-      <p>    <h2>オールインクルーシブについて</h2> <!-- 見出し -->
+      <p>    <h3>オールインクルーシブについて</h3> <!-- 見出し -->
     <a href="<%= url_for(controller: 'home', action: 'footer') %>" style="color: #fff;">オールインクルーシブとは</a>
+            <br> 
+            <a>オールインクルーシブの魅力</a>
   </footer>
 </body>
