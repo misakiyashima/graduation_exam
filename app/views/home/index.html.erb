@@ -1,13 +1,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%= stylesheet_link_tag 'styles', media: 'all' %>
+    <%= stylesheet_link_tag 'styles', media: 'all' %>
 </head>
 <body>
    <div class="image-container">
-      <img src="app/images/pictures/IMG_1150.JPG" alt="写真1">
-      <img src="app/images/pictures/IMG_1179.JPG" alt="写真2">
-      <img src="app/images/pictures/IMG_3290.JPG" alt="写真3">
+      <img src="<%= image_path('pictures/IMG_1150.JPG') %>" alt="写真1">
+      <img src="<%= image_path('pictures/IMG_1179.JPG') %>" alt="写真2">
+      <img src="<%= image_path('pictures/IMG_3290.JPG') %>" alt="写真3">
+      <img src="<%= image_path('pictures/IMG_3934.JPG') %>" alt="写真４">
+      <img src="<%= image_path('pictures/IMG_3990.JPG') %>" alt="写真５">
    </div>
   <h1 id="title">特別ステイで至福の時間を</h1>
   <h2>オールインクルーシブホテル</h2>
