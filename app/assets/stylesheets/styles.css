@@ -3,10 +3,10 @@ body {
     flex-direction: column; /* 縦方向に並べる */
     justify-content: center; /* 中央寄せ（縦方向） */
     align-items: center; /* 中央寄せ（横方向） */
-    height: 100vh;
+    height: min-height: 100vh;
     margin: 0;
     background-color: #CCFFCC	;
-}
+　　　}
 
 h1 {
     margin-bottom: 20px; /* h1とフォームの間に余白を追加 */
