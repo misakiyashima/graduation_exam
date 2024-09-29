@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
   root to: 'home#index'
   get 'search', to: 'home#search'
-  get 'footer', to: 'home#footer' # footerアクションへのルートを追加
+  get 'footer', to: 'home#footer', as: 'footer'
   resources :hotels, only: [:index, :show] do
     collection do
       get 'search'
     end
   end
 
-  get "hotels/index"
-  get "hotels/show"
-  resources :tasks
+  resources :users
+  resources :login, only: [:new, :create]
+  resources :logout, only: [:show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -23,4 +23,4 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-end
+  end
