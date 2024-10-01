@@ -21,11 +21,11 @@
     <header>
       <nav>
         <ul>
-          <%= link_to 'オールインクルーシブとは？', footer_path %>
-          <li><a href="/about">旅ログ</a></li>
-          <li><a href="/contact">施設登録</a></li>
-          <%= link_to 'ログイン', 
-          <%= link_to '新規登録', new_login_path %>
+          <li><%= link_to 'オールインクルーシブとは？', footer_path %></li>
+          <li><a>旅ログ</a></li>
+          <li><a>施設登録</a></li>
+          <li><%= link_to 'ログイン', new_session_path %></li>
+          <li><%= link_to '新規登録', new_session_path %><li>
         </ul>
       </nav>
     </header>
@@ -37,7 +37,7 @@
     <p>
         <%= link_to 'オールインクルーシブとは', footer_path %>
         <br> 
-        <a>オールインクルーシブの魅力</a>
+        <%= link_to 'オールインクルーシブの魅力',footer_path %>
     </p>
   </footer>
 

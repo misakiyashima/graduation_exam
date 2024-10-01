@@ -1,3 +1,14 @@
+nav ul {
+  list-style: none; /* リストのデフォルトの点を消す */
+  padding: 0; /* パディングを0にする */
+  margin: 0; /* マージンを0にする */
+  display: flex; /* フレックスボックスを使って横並びにする */
+}
+
+nav li {
+  margin-right: 20px; /* 項目間のスペースを調整 */
+}
+
 body {
     display: flex;
     flex-direction: column; /* 縦方向に並べる */
