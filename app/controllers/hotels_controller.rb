@@ -1,6 +1,6 @@
 class HotelsController < ApplicationController
   def index
-    @hotels = Hotel.where (all_inclusive: true)
+    @hotels = Hotel.where(all_inclusive: true)
   end
 
   def show

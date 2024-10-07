@@ -12,5 +12,4 @@ class User < ApplicationRecord
   def create
   end
 
-  def
 end

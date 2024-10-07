@@ -352,28 +352,40 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  better_errors
+  bcrypt (~> 3.1.20)
+  better_errors (~> 2.10.1)
   bootsnap
   brakeman
   capybara
   cssbundling-rails
   debug
   dotenv-rails
+  faraday (~> 2.12.0)
+  faraday-net_http (~> 3.3.0)
+  hashie (~> 5.0.0)
   hotwire-rails
   httparty
   jbuilder
   jsbundling-rails
+  jwt (~> 2.9.1)
   mysql2 (~> 0.5)
+  oauth (~> 1.1.0)
+  oauth-tty (~> 1.0.5)
+  oauth2 (~> 2.0.9)
   pry-byebug
   puma (>= 5.0)
   rails (~> 7.2.1)
+  rouge (~> 4.4.0)
   rubocop-rails-omakase
   selenium-webdriver
-  sorcery
+  snaky_hash (~> 2.0.1)
+  sorcery (~> 0.17.0)
   sprockets-rails
   stimulus-rails
   turbo-rails
   tzinfo-data
+  uri (~> 0.13.1)
+  version_gem (~> 1.1.4)
   web-console
 
 BUNDLED WITH
