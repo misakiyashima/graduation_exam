@@ -1,14 +1,14 @@
 class SessionsController < ApplicationController
   def new
-    render :new
   end
 
   def create
-    @user = User.authenticate(params[:email], params[:password])
+   Rails.logger.debug(params.inspect)
+    @user = login(params[:email], params[:password])
 
-    if user.present?
-      session[:user_id] = user.id
-      redirect_to root_url, notice: "ログインしました"
+    if @user.present?
+      session[:user_id] = @user.id
+      redirect_to users_path, notice: "ログインしました"
     else
       flash.now.alert = "メールまたはパスワードが間違っています"
       render :new
