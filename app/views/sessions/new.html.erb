@@ -1,6 +1,6 @@
 <h1>ログイン</h1>
 
-<%= form_with model:@user do |form| %>
+<%= form_with url: sessions_path do |form| %>
   <div>
     <%= form.label :mail, 'メールアドレス', style: "display: block" %>
     <%= form.text_field :mail, value: params[:mail] %>
