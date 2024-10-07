@@ -3,7 +3,6 @@ class SessionsController < ApplicationController
   end
 
   def create
-   Rails.logger.debug(params.inspect)
     @user = login(params[:email], params[:password])
 
     if @user.present?
