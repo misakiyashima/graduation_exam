@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
     if @user.present?
       session[:user_id] = @user.id
-      redirect_to users_path, notice: "ログインしました"
+      redirect_to root_path, notice: "ログインしました"
     else
       flash.now.alert = "メールまたはパスワードが間違っています"
       render :new
