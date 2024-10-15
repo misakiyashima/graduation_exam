@@ -1,5 +1,7 @@
 class LoginsController < ApplicationController
-  def new; end
+  def new; 
+    render 'sessions/new'
+  end
 
   def create
     @user = login(params[:email], params[:password])
