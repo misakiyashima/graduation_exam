@@ -17,15 +17,17 @@
 
   <header>
       <% if logged_in? %>
-        <%= render 'shared/header' %>
+        <%= render 'home/header/header' %>
       <% else %>
-        <%= render 'shared/before_login_header' %>
+        <%= render 'home/header/before_login_header' %>
+      <% end %>
   </header>
     
   </head>
 
 
-    <%= yield %>
+  <%= yield %>
+
 
   <footer>
     <h3>オールインクルーシブについて</h3>
