@@ -9,7 +9,7 @@ class LoginsController < ApplicationController
     if @user
       redirect_to root_path
     else
-      render :new
+      render 'users/new'
     end
   end
 end
