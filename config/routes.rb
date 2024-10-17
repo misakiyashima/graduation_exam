@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'home#index'
+  post '/', to: 'sessions#create'
   get 'search', to: 'home#search'
   get 'footer', to: 'home#footer', as: 'footer'
   resources :hotels, only: [:index, :show] do
