@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     　flash[:notice] = "登録が完了しました。"
       redirect_to root_path
     else
-    　flash.now.alert = "登録に失敗しました。もう一度確認をお願いします"
+      flash.now.alert = "登録に失敗しました。もう一度確認をお願いします"
       render :new
     end
   end

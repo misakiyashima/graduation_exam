@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
+  binding.pry
   delete 'logout', to: 'sessions#destroy'
-  
+
   get 'search', to: 'home#search'
   get 'footer', to: 'home#footer', as: 'footer'
   resources :hotels, only: [:index, :show] do
@@ -13,7 +14,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[new create]
-
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
