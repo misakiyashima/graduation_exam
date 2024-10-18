@@ -4,15 +4,15 @@
       <h1>ユーザー登録</h1>
       <%= form_with model: @user do |f| %>
         <div class="mb-3">
-          <%= f.label :email, class: "form-label" %>
+          <%= f.label :メースアドレス, class: "form-label" %>
           <%= f.email_field :email, class: "form-control" %>
         </div>
         <div class="mb-3">
-          <%= f.label :password, class: "form-label" %>
+          <%= f.label :パスワード, class: "form-label" %>
           <%= f.password_field :password, class: "form-control" %>
         </div>
         <div class="mb-3">
-          <%= f.label :password_confirmation, class: "form-label" %>
+          <%= f.label :パスワード確認, class: "form-label" %>
           <%= f.password_field :password_confirmation, class: "form-control" %>
         </div>
         <%= f.submit "登録", class: "btn btn-primary" %>
