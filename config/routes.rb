@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   get 'search', to: 'home#search'
-  get 'footer', to: 'home#footer', as: 'footer'
+  get 'explanation', to: 'home#explanation', as: 'explanation'
   resources :hotels, only: [:index, :show] do
     collection do
       get 'search'

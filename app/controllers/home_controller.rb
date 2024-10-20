@@ -12,8 +12,8 @@ class HomeController < ApplicationController
     render :index
   end
 
-  def footer
+  def explanation
     # フッターの内容を表示するためのアクション
-     render partial: 'home/footer/footer'
+     render partial: 'home/footer/explanation'
   end
 end
