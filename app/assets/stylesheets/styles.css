@@ -12,12 +12,15 @@ nav li {
 body {
     display: flex;
     flex-direction: column; /* 縦方向に並べる */
-    justify-content: center; /* 中央寄せ（縦方向） */
-    align-items: center; /* 中央寄せ（横方向） */
-    height: min-height: 100vh;
+    min-height: 100vh; /* ビューポートの高さを最小値に設定 */
     margin: 0;
-    background-color: #CCFFCC	;
+    background-color: #CCFFCC;
 }
+
+main {
+    flex: 1; /* メインコンテンツが残りのスペースを占めるようにする */
+}
+
 
 h1 {
     margin-bottom: 20px; /* h1とフォームの間に余白を追加 */
