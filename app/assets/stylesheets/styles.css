@@ -17,6 +17,7 @@ body {
     background-color: #CCFFCC;
 }
 
+
 main {
     flex: 1; /* メインコンテンツが残りのスペースを占めるようにする */
 }
@@ -27,12 +28,14 @@ h1 {
     font-family: 'GlimChe', sans-serif; /* GlimCheフォントを指定 */
     color: #009933; /* フォントカラーを指定 */
     font-size: 20px
+    
 }
 
 h2 {
     margin-bottom: 20px; /* h1とフォームの間に余白を追加 */
     font-family: 'GlimChe', sans-serif; /* GlimCheフォントを指定 */
     color: #009933; /* フォントカラーを指定 */
+    justify-content: center;
 }
 
 
