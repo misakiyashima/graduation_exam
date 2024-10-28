@@ -24,7 +24,6 @@ h2 {
     margin-bottom: 20px; /* h2とフォームの間に余白を追加 */
 }
 
-
 form {
     display: flex; /* フォーム内の要素を横並びにする */
     justify-content: center; /* 中央寄せ（横方向） */
