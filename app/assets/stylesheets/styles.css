@@ -17,6 +17,9 @@ body {
     background-color: #CCFFCC;
 }
 
+.center-text {
+  text-align: center;
+}
 
 main {
     flex: 1; /* メインコンテンツが残りのスペースを占めるようにする */
