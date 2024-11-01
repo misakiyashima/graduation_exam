@@ -14,7 +14,7 @@ body {
     flex-direction: column; /* 縦方向に並べる */
     min-height: 100vh; /* ビューポートの高さを最小値に設定 */
     margin: 0;
-    background-color: #CCFFCC;
+    background-color: white;
 }
 
 .center-text {
