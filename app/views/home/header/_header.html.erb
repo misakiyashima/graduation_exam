@@ -2,9 +2,7 @@
       <nav>
         <ul>
           <li><%= link_to 'オールインクルーシブとは？', explanation_path %></li>
-          <li><a>旅ログ</a></li>
-          <li><a>施設登録</a></li>
-          <li><%= link_to 'ログアウト', logout_path, method: :delete %></li>
+          <li><%= button_to 'ログアウト', logout_path, method: :delete, data: { turbo: true } %></li>
         </ul>
       </nav>
     </header>

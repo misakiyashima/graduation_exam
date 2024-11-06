@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
     <title><%= content_for(:title) || "allinclusive" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
@@ -15,29 +15,30 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "styles", "data-turbo-track": "reload" %>
+  </head>
 
    <body>
 
-   <header>
-      <% if logged_in? %>
-        <%= render 'home/header/header' %>
-      <% else %>
-        <%= render 'home/header/before_login_header' %>
-      <% end %>
-   </header>
-  
-    <% if flash[:notice] %>
-      <div class="alert alert-success">
-        <%= flash[:notice] %>
-      </div>
-    <% end %>
-    <% if flash[:alert] %>
-      <div class="alert alert-danger">
-        <%= flash[:alert] %>
-      </div>
-    <% end %>
+    <header>
+        <% if logged_in? %>
+          <%= render 'home/header/header' %>
+        <% else %>
+          <%= render 'home/header/before_login_header' %>
+        <% end %>
 
-   </head>
+  
+      <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="alert alert-danger">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+    </header>
 
     <main>
       <%= yield %>
