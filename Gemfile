@@ -75,6 +75,20 @@ gem 'uri', '~> 0.13.1'
 gem 'pry'
 gem 'pry-rails'
 
+gem 'devise' #ユーザー認証
+gem 'devise-i18n' #deviseの日本語化
+gem 'omniauth-twitter' #twitter認証
+gem 'omniauth-facebook' #facebook認証
+gem 'omniauth-google-oauth2' # google認証
+gem 'omniauth-github' # github認証
+gem 'orm_adapter' 
+gem 'responders' 
+gem 'warden' 
+gem 'omniauth-oauth' 
+gem 'omniauth-oauth2' 
+gem 'omniauth' 
+gem 'rack-protection'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
