@@ -114,8 +114,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.12.1)
-      devise (>= 4.9.0)
     dotenv (3.1.2)
     dotenv-rails (3.1.2)
       dotenv (= 3.1.2)
@@ -412,7 +410,6 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise
-  devise-i18n
   dotenv-rails
   faraday (~> 2.12.0)
   faraday-net_http (~> 3.3.0)
@@ -430,17 +427,12 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-github
   omniauth-google-oauth2
-  omniauth-oauth
-  omniauth-oauth2
   omniauth-twitter
-  orm_adapter
   pry
   pry-byebug
   pry-rails
   puma (>= 5.0)
-  rack-protection
   rails (~> 7.2.1)
-  responders
   rouge (~> 4.4.0)
   rubocop-rails-omakase
   selenium-webdriver
@@ -452,7 +444,6 @@ DEPENDENCIES
   tzinfo-data
   uri (~> 0.13.1)
   version_gem (~> 1.1.4)
-  warden
   web-console
   webpacker (~> 5.4)
 
