@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  
   root to: 'home#index'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[new create]
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
