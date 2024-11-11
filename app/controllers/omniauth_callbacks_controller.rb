@@ -1,4 +1,4 @@
-class OmniauthCallbacksController < ApplicationController
+class Users::OmniauthCallbacksController < ApplicationController
   def github
     @user = User.from_omniauth(request.env["omniauth.auth"])
     
