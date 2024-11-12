@@ -48,7 +48,7 @@ gem 'better_errors', '~> 2.10.1'
 
 gem 'sorcery', '~> 0.17.0'
 
-gem 'rouge', '~> 4.4.0'
+gem 'rouge', '~> 4.5.1'
 
 gem 'bcrypt', '~> 3.1.20'
 
