@@ -24,10 +24,11 @@
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "daisyui": "^4.12.10",
+    "esbuild": "^0.24.0",
     "nodemon": "^3.1.7",
     "postcss": "^8.4.45",
     "postcss-cli": "^11.0.0",
     "sass": "^1.78.0",
-    "esbuild": "^0.24.0"
+    "stimulus-autocomplete": "^3.1.0"
   }
 }
