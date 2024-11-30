@@ -10,9 +10,11 @@ Rails.application.routes.draw do
   resources :hotels, only: [:index, :show] do
     collection do
       get 'search'
+      get 'bookmarks'
     end
   end
 
+  resources :bookmarks, only: %i[create destroy]
   resources :users, only: %i[new create]
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
