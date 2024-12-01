@@ -24,5 +24,17 @@ class User < ApplicationRecord
     user.email = auth.info.email 
     user.password = Devise.friendly_token[0, 20] 
     end 
+
+    def bookmark(board)
+    bookmark_boards << board
+    end
+
+    def unbookmark(board)
+    bookmark_boards.destroy(board)
+    end
+
+    def bookmark?(board)
+    bookmark_boards.include?(board)
+   end
   end
 end
