@@ -25,16 +25,16 @@ class User < ApplicationRecord
     user.password = Devise.friendly_token[0, 20] 
     end 
 
-    def bookmark(board)
-    bookmark_boards << board
+    def bookmark(hotel)
+    bookmark_hotel << hotel
     end
 
-    def unbookmark(board)
-    bookmark_boards.destroy(board)
+    def unbookmark(hotel)
+    bookmark_hotel.destroy(hotel)
     end
 
-    def bookmark?(board)
-    bookmark_boards.include?(board)
+    def bookmark?(hotel)
+    bookmark_hotel.include?(hotel)
    end
   end
 end
