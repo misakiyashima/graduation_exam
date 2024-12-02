@@ -24,4 +24,8 @@ class HotelsController < ApplicationController
     end
     render :index
   end
+
+  def bookmarks
+    @bookmark_boards = current_user.bookmark_hotels.includes(:user).order(created_at: :desc)
+  end
 end

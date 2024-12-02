@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
-  has_many :bookmark_boards, through: :bookmarks, source: :hotel
+  has_many :bookmark_hotels, through: :bookmarks, source: :hotel
   
     def self.login(email, password)
       user = find_by(email: email)
@@ -20,21 +20,21 @@ class User < ApplicationRecord
     end
 
     def self.from_omniauth(auth) 
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user| 
-    user.email = auth.info.email 
-    user.password = Devise.friendly_token[0, 20] 
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user| 
+      user.email = auth.info.email 
+      user.password = Devise.friendly_token[0, 20] 
     end 
 
     def bookmark(hotel)
-    bookmark_hotel << hotel
+      bookmark_hotels << hotel
     end
 
     def unbookmark(hotel)
-    bookmark_hotel.destroy(hotel)
+      bookmark_hotels.destroy(hotel)
     end
 
     def bookmark?(hotel)
-    bookmark_hotel.include?(hotel)
+      bookmark_hotels.include?(hotel)
    end
   end
 end
