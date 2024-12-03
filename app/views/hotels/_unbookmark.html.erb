@@ -1,0 +1,3 @@
+<%= link_to bookmark_path(current_user.bookmarks.find_by(hotel_id: hotel.id)), id: "unbookmark-button-for-hotel-#{hotel.id}", data: { turbo_method: :delete } do %>
+  <i class="bi bi-star-fill"></i>
+<% end %>
