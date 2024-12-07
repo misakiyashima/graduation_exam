@@ -9,6 +9,10 @@ nav li {
   margin-right: 20px; /* 項目間のスペースを調整 */
 }
 
+.logout-button {
+     margin-left: auto; /* ログアウトボタンを右寄せにする */ 
+     }
+
 body {
     display: flex;
     flex-direction: column; /* 縦方向に並べる */
