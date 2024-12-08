@@ -15,7 +15,14 @@
       <% @hotels.each do |hotel| %>
         <li>
           <%= link_to hotel['hotelName'], hotel['hotelInformationUrl'], target: "_blank" %>
-          <%= button_to 'お気に入りに追加', favorite_hotel_path(hotel_id: hotel['id']), method: :post, class: 'btn btn-secondary' %>
+
+          <% if current_user.bookmark?(hotel) %>
+            <span class="text-success">お気に入り済み</span>
+            <%= button_to 'お気に入り解除', unbookmark_hotel_path(hotel), method: :delete, class: 'btn btn-secondary' %>
+          <% else %>
+            <%= button_to 'お気に入りに登録', bookmark_hotel_path(hotel), method: :post, class: 'btn btn-primary' %>
+          <% end %>
+
         </li>
       <% end %>
     </ul>
