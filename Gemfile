@@ -64,7 +64,7 @@ gem 'version_gem', '~> 1.1.4'
 
 gem 'faraday', '~> 2.12.0'
 
-gem 'jwt', '~> 2.9.1'
+gem 'jwt', '~> 2.9.3'
 
 gem 'hashie', '~> 5.0.0'
 

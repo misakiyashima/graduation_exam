@@ -149,7 +149,7 @@ GEM
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
     json (2.7.2)
-    jwt (2.9.1)
+    jwt (2.9.3)
       base64
     language_server-protocol (3.17.0.3)
     logger (1.6.1)
@@ -418,7 +418,7 @@ DEPENDENCIES
   httparty
   jbuilder
   jsbundling-rails
-  jwt (~> 2.9.1)
+  jwt (~> 2.9.3)
   mysql2 (~> 0.5)
   oauth (~> 1.1.0)
   oauth-tty (~> 1.0.5)
