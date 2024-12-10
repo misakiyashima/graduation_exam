@@ -16,12 +16,6 @@
         <li>
           <%= link_to hotel['hotelName'], hotel['hotelInformationUrl'], target: "_blank" %>
 
-          <% if current_user.bookmark?(hotel) %>
-            <span class="text-success">お気に入り済み</span>
-            <%= button_to 'お気に入り解除', unbookmark_hotel_path(hotel), method: :delete, class: 'btn btn-secondary' %>
-          <% else %>
-            <%= button_to 'お気に入りに登録', bookmark_hotel_path(hotel), method: :post, class: 'btn btn-primary' %>
-          <% end %>
 
         </li>
       <% end %>
