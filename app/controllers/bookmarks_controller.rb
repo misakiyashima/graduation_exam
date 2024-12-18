@@ -1,4 +1,5 @@
 class BookmarksController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :destroy]
   def create
     hotel = Hotel.find(params[:hotel_id])
     current_user.bookmark(hotel)

@@ -15,7 +15,6 @@
       <% @hotels.each do |hotel| %>
         <li>
           <%= link_to hotel['hotelName'], hotel['hotelInformationUrl'], target: "_blank" %>
-          <%= debug hotel %>
           <%= render 'bookmark_buttons', hotel: hotel %>
         </li>
       <% end %>    
