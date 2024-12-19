@@ -1,5 +1,6 @@
 <div class='ms-auto'>
-  <% if current_user&.bookmark?(hotel) %>
+  <% if current_user.bookmark?(hotel) %>
+  <% binding.pry %>
     <%= render 'unbookmark', { hotel: hotel } %>
   <% else %>
     <%= render 'bookmark', { hotel: hotel } %>
