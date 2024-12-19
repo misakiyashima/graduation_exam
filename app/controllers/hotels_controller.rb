@@ -15,6 +15,7 @@ class HotelsController < ApplicationController
   end
 
   def search
+    Rails.logger.debug "Current user: #{current_user.inspect}"
     client = HotelService.new ('1092610730557101212')
     response = client.search_all_inclusive_hotels(params[:keyword])
     @hotels = response.map { |hotel| hotel['hotel'][0]['hotelBasicInfo'] } unless response.nil?
