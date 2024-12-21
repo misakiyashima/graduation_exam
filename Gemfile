@@ -74,6 +74,7 @@ gem 'uri', '~> 0.13.1'
 
 gem 'pry'
 gem 'pry-rails'
+gem 'pry-nav'
 
 gem 'devise'
 gem 'omniauth'
