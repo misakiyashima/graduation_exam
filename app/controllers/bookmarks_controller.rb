@@ -5,22 +5,26 @@ class BookmarksController < ApplicationController
     hotel_details = hotel_service.get_hotel_details(hotel_no)
 
     if hotel_details
-      hotel = Hotel.find_or_create_by(hotelNo: hotel_details['hotelNo']) do |h|
-        h.name = hotel_details['hotelName']
-        h.address = hotel_details['address1'] + hotel_details['address2']
-        # 必要に応じて他の属性を設定
+      # ホテル情報をデータベースに保存せずにブックマーク情報のみを保存
+      bookmark = current_user.bookmarks.create(
+        hotel_no: hotel_details['hotelNo'],
+        hotel_name: hotel_details['hotelName'],
+        hotel_information_url: hotel_details['hotelInformationUrl']
+      )
+      if bookmark.persisted?
+        redirect_to hotels_path, success: 'お気に入りに追加しました'
+      else
+        redirect_to hotels_path, alert: 'お気に入りの追加に失敗しました'
       end
-
-      current_user.bookmark(hotel)
-      redirect_to hotels_path, success: 'お気に入りに追加しました'
     else
       redirect_to hotels_path, alert: 'ホテルが見つかりませんでした'
     end
   end
 
   def destroy
-    hotel = current_user.bookmarks.find(params[:id]).hotel
-    current_user.unbookmark(hotel)
+    bookmark = current_user.bookmarks.find(params[:id])
+    bookmark.destroy
     redirect_to hotels_path, success: 'お気に入りを解除しました', status: :see_other
   end
 end
+
