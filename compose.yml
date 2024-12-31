@@ -27,6 +27,7 @@ services:
       - node_modules:/myapp/node_modules
     environment:
       TZ: Asia/Tokyo
+      RAKUTEN_API_KEY: 1092610730557101212
     ports:
       - "3000:3000"
     depends_on:
