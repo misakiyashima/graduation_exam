@@ -3,7 +3,7 @@ class HotelService
   base_uri 'https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426'
 
   def initialize(api_key)
-    @api_key = api_key
+    @api_key = ENV['RAKUTEN_API_KEY']  #環境変数から API キーを取得
   end
 
   def search_all_inclusive_hotels(keyword)
