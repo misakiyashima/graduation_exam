@@ -4,8 +4,11 @@ class BookmarksController < ApplicationController
     hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])
     hotel_details = hotel_service.get_hotel_details(hotel_no)
 
-    if hotel_details
-      # ホテル情報をデータベースに保存せずにブックマーク情報のみを保存
+    # デバッグログを追加
+    Rails.logger.debug "Hotel details: #{hotel_details.inspect}"
+    Rails.logger.debug "Request parameters: #{hotel_no}"
+
+    if hotel_details.present?
       bookmark = current_user.bookmarks.create(
         hotel_no: hotel_details['hotelNo'],
         hotel_name: hotel_details['hotelName'],

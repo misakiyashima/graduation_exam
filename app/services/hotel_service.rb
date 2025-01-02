@@ -16,6 +16,7 @@ class HotelService
       }
     }
     response = self.class.get('', options)
+    # デバッグログを追加
     Rails.logger.info("Request URL: #{self.class.base_uri}")
     Rails.logger.info("Request Options: #{options}")
     Rails.logger.info("Status Code: #{response.code}")
@@ -34,6 +35,7 @@ class HotelService
       }
     }
     response = self.class.get('', options)
+    # デバッグログを追加
     Rails.logger.info("Request URL: #{self.class.base_uri}")
     Rails.logger.info("Request Options: #{options}")
     Rails.logger.info("Status Code: #{response.code}")
@@ -47,3 +49,4 @@ class HotelService
     end
   end
 end
+
