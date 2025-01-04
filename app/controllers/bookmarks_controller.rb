@@ -1,12 +1,8 @@
 class BookmarksController < ApplicationController
   def create
     hotel_no = params[:hotel_id]
-    hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])
+    hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])  # APIキーを渡す
     hotel_details = hotel_service.get_hotel_details(hotel_no)
-
-    # デバッグログを追加
-    Rails.logger.debug "Hotel details: #{hotel_details.inspect}"
-    Rails.logger.debug "Request parameters: #{hotel_no}"
 
     if hotel_details.present?
       bookmark = current_user.bookmarks.create(
@@ -30,4 +26,3 @@ class BookmarksController < ApplicationController
     redirect_to hotels_path, success: 'お気に入りを解除しました', status: :see_other
   end
 end
-

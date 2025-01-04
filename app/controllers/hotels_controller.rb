@@ -17,10 +17,6 @@ class HotelsController < ApplicationController
   def search
     client = HotelService.new('1092610730557101212')
     response = client.search_all_inclusive_hotels(params[:keyword])
-
-    # デバッグログを追加
-    Rails.logger.debug "Search response: #{response.inspect}"
-
     @hotels = response.map { |hotel| hotel['hotel'][0]['hotelBasicInfo'] } if response.present?
     if @hotels.blank?
       flash[:alert] = "検索結果がありません。"
