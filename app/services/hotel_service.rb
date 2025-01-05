@@ -29,6 +29,10 @@ class HotelService
       }
     }
     response = self.class.get('', options)
+
+  # レスポンスをデバッグ出力
+  puts response.inspect    
+
     parsed_response = response.parsed_response
     if parsed_response['hotels'] && parsed_response['hotels'][0] && parsed_response['hotels'][0]['hotel']
       parsed_response['hotels'][0]['hotel'][0]['hotelBasicInfo']
