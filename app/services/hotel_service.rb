@@ -28,10 +28,7 @@ class HotelService
         'format' => 'json'
       }
     }
-    response = self.class.get('', options)
-
-  # レスポンスをデバッグ出力
-  puts response.inspect    
+    response = self.class.get('', options)  
 
     parsed_response = response.parsed_response
     if parsed_response['hotels'] && parsed_response['hotels'][0] && parsed_response['hotels'][0]['hotel']
