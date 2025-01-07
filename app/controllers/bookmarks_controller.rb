@@ -1,6 +1,7 @@
 class BookmarksController < ApplicationController
   def create
     hotel_no = params[:hotel_id]
+    Rails.logger.info "Hotel ID: #{hotel_no}" 
     hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])  # APIキーを渡す
     hotel_details = hotel_service.get_hotel_details(hotel_no)
 
