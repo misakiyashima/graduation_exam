@@ -10,7 +10,7 @@ class HotelService
     options = {
       query: {
         'applicationId' => @api_key,
-        'keyword' => keyword,
+        'keyword' => "#{keyword} オールインクルーシブ",
         'format' => 'json',
         'responseType' => 'middle'
       }

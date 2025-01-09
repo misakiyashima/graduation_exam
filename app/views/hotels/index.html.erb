@@ -13,7 +13,10 @@
     <ul>
       <% @hotels.each do |hotel| %>
         <li>
-          <%= link_to hotel['hotelName'], hotel['hotelInformationUrl'], target: "_blank" %>
+          <h2><%= hotel['hotelName'] %></h2>
+          <img src="<%= hotel['hotelImageUrl'] %>" alt="<%= hotel['hotelName'] %>" style="width: 200px; height: auto;">
+          <p><%= hotel['hotelSpecial'] %></p>
+          <a href="<%= hotel['hotelInformationUrl'] %>">詳細情報</a>
           <%= render 'bookmark_buttons', hotel: hotel %>
         </li>
       <% end %>    
@@ -22,6 +25,7 @@
     <p>検索結果がありません。</p>
   <% end %>
 </turbo-frame>
+
 
 <div>
   <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>

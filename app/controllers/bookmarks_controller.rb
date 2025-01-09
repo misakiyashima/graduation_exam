@@ -14,6 +14,8 @@ class BookmarksController < ApplicationController
         hotel_name: hotel_details['hotelName'],
         hotel_information_url: hotel_details['hotelInformationUrl']
       )
+      
+      Rails.logger.info "Bookmark Errors: #{bookmark.errors.full_messages}"
       if bookmark.persisted?
         redirect_to hotels_path, success: 'お気に入りに追加しました'
       else
