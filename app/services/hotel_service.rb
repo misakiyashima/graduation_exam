@@ -21,6 +21,7 @@ class HotelService
   end
 
   def get_hotel_details(hotel_no)
+    detail_base_uri = 'https://app.rakuten.co.jp/services/api/Travel/HotelDetailSearch/20170426'
     options = {
       query: {
         'applicationId' => @api_key,
@@ -28,7 +29,10 @@ class HotelService
         'format' => 'json'
       }
     }
-    response = self.class.get('', options)  
+    response = self.class.get(detail_base_uri, options)  
+    
+    # デバッグ用のログを追加 
+    Rails.logger.info "API Response: #{response.body}"
 
     parsed_response = response.parsed_response
     if parsed_response['hotels'] && parsed_response['hotels'][0] && parsed_response['hotels'][0]['hotel']
@@ -38,3 +42,4 @@ class HotelService
     end
   end
 end
+

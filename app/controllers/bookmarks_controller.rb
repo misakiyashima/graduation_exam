@@ -1,12 +1,15 @@
 class BookmarksController < ApplicationController
   def create
     hotel_no = params[:hotel_id]
-    Rails.logger.info "Hotel ID: #{hotel_no}" 
+    Rails.logger.info "Hotel ID: #{hotel_no}"
     hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])  # APIキーを渡す
     hotel_details = hotel_service.get_hotel_details(hotel_no)
-
+    Rails.logger.info "Hotel Details: #{hotel_details.inspect}"
+    
     if hotel_details.present?
       bookmark = current_user.bookmarks.create(
+        user_id: params[:user_id],
+        hotel_id: params[:hotel_id],
         hotel_no: hotel_details['hotelNo'],
         hotel_name: hotel_details['hotelName'],
         hotel_information_url: hotel_details['hotelInformationUrl']
@@ -25,5 +28,11 @@ class BookmarksController < ApplicationController
     bookmark = current_user.bookmarks.find(params[:id])
     bookmark.destroy
     redirect_to hotels_path, success: 'お気に入りを解除しました', status: :see_other
+  end
+
+  private
+
+  def bookmark_params
+    params.permit(:user_id, :hotel_id, :hotel_no, :hotel_name, :hotel_information_url)
   end
 end

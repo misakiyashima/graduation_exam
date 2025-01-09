@@ -10,12 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_28_145020) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_09_061307) do
   create_table "bookmarks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "hotel_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "hotel_no"
+    t.string "hotel_name"
+    t.string "hotel_information_url"
     t.index ["hotel_id"], name: "index_bookmarks_on_hotel_id"
     t.index ["user_id", "hotel_id"], name: "index_bookmarks_on_user_id_and_hotel_id", unique: true
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
