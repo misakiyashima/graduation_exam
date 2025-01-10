@@ -1,10 +1,8 @@
 class BookmarksController < ApplicationController
   def create
     hotel_no = params[:hotel_id]
-    Rails.logger.info "Hotel ID: #{hotel_no}"
     hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])  # APIキーを渡す
     hotel_details = hotel_service.get_hotel_details(hotel_no)
-    Rails.logger.info "Hotel Details: #{hotel_details.inspect}"
     
     if hotel_details.present?
       bookmark = current_user.bookmarks.create(
@@ -38,3 +36,4 @@ class BookmarksController < ApplicationController
     params.permit(:user_id, :hotel_id, :hotel_no, :hotel_name, :hotel_information_url)
   end
 end
+

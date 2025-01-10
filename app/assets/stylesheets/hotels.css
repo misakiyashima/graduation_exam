@@ -1,0 +1,31 @@
+/* app/assets/stylesheets/hotels.css */
+
+.hotel-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.hotel-item {
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.hotel-item img {
+  width: 200px;
+  height: auto;
+  margin-right: 20px;
+  float: left;
+}
+
+.hotel-item h2 {
+  margin-top: 0;
+}
+
+.hotel-item p {
+  margin: 0;
+}
+
+.hotel-item a {
+  display: block;
+  margin-top: 10px;
+}
