@@ -5,8 +5,10 @@ class BookmarksController < ApplicationController
     hotel_details = hotel_service.get_hotel_details(hotel_no)
     
     if hotel_details.present?
+      # ホテル情報をデータベースに保存
+      hotel_service.save_hotel_to_db(hotel_details)
+      
       bookmark = current_user.bookmarks.create(
-        user_id: params[:user_id],
         hotel_id: params[:hotel_id],
         hotel_no: hotel_details['hotelNo'],
         hotel_name: hotel_details['hotelName'],
@@ -17,7 +19,7 @@ class BookmarksController < ApplicationController
       if bookmark.persisted?
         redirect_to hotels_path, success: 'お気に入りに追加しました'
       else
-        redirect_to hotels_path, alert: 'お気に入りの追加に失敗しました'
+        redirect_to hotels_path, alert: "お気に入りの追加に失敗しました: #{bookmark.errors.full_messages.join(', ')}"
       end
     else
       redirect_to hotels_path, alert: 'ホテルが見つかりませんでした'

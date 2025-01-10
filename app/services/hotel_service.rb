@@ -36,10 +36,18 @@ class HotelService
 
     parsed_response = response.parsed_response
     if parsed_response['hotels'] && parsed_response['hotels'][0] && parsed_response['hotels'][0]['hotel']
-      parsed_response['hotels'][0]['hotel'][0]['hotelBasicInfo']
+      hotel_info = parsed_response['hotels'][0]['hotel'][0]['hotelBasicInfo']
+      hotel_info
     else
       nil
     end
   end
-end
 
+  def save_hotel_to_db(hotel_info)
+    Hotel.create(
+      id: hotel_info['hotelNo'],
+      name: hotel_info['hotelName'],
+      hotel_information_url: hotel_info['hotelInformationUrl']
+    )
+  end
+end
