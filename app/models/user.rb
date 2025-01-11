@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
-  as_many :hotels, through: :bookmarks
+  has_many :bookmark_hotels, through: :bookmarks, source: :hotel
 
   def self.login(email, password)
     user = find_by(email: email)

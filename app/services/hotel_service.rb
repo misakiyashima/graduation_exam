@@ -44,10 +44,12 @@ class HotelService
   end
 
   def save_hotel_to_db(hotel_info)
-    Hotel.create(
-      id: hotel_info['hotelNo'],
-      name: hotel_info['hotelName'],
-      hotel_information_url: hotel_info['hotelInformationUrl']
-    )
+    unless Hotel.exists?(id: hotel_info['hotelNo'])
+      Hotel.create(
+        id: hotel_info['hotelNo'],
+        name: hotel_info['hotelName'],
+        hotel_information_url: hotel_info['hotelInformationUrl']
+      )
+    end
   end
 end
