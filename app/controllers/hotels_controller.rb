@@ -27,7 +27,7 @@ class HotelsController < ApplicationController
 
   def bookmarks
     if current_user
-      @bookmark_hotels = current_user.bookmark_hotels.includes(:user).order(created_at: :desc)
+      @bookmark_hotels = current_user.bookmark_hotels.order(created_at: :desc)
     else
       @bookmark_hotels = []
     end
