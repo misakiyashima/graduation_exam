@@ -19,7 +19,7 @@ class BookmarksController < ApplicationController
         
         Rails.logger.info "Bookmark Errors: #{bookmark.errors.full_messages}"
         if bookmark.persisted?
-          redirect_to hotels_path, success: 'お気に入りに追加しました'
+          redirect_to hotels_path, notice: 'お気に入りに追加しました'
         else
           redirect_to hotels_path, alert: "お気に入りの追加に失敗しました: #{bookmark.errors.full_messages.join(', ')}"
         end
