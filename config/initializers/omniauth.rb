@@ -1,4 +1,4 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :twitter, "TXJzVHY3dmM2WC0wTE1CVjNUclg6MTpjaQ", "kt8B10o9oFL4z7lYKTFMHsRkys03zT3_nHKdU-u4Pb21BOTlw_"
+  provider :twitter, "74HqoBpH32Cln9bJxbZ5DfE60", "E9AfkuAKE2lucCCBImLfIkI3UA25WanFf2SFYZhbqCHaceJ26l"
   OmniAuth.config.allowed_request_methods = [:post, :get]
 end
