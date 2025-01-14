@@ -10,4 +10,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_registration_url
     end
   end
+
+  protected
+
+  def after_omniauth_failure_path_for(scope)
+    new_user_session_path(scope)
+  end
 end
+
