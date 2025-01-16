@@ -19,7 +19,7 @@
       <div class="row">
         <% if @bookmark_hotels.present? %>
           <% @bookmark_hotels.each do |hotel| %>
-            <%= render partial: 'hotel', locals: { hotel: hotel } %>
+            <%= render partial: 'bookmark_hotel', locals: { hotel: hotel } %>
           <% end %>
         <% else %>
           <p>お気に入り登録はありません</p>
@@ -29,4 +29,3 @@
     </div>
   </div>
 </div>
-
