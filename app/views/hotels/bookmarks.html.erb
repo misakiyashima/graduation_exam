@@ -18,8 +18,8 @@
     <div class="col-12">
       <div class="row">
         <% if @bookmark_hotels.present? %>
-          <% @bookmark_hotels.each do |hotel| %>
-            <%= render partial: 'bookmark_hotel', locals: { hotel: hotel } %>
+          <% @bookmark_hotels.each do |bookmark| %>
+            <%= render partial: 'bookmark_hotel', locals: { bookmark: bookmark } %>
           <% end %>
         <% else %>
           <p>お気に入り登録はありません</p>

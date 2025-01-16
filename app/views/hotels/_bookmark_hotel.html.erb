@@ -1,13 +1,9 @@
 <div class="col-12">
   <div class="card mb-3">
     <div class="card-body">
-      <% if hotel.present? %>
-        <h5 class="card-title"><%= hotel['hotelName'] %></h5>
-        <img src="<%= hotel['hotelImageUrl'] %>" alt="<%= hotel['hotelName'] %>">
-        <p><%= hotel['hotelSpecial'] %></p>
-        <%= link_to '詳細を見る', hotel['hotelInformationUrl'], class: 'btn btn-primary', target: '_blank' %>
-        <%= hotel['hotelImageUrl'] %>
-        <pre><%= hotel.inspect %></pre> <!-- デバッグ用にhotelオブジェクトの内容を表示 --> 
+      <% if bookmark.present? %>
+        <h5 class="card-title"><%= bookmark.hotel_name %></h5>
+        <%= link_to '詳細を見る', bookmark.hotel_information_url, class: 'btn btn-primary', target: '_blank' %>
       <% else %>
         <p>ホテル情報がありません。</p>
       <% end %>
