@@ -28,6 +28,7 @@ class HotelsController < ApplicationController
   def bookmarks
     if current_user
       @bookmark_hotels = current_user.bookmark_hotels.order(created_at: :desc)
+      Rails.logger.debug @bookmark_hotels.inspect
     else
       @bookmark_hotels = []
     end

@@ -1,10 +1,16 @@
 <div class="col-12">
   <div class="card mb-3">
     <div class="card-body">
-      <h5 class="card-title"><%= hotel.name %></h5>
-      <img src="<%= hotel.hotel_image_url %>" alt="<%= hotel.hotel_name %>">
-      <p><%= hotel.hotelSpecial %></p>
-      <%= link_to '詳細を見る', hotel.hotel_information_url, class: 'btn btn-primary', target: '_blank' %>
+      <% if hotel.present? %>
+        <h5 class="card-title"><%= hotel['hotelName'] %></h5>
+        <img src="<%= hotel['hotelImageUrl'] %>" alt="<%= hotel['hotelName'] %>">
+        <p><%= hotel['hotelSpecial'] %></p>
+        <%= link_to '詳細を見る', hotel['hotelInformationUrl'], class: 'btn btn-primary', target: '_blank' %>
+        <%= hotel['hotelImageUrl'] %>
+        <pre><%= hotel.inspect %></pre> <!-- デバッグ用にhotelオブジェクトの内容を表示 --> 
+      <% else %>
+        <p>ホテル情報がありません。</p>
+      <% end %>
     </div>
   </div>
 </div>
