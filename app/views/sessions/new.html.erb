@@ -17,7 +17,7 @@
         <%= link_to '登録ページへ', new_user_path %>
         <%= link_to 'パスワードをお忘れの方はこちら', '#' %>
         
-        <%= link_to "Sign in with Twitter", user_twitter_omniauth_authorize_path %>
+        <%= link_to 'Sign in with Twitter', user_twitter_omniauth_authorize_path, method: :post %>
       </div>
     </div>
   </div>
