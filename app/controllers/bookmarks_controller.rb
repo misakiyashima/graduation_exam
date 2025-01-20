@@ -1,4 +1,6 @@
 class BookmarksController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :destroy]
+
   def create
     hotel_no = params[:hotel_id]
     hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])  # APIキーを渡す
@@ -38,6 +40,12 @@ class BookmarksController < ApplicationController
   end
 
   private
+
+  def authenticate_user!
+    unless user_signed_in?
+      redirect_to login_path, alert: 'ログインが必要です。'
+    end
+  end
 
   def bookmark_params
     params.permit(:user_id, :hotel_id, :hotel_no, :hotel_name, :hotel_information_url)
