@@ -4,6 +4,7 @@
       <% if bookmark.present? %>
         <h5 class="card-title"><%= bookmark.hotel_name %></h5>
         <%= link_to '詳細を見る', bookmark.hotel_information_url, class: 'btn btn-primary', target: '_blank' %>
+        <%= button_to 'お気に入りから削除', bookmark_path(bookmark), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
       <% else %>
         <p>ホテル情報がありません。</p>
       <% end %>

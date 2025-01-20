@@ -21,7 +21,7 @@ class BookmarksController < ApplicationController
         
         Rails.logger.info "Bookmark Errors: #{bookmark.errors.full_messages}"
         if bookmark.persisted?
-          redirect_to hotels_path, notice: 'お気に入りに追加しました'
+          redirect_to search_hotels_path(keyword: params[:keyword]), notice: 'お気に入りに追加しました'
         else
           redirect_to hotels_path, alert: "お気に入りの追加に失敗しました: #{bookmark.errors.full_messages.join(', ')}"
         end
@@ -33,11 +33,16 @@ class BookmarksController < ApplicationController
     end
   end
 
-  def destroy
-    bookmark = current_user.bookmarks.find(params[:id])
+def destroy
+  bookmark = current_user.bookmarks.find_by(id: params[:id])
+  if bookmark
     bookmark.destroy
-    redirect_to hotels_path, success: 'お気に入りを解除しました', status: :see_other
+    redirect_to bookmarks_hotels_path, notice: 'お気に入りを解除しました', status: :see_other
+  else
+    redirect_to bookmarks_hotels_path, alert: 'お気に入りが見つかりませんでした', status: :see_other
   end
+end
+
 
   private
 
@@ -51,4 +56,3 @@ class BookmarksController < ApplicationController
     params.permit(:user_id, :hotel_id, :hotel_no, :hotel_name, :hotel_information_url)
   end
 end
-

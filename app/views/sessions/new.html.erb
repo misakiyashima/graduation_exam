@@ -14,10 +14,11 @@
         <%= f.submit "ログイン", class: "btn btn-primary" %>
       <% end %>
       <div class='text-center'>
+      　<%= link_to 'パスワードをお忘れの方はこちら', '#' %>
+      　<br>
         <%= link_to '新規登録ページへ', new_user_path %>
-        <%= link_to 'パスワードをお忘れの方はこちら', '#' %>
         <br>
-        <%= link_to 'Sign in with Twitter', user_twitter_omniauth_authorize_path, method: :post %>
+        <%= link_to 'twitterでログイン', user_twitter_omniauth_authorize_path, method: :post %>
         <br>
         <br>
       　<%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
