@@ -1,6 +1,8 @@
 class HotelsController < ApplicationController
   def index
     @hotels = Hotel.where(all_inclusive: true)
+    @comment = Comment.new
+    @comments = @hotels.comments.includes(:user).order(created_at: :desc)
   end
 
   def show

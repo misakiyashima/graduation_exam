@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'search'
       get 'bookmarks'
     end
+    resources :comments, only: %i[create edit destroy], shallow: true
   end
 
   resources :bookmarks, only: %i[create destroy]
