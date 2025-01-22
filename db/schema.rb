@@ -34,15 +34,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_21_154144) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "hotel_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["hotel_id"], name: "index_favorites_on_hotel_id"
-    t.index ["user_id"], name: "index_favorites_on_user_id"
-  end
-
   create_table "hotels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -78,6 +69,4 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_21_154144) do
   add_foreign_key "bookmarks", "users"
   add_foreign_key "comments", "hotels"
   add_foreign_key "comments", "users"
-  add_foreign_key "favorites", "hotels"
-  add_foreign_key "favorites", "users"
 end
