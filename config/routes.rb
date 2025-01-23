@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   root to: 'home#index'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
@@ -17,8 +16,10 @@ Rails.application.routes.draw do
 
   resources :bookmarks, only: %i[create destroy]
   resources :users, only: %i[new create]
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
+  # SorceryのTwitter認証用ルート
+  get 'oauth/callbacks/twitter', to: 'oauth_callbacks#twitter'
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -76,7 +76,7 @@ gem 'pry'
 gem 'pry-rails'
 gem 'pry-nav'
 
-gem 'devise'
+#gem 'devise'
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-rails_csrf_protection'
