@@ -80,6 +80,7 @@ gem 'pry-nav'
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-rails_csrf_protection'
+gem 'dotenv-rails'
 
 
 group :development, :test do

@@ -8,7 +8,6 @@ class OauthCallbacksController < ApplicationController
     end
 
     user = User.from_omniauth(auth)
-    Rails.logger.debug "User from omniauth: #{user.inspect}"
 
     if user.persisted?
       session[:user_id] = user.id

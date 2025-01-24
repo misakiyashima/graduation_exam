@@ -9,9 +9,10 @@ Rails.application.config.sorcery.submodules = [:external]
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
   config.external_providers = [:twitter]
-  config.twitter.key = "wRFHOrusnaCk9vfRuuVTwew8B"
-  config.twitter.secret = "Y5pQopgpzcylCqxmjmamAUSP4dr1fgWuTEbL0KXN0eo53sTK87"
-  config.twitter.callback_url = "http://localhost:3000/oauth/callbacks/twitter"
+  config.twitter.key = ENV['TWITTER_KEY']
+  config.twitter.secret = ENV['TWITTER_SECRET']
+  config.twitter.callback_url = ENV['TWITTER_CALLBACK_URL']
+end
 
   # -- core --
   # What controller action to call for non-authenticated users. You can also
