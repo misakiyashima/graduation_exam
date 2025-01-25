@@ -2,7 +2,7 @@ class OauthCallbacksController < ApplicationController
   def twitter
     auth = request.env['omniauth.auth']
     if auth.nil? || !auth['provider'] || !auth['uid']
-      Rails.logger.error "Invalid auth hash: #{auth.inspect}"
+      Rails.logger.error "OmniAuth auth hash is nil. Request env: #{request.env.inspect}"
       redirect_to new_user_path, alert: '認証情報が取得できませんでした。'
       return
     end

@@ -3,7 +3,7 @@
     <%= form_with model: comment, url: hotel_comments_path(hotel) do |f| %>
       <%= f.label :body %>
       <%= f.text_area :body, class: "form-control mb-3", row: "4", placeholder: Comment.human_attribute_name(:body) %>
-      <%= f.submit t('defaults.post'), class: "btn btn-primary" %>
+      <%= f.submit 'コメントを投稿しました', class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
