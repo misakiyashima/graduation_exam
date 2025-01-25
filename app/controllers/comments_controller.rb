@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :authenticate_user!, only: [:create, :edit, :destroy]
 
   def create
     @hotel = Hotel.find(params[:hotel_id])
@@ -11,6 +11,9 @@ class CommentsController < ApplicationController
     else
       redirect_to @hotel, alert: 'コメントの作成に失敗しました'
     end
+  end
+
+  def edit
   end
 
   def destroy
@@ -25,5 +28,3 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 end
-
-
