@@ -1,16 +1,22 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :destroy]
+
   def create
-    comment = current_user.comments.build(comment_params)
-    if comment.save
-      redirect_to root_path, notice: 'コメントを作成しました'
+    @hotel = Hotel.find(params[:hotel_id])
+    @comment = @hotel.comments.build(comment_params)
+    @comment.user = current_user
+
+    if @comment.save
+      redirect_to @hotel, notice: 'コメントを作成しました'
     else
-      redirect_to root_path, alert: 'コメントの作成に失敗しました'
+      redirect_to @hotel, alert: 'コメントの作成に失敗しました'
     end
   end
 
   def destroy
     @comment = current_user.comments.find(params[:id])
     @comment.destroy!
+    redirect_to @comment.hotel, notice: 'コメントを削除しました'
   end
 
   private
@@ -19,3 +25,5 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 end
+
+
