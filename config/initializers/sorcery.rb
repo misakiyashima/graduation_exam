@@ -12,7 +12,6 @@ Rails.application.config.sorcery.configure do |config|
   config.twitter.key = ENV['TWITTER_KEY']
   config.twitter.secret = ENV['TWITTER_SECRET']
   config.twitter.callback_url = ENV['TWITTER_CALLBACK_URL']
-end
 
   # -- core --
   # What controller action to call for non-authenticated users. You can also

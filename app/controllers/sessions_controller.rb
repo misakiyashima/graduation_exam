@@ -20,4 +20,8 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to root_path, notice: "ログアウトしました"
   end
+  def failure
+    flash[:notice] = 'キャンセルしました'
+    redirect_to new_user_path
+  end
 end

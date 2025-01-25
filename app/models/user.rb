@@ -19,8 +19,7 @@ class User < ApplicationRecord
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = SecureRandom.hex(10)
-      user.name = auth.info.name  
-      user.image = auth.info.image 
+      user.name = auth.info.name
     end
   end
 
