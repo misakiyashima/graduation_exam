@@ -3,19 +3,20 @@ class HotelsController < ApplicationController
     @hotels = Hotel.where(all_inclusive: true)
   end
 
-  def show
-    client = HotelService.new('1092610730557101212')
-    hotel_info = client.get_hotel_details(params[:id])
-    if hotel_info.nil?
-      flash[:alert] = "ホテルの詳細情報が見つかりません。"
-      redirect_to hotels_path
-    else
-      @hotel = OpenStruct.new(hotel_info)
-      @hotel_information_url = @hotel.hotelInformationUrl
-      @comments = Comment.where(hotel_id: params[:id])
-      @comment = Comment.new
-    end
+def show
+  client = HotelService.new('1092610730557101212')
+  hotel_info = client.get_hotel_details(params[:id], fields: ['hotelName', 'hotelImageUrl', 'hotelInformationUrl', 'hotelSpecial'])
+  if hotel_info.nil?
+    flash[:alert] = "ホテルの詳細情報が見つかりません。"
+    redirect_to hotels_path
+  else
+    @hotel_id = params[:id]
+    @hotel = hotel_info
+    @hotel_information_url = @hotel['hotelInformationUrl']
+    @comments = Comment.where(hotel_id: params[:id])
+    @comment = Comment.new
   end
+end
 
   def search
     client = HotelService.new('1092610730557101212')

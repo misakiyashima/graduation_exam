@@ -20,13 +20,14 @@ class HotelService
     parsed_response['hotels']
   end
 
-  def get_hotel_details(hotel_no)
+  def get_hotel_details(hotel_no, fields: [])
     detail_base_uri = 'https://app.rakuten.co.jp/services/api/Travel/HotelDetailSearch/20170426'
     options = {
       query: {
         'applicationId' => @api_key,
         'hotelNo' => hotel_no,
         'format' => 'json'
+        'elements' => fields.join(',')
       }
     }
     response = self.class.get(detail_base_uri, options)  
