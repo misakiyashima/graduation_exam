@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :edit, :destroy]
+  before_action :require_login, only: [:create, :edit, :destroy]
 
   def create
     @hotel = Hotel.find(params[:hotel_id])
