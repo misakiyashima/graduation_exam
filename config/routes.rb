@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :users, only: %i[new create]
 
   # SorceryのTwitter認証用ルート
-  post '/auth/:provider/callback', to: 'oauth_callbacks#twitter'
+  get '/auth/:provider/callback', to: 'oauth_callbacks#twitter'
   get '/auth/failure', to: 'sessions#failure'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
