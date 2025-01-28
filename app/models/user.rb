@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  attr_accessor :skip_password_validation
+
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
@@ -10,6 +12,8 @@ class User < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :bookmark_hotels, through: :bookmarks, source: :hotel
 
+  validate :password_presence, unless: :skip_password_validation
+
   def self.login(email, password)
     user = find_by(email: email)
     user if user && user.authenticate(password)
@@ -17,9 +21,11 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email.presence || "#{auth.uid}@twitter.com"  # emailが空の場合にデフォルト値を設定
+      user.email = auth.info.email.presence || "#{auth.uid}@twitter.com"
       user.password = SecureRandom.hex(10)
+      user.password_confirmation = user.password
       user.name = auth.info.name
+      user.skip_password_validation = true
     end
 
     if user.new_record?
@@ -27,6 +33,12 @@ class User < ApplicationRecord
     end
 
     user
+  end
+
+  private
+
+  def password_presence
+    errors.add(:password, "can't be blank") if password.blank?
   end
 
   def bookmark(hotel)
