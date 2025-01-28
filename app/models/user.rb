@@ -17,11 +17,12 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
+      user.email = auth.info.email.presence || "#{auth.uid}@twitter.com"  # emailが空の場合にデフォルト値を設定
       user.password = SecureRandom.hex(10)
       user.name = auth.info.name
     end
   end
+
 
   def bookmark(hotel)
     bookmark_hotels << hotel
