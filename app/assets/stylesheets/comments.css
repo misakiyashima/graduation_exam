@@ -1,0 +1,7 @@
+.comment-box {
+  background-color: white; /* 背景色を白に設定 */
+  padding: 10px; /* パディングを追加 */
+  margin-bottom: 10px; /* コメント間のスペースを追加 */
+  border: 1px solid #ddd; /* 枠線を追加 */
+  border-radius: 5px; /* 角を丸める */
+}

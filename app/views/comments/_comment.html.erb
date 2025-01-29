@@ -1,9 +1,9 @@
-<tr id="comment-<%= comment.id %>">
+<tr id="comment-<%= comment.id %>" class="comment-box">
   <td style="width: 60px">
-    <%= image_tag "sample", width: "50", height: "50", class: "rounded-circle" %>
+    <i class="bi bi-person-circle" style="font-size: 50px;"></i> <!-- Bootstrapのアイコンを使用 -->
   </td>
   <td>
-    <h3 class="small"><%= comment.user.decorate.full_name %></h3>
+    <h3 class="small"><%= comment.user.name %></h3>
     <p><%= simple_format(comment.body) %></p>
   </td>
   <% if current_user&.own?(comment) %>
@@ -23,4 +23,3 @@
     </td>
   <% end %>
 </tr>
-
