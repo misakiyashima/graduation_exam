@@ -26,7 +26,7 @@ class HotelService
       query: {
         'applicationId' => @api_key,
         'hotelNo' => hotel_no,
-        'format' => 'json'
+        'format' => 'json',
         'elements' => fields.join(',')
       }
     }

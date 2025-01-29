@@ -6,22 +6,21 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-3">
-              <%= image_tag @hotel.hotelImageUrl, width: "300", height: "200", class: "card-img-top img-fluid" %>
+              <%= image_tag @hotel["hotelImageUrl"], width: "300", height: "200", class: "card-img-top img-fluid" %>
             </div>
             <div class="col-md-9">
-              <h3 style="display: inline;"><%= @hotel.hotelName %></h3>
+              <h3 style="display: inline;"><%= @hotel["hotelName"] %></h3>
               <ul class="list-inline">
               </ul>
-              </div>
             </div>
           </div>
-          <p><%= simple_format(@hotel.hotelSpecial) %></p>
+          <p><%= simple_format(@hotel["hotelSpecial"]) %></p>
           <table class="table">
             <tbody id="table-comment">
               <%= render @comments %>
             </tbody>
           </table>
-          <p><%= link_to '詳細情報', @hotel_information_url, target: '_blank' %></p>
+          <p><%= link_to '詳細情報', @hotel["hotelInformationUrl"], target: '_blank' %></p>
         </div>
       </article>
     </div>

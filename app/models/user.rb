@@ -41,6 +41,8 @@ class User < ApplicationRecord
     errors.add(:password, "can't be blank") if password.blank?
   end
 
+ public
+
   def bookmark(hotel)
     bookmark_hotels << hotel
   end
