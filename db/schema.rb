@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_24_065146) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_30_035748) do
   create_table "bookmarks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "hotel_id"
@@ -34,12 +34,32 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_24_065146) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "hotel_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotel_id"], name: "index_favorites_on_hotel_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "hotel_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hotels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "all_inclusive"
     t.string "hotel_information_url"
+  end
+
+  create_table "tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -70,4 +90,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_24_065146) do
   add_foreign_key "bookmarks", "users"
   add_foreign_key "comments", "hotels"
   add_foreign_key "comments", "users"
+  add_foreign_key "favorites", "hotels"
+  add_foreign_key "favorites", "users"
 end

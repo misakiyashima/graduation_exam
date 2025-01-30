@@ -1,0 +1,2 @@
+class HotelTag < ApplicationRecord
+end
