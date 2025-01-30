@@ -1,0 +1,9 @@
+<div>
+  <h2><%= @hotel.name %></h2>
+  <p><%= @hotel.location %></p>
+  <ul>
+    <% @hotel.tags.each do |tag| %>
+      <li><%= tag.name %></li>
+    <% end %>
+  </ul>
+</div>
