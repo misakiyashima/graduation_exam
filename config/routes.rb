@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :bookmarks, only: %i[create destroy]
   resources :users, only: %i[new create]
+  resources :tags, only: [:new, :create, :destroy]
 
   # SorceryのTwitter認証用ルート
   get '/auth/:provider/callback', to: 'oauth_callbacks#twitter'

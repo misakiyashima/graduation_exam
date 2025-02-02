@@ -5,7 +5,12 @@
       <% if hotel['tags'] %>
         <% hotel['tags'].each do |tag| %>
           <% if tag %>
-            <li><%= tag['name'] %></li>
+            <li>
+              <%= tag['name'] %>
+              <% if current_user %>
+                <%= link_to '削除', tag_path(tag), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+              <% end %>
+            </li>
           <% end %>
         <% end %>
       <% end %>
