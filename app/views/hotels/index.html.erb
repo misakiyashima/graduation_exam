@@ -17,16 +17,11 @@
           <img src="<%= hotel['hotelImageUrl'] %>" alt="<%= hotel['hotelName'] %>">
           <p><%= hotel['hotelSpecial'] %></p>
           
-          <%= render 'tags/tags' %>
-          <% if user_signed_in? %>
-          <%= link_to 'タグを追加', new_tag_path %>
-          <% else %>
-          <%= link_to 'タグを追加', login_path %>
-          <% end %>
+          <%= render 'tags/tags', hotel: hotel %>
          
           <a href="<%= hotel['hotelInformationUrl'] %>" target="_blank">詳細情報</a> 
           <%= render 'bookmark_buttons', hotel: hotel %>
-        <%= link_to 'みんなの旅ログをみる', hotel_path(hotel['hotelNo']) %>
+          <%= link_to 'みんなの旅ログをみる', hotel_path(hotel['hotelNo']) %>
         </li>
       <% end %>    
     </ul>
