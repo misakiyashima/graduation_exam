@@ -6,11 +6,11 @@ class TagsController < ApplicationController
   end
 
   def create
-    hotel_tag = HotelTag.new(hotel_tag_params)
-    if hotel_tag.save
+    @hotel_tag = HotelTag.new(hotel_tag_params)
+    if @hotel_tag.save
       redirect_to root_path, notice: "タグが追加されました"
     else
-      redirect_to root_path, alert: "タグの追加に失敗しました"
+      render :new, alert: "タグの追加に失敗しました"
     end
   end
 
