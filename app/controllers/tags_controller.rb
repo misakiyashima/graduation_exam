@@ -3,6 +3,8 @@ class TagsController < ApplicationController
 
   def new
     @hotel_tag = HotelTag.new
+    @hotels = Hotel.all
+    @tags = Tag.all
   end
 
   def create
@@ -11,6 +13,8 @@ class TagsController < ApplicationController
     if @hotel_tag.save
       redirect_to root_path, notice: "タグが追加されました"
     else
+      @hotels = Hotel.all
+      @tags = Tag.all
       render :new, alert: "タグの追加に失敗しました"
     end
   end
