@@ -7,6 +7,7 @@ class TagsController < ApplicationController
 
   def create
     @hotel_tag = HotelTag.new(hotel_tag_params)
+    puts hotel_tag_params.inspect # デバッグ出力
     if @hotel_tag.save
       redirect_to root_path, notice: "タグが追加されました"
     else
