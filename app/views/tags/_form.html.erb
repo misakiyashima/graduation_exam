@@ -1,7 +1,6 @@
 <%= form_with model: @hotel_tag, url: tags_path, method: :post do |form| %>
   <div>
-    <%= form.label :hotel_id, "ホテル" %>
-    <%= form.collection_select :hotel_id, Hotel.all, :id, :name %>
+    <%= form.hidden_field :hotel_id, value: @hotel_id %>
   </div>
   <div>
     <%= form.label :tag_id, "タグ" %>
