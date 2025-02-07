@@ -16,7 +16,7 @@
       <% end %>
     </ul>
     <% if current_user %>
-      <%= link_to 'タグを追加', new_tag_path %>
+      <%= link_to 'タグを追加', new_tag_path(hotel_id: hotel['hotelNo']) %>
     <% else %>
       <%= link_to 'タグを追加', login_path %>
     <% end %>

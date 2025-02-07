@@ -4,7 +4,7 @@
   </div>
   <div>
     <%= form.label :tag_id, "タグ" %>
-    <%= form.collection_select :tag_id, Tag.all, :id, :name %>
+    <%= form.text_field :tag_id %>
   </div>
   <div>
     <%= form.submit "タグを追加" %>
