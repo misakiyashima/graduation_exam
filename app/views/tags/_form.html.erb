@@ -10,3 +10,14 @@
     <%= form.submit "タグを追加" %>
   </div>
 <% end %>
+
+<% if @hotel_tag.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@hotel_tag.errors.count, "error") %> prohibited this hotel_tag from being saved:</h2>
+    <ul>
+      <% @hotel_tag.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
