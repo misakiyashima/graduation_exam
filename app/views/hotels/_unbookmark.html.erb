@@ -1,3 +1,1 @@
-<%= link_to bookmark_path(current_user.bookmarks.find_by(hotel_id: hotel[:hotelNo])), id: "unbookmark-button-for-hotel-#{hotel[:hotelNo]}", data: { turbo_method: :delete } do %>
-  <i>★</i>
-<% end %>
+<%= button_to 'ブックマーク解除', bookmarks_path(hotel_id: hotel["hotelNo"]), method: :delete, data: { turbo: true }, id: "unbookmark-button-for-hotel-#{hotel["hotelNo"]}" %>

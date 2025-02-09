@@ -1,26 +1,16 @@
 <div>
-  <% if hotel %>
-    <h2><%= hotel['hotelName'] %></h2>
-    <ul>
-      <% if hotel['tags'] %>
-        <% hotel['tags'].each do |tag| %>
-          <% if tag %>
-            <li>
-              <%= tag['name'] %>
-              <% if current_user %>
-                <%= link_to '削除', tag_path(tag), method: :delete, data: { confirm: '本当に削除しますか？' } %>
-              <% end %>
-            </li>
-          <% end %>
-        <% end %>
+  <% if hotel['tags'].present? %>
+    <ul class="tag-list">
+      <% hotel['tags'].each do |tag| %>
+        <li class="tag"><%= tag %></li>
       <% end %>
     </ul>
-    <% if current_user %>
-      <%= link_to 'タグを追加', new_tag_path(hotel_id: hotel['hotelNo']) %>
-    <% else %>
-      <%= link_to 'タグを追加', login_path %>
-    <% end %>
   <% else %>
-    <p>ホテル情報が見つかりません。</p>
+    <p>タグがありません。</p>
+  <% end %>
+  <% if current_user %>
+    <%= link_to 'タグを追加', new_tag_path(hotel_id: hotel['hotelNo']) %>
+  <% else %>
+    <%= link_to 'タグを追加', login_path %>
   <% end %>
 </div>

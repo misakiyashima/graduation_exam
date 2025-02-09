@@ -1,4 +1,4 @@
-<div class='ms-auto'>
+<div class='bookmark-buttons-wrapper'>
   <% if current_user && current_user.bookmark?(hotel[:hotelNo]) %>
     <%= render 'unbookmark', { hotel: hotel } %>
   <% else %>

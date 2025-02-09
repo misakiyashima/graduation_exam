@@ -1,1 +1,1 @@
-<%= button_to 'ブックマーク', bookmarks_path(hotel_id: hotel["hotelNo"]), method: :post, data: { turbo: true }, id: "bookmark-button-for-hotel-#{hotel["hotelNo"]}" %>
+<%= button_to 'ブックマーク', bookmarks_path(hotel_id: hotel["hotelNo"]), method: :post, data: { turbo: true }, id: "bookmark-button-for-hotel-#{hotel["hotelNo"]}", class: "bookmark-button" %>

@@ -8,6 +8,7 @@
 .hotel-item {
   margin-bottom: 20px;
   overflow: hidden;
+  text-align: left; /* ホテル全体を左寄せにする */
 }
 
 .hotel-item img {
@@ -28,4 +29,15 @@
 .hotel-item a {
   display: block;
   margin-top: 10px;
+}
+
+.bookmark-buttons-wrapper {
+  margin-top: 10px;
+  text-align: left; /* ブックマークボタンを左寄せにする */
+}
+
+.bookmark-button {
+  display: block; /* ボタンをブロック要素にして左寄せにする */
+  text-align: left; /* ボタンのテキストを左寄せにする */
+  margin-top: 5px; /* 上部マージンを追加してスペースを確保 */
 }

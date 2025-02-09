@@ -3,3 +3,4 @@
 //= link styles.css
 //= link hotels.css
 //= link comments.css
+//= link tags.css
