@@ -31,13 +31,7 @@
   margin-top: 10px;
 }
 
-.bookmark-buttons-wrapper {
-  margin-top: 10px;
-  text-align: left; /* ブックマークボタンを左寄せにする */
-}
-
-.bookmark-button {
-  display: block; /* ボタンをブロック要素にして左寄せにする */
-  text-align: left; /* ボタンのテキストを左寄せにする */
-  margin-top: 5px; /* 上部マージンを追加してスペースを確保 */
+.button_to {
+  text-align: left; /* 左寄せにする */
+  display: block;   /* ブロック要素にする */
 }

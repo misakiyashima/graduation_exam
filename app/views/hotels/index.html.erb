@@ -20,9 +20,7 @@
           <%= render 'tags/tags', hotel: hotel %>
           <%= link_to 'みんなの旅ログをみる', hotel_path(hotel['hotelNo']) %>
           <a href="<%= hotel['hotelInformationUrl'] %>" target="_blank">宿詳細情報</a>
-          <div class="bookmark-buttons-wrapper">
-            <%= render 'bookmark_buttons', hotel: hotel %>
-          </div>
+          <%= render 'bookmark_buttons', hotel: hotel %>
         </li>
       <% end %>    
     </ul>
