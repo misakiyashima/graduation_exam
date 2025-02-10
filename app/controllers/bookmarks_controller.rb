@@ -46,7 +46,7 @@ class BookmarksController < ApplicationController
   private
 
   def authenticate_user!
-    unless user_signed_in?
+    unless logged_in?
       redirect_to login_path, alert: 'ログインが必要です。'
     end
   end
