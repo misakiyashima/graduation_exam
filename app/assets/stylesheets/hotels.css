@@ -31,7 +31,9 @@
   margin-top: 10px;
 }
 
-.button_to {
-  text-align: left; /* 左寄せにする */
-  display: block;   /* ブロック要素にする */
+.custom-class {
+  display: flex;
+  justify-content: flex-start; /* 左側に配置 */
+  align-items: center;
+  width: 100%; /* 必要に応じてフォームの幅を設定 */
 }

@@ -1,6 +1,5 @@
-
-  <% if current_user && current_user.bookmark?(hotel[:hotelNo]) %>
+<% if current_user && current_user.bookmark?(hotel[:hotelNo]) %>
     <%= render 'unbookmark', { hotel: hotel } %>
   <% else %>
     <%= render 'bookmark', { hotel: hotel } %>
-  <% end %>
+<% end %>

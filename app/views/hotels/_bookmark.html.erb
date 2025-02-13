@@ -1,1 +1,7 @@
-<%= button_to 'ブックマーク', bookmarks_path(hotel_id: hotel["hotelNo"]), method: :post, data: { turbo: true }, id: "bookmark-button-for-hotel-#{hotel["hotelNo"]}", style: 'margin: 0 !important; display: inline !important;' %>
+<%= button_to 'ブックマーク', 
+               bookmarks_path(hotel_id: hotel["hotelNo"]), 
+               method: :post, 
+               data: { turbo: true }, 
+               id: "bookmark-button-for-hotel-#{hotel["hotelNo"]}", 
+               class: 'custom-class',
+               form: { class: 'custom-class' } %>
