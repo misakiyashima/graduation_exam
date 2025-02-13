@@ -16,4 +16,7 @@ application.register('autocomplete', Autocomplete) // コンポーネントに�
 application.debug = false
 window.Stimulus = application
 
+import 'jquery';
+import 'popper.js';
+
 export { application }
