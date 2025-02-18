@@ -1,7 +1,12 @@
-.comment-box {
-  background-color: white; /* 背景色を白に設定 */
-  padding: 10px; /* パディングを追加 */
-  margin-bottom: 10px; /* コメント間のスペースを追加 */
-  border: 1px solid #ddd; /* 枠線を追加 */
-  border-radius: 5px; /* 角を丸める */
+/* styles.css */
+.user-name {
+    background-color: white; /* 背景色を白に設定 */
+    padding: 5px; /* 枠内に余白を追加 */
+    border: 1px solid black; /* 枠線を追加 */
+    display: inline-block; /* インラインブロック要素に設定 */
+    margin-bottom: 10px; /* 下に余白を追加 */
+}
+
+.container {
+    margin-left: 20px; /* 左側に20pxの余白を追加 */
 }

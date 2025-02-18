@@ -1,25 +1,23 @@
-<tr id="comment-<%= comment.id %>" class="comment-box">
-  <td style="width: 60px">
-    <i class="bi bi-person-circle" style="font-size: 50px;"></i> <!-- Bootstrapのアイコンを使用 -->
-  </td>
-  <td>
-    <h3 class="small"><%= comment.user.name %></h3>
+<div class="comment-box" id="comment-<%= comment.id %>">
+  <div>
+    <h3 class="small user-name"><%= comment.user.name %></h3>
     <p><%= simple_format(comment.body) %></p>
-  </td>
+  </div>
+  
   <% if current_user&.own?(comment) %>
-    <td class="action">
+    <div class="action">
       <ul class="list-inline justify-content-center" style="float: right;">
         <li class="list-inline-item">
-          <%= link_to "#", class: "edit-comment-link" do %>
-            <i class="bi bi-pencil-fill"></i> <!-- 修正: アイコンのクラス -->
+          <%= link_to "編集", class: "edit-comment-link" do %>
+            <i class="bi bi-pencil-fill"></i> 
           <% end %>
         </li>
         <li class="list-inline-item">
-          <%= link_to "#", class: "delete-comment-link" do %>
-            <i class="bi bi-trash-fill"></i> <!-- 修正: アイコンのクラス -->
+          <%= link_to "削除", class: "delete-comment-link" do %>
+            <i class="bi bi-trash-fill"></i> 
           <% end %>
         </li>
       </ul>
-    </td>
+    </div>
   <% end %>
-</tr>
+</div>

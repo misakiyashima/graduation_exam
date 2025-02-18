@@ -15,12 +15,12 @@
             </div>
           </div>
           <p><%= simple_format(@hotel["hotelSpecial"]) %></p>
+          <p><%= link_to '詳細情報', @hotel["hotelInformationUrl"], target: '_blank' %></p>
           <table class="table">
             <tbody id="table-comment">
-              <%= render @comments %>
+              <%= render partial: "comments/comment", collection: @comments %>
             </tbody>
           </table>
-          <p><%= link_to '詳細情報', @hotel["hotelInformationUrl"], target: '_blank' %></p>
         </div>
       </article>
     </div>
