@@ -18,7 +18,7 @@
           <p><%= link_to '詳細情報', @hotel["hotelInformationUrl"], target: '_blank' %></p>
           <table class="table">
             <tbody id="table-comment">
-              <%= render partial: "comments/comment", collection: @comments %>
+              <%= render  "comments/comment" %>
             </tbody>
           </table>
         </div>
