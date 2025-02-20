@@ -1,23 +1,18 @@
-<div class="comment-box" id="comment-<%= comment.id %>">
-  <div>
-    <h3 class="small user-name"><%= comment.user.name %></h3>
-    <p><%= simple_format(comment.body) %></p>
+<% comments.each do |comment| %>
+  <div class="comment">
+    <p><%= comment.body %></p>
+    <ul class="list-inline justify-content-center" style="float: right;">
+      <li class="list-inline-item">
+        <%= link_to "編集", edit_comment_path(comment), class: "edit-comment-link" do %>
+          <i class="bi bi-pencil-fill"></i>
+        <% end %>
+      </li>
+      <li class="list-inline-item">
+        <%= link_to "削除", comment, method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: "delete-comment-link" do %>
+          <i class="bi bi-trash-fill"></i>
+        <% end %>
+      </li>
+    </ul>
   </div>
-  
-  <% if current_user&.own?(comment) %>
-    <div class="action">
-      <ul class="list-inline justify-content-center" style="float: right;">
-        <li class="list-inline-item">
-          <%= link_to "編集", class: "edit-comment-link" do %>
-            <i class="bi bi-pencil-fill"></i> 
-          <% end %>
-        </li>
-        <li class="list-inline-item">
-          <%= link_to "削除", class: "delete-comment-link" do %>
-            <i class="bi bi-trash-fill"></i> 
-          <% end %>
-        </li>
-      </ul>
-    </div>
-  <% end %>
-</div>
+<% end %>
+
