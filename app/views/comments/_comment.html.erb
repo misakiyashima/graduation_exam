@@ -3,16 +3,13 @@
     <p><%= comment.body %></p>
     <ul class="list-inline justify-content-center" style="float: right;">
       <li class="list-inline-item">
-        <%= link_to "編集", edit_comment_path(comment), class: "edit-comment-link" do %>
+        <%= link_to "編集", edit_comment_path(comment), class: "edit-comment-link" %>
           <i class="bi bi-pencil-fill"></i>
-        <% end %>
-      </li>
+        </li>
       <li class="list-inline-item">
-        <%= link_to "削除", comment, method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: "delete-comment-link" do %>
+        <%= link_to "削除", comment, method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: "delete-comment-link" %>
           <i class="bi bi-trash-fill"></i>
-        <% end %>
-      </li>
+        </li>
     </ul>
   </div>
 <% end %>
-
