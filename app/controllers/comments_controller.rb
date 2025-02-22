@@ -24,6 +24,23 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit
+    # 編集画面の表示（必要に応じてビューを作成）
+  end
+
+  def update
+    if @comment.update(comment_params)
+      redirect_to hotel_path(@hotel), notice: 'コメントが更新されました。'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @comment.destroy
+    redirect_to hotel_path(@hotel), notice: 'コメントが削除されました。'
+  end
+
   private
 
   def set_hotel
@@ -38,3 +55,4 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 end
+

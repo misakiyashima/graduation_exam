@@ -29,5 +29,8 @@ module Myapp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Add the following line to disable the raise on missing callback actions
+    config.action_controller.raise_on_missing_callback_actions = false
   end
 end
