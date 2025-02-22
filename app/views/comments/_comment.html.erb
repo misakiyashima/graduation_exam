@@ -1,5 +1,6 @@
 <% comments.each do |comment| %>
   <div class="comment">
+    <p><strong><%= comment.user.name %></strong></p> <!-- 投稿者の名前を表示 -->
     <p><%= comment.body %></p>
     <ul class="list-inline justify-content-center" style="float: right;">
       <li class="list-inline-item">

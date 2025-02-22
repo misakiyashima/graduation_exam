@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   attr_accessor :skip_password_validation
   
-  validates :username, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
