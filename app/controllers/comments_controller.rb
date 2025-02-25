@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_hotel, only: [:create]
+  before_action :set_hotel, only: [:create, :destroy]  # destroyアクションも追加
   before_action :set_comment, only: [:edit, :update, :destroy]
 
   def create
@@ -25,7 +25,6 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    # 編集画面の表示（必要に応じてビューを作成）
   end
 
   def update
@@ -38,7 +37,7 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    redirect_to hotel_path(@hotel), notice: 'コメントが削除されました。'
+    redirect_to hotel_path(@comment.hotel), notice: 'コメントが削除されました。'
   end
 
   private
@@ -55,4 +54,3 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 end
-

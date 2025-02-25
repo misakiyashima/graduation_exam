@@ -19,4 +19,9 @@
   <div class="actions">
     <%= form.submit "更新" %>
   </div>
+
+  <div class="actions">
+    <%= button_to "削除", hotel_comment_path(@hotel, @comment), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: "delete-comment-link" %>
+    <i class="bi bi-trash-fill"></i>
+  </div>
 <% end %>
