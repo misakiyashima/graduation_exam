@@ -1,9 +1,8 @@
 class CommentsController < ApplicationController
-  before_action :set_hotel, only: [:create, :destroy]  # destroyアクションも追加
   before_action :set_comment, only: [:edit, :update, :destroy]
+  before_action :set_hotel, only: [:create, :destroy]
 
   def create
-    # ホテル情報をAPIから取得
     client = HotelService.new(ENV['RAKUTEN_API_KEY'])
     hotel_info = client.get_hotel_details(params[:hotel_id], fields: ['hotelName', 'hotelImageUrl', 'hotelInformationUrl', 'hotelSpecial'])
 
@@ -13,7 +12,6 @@ class CommentsController < ApplicationController
       return
     end
 
-    # コメントを作成
     @comment = @hotel.comments.build(comment_params)
     @comment.user = current_user
 
@@ -37,13 +35,13 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    redirect_to hotel_path(@comment.hotel), notice: 'コメントが削除されました。'
+    redirect_to hotel_path(@hotel), notice: 'コメントが削除されました。'
   end
 
   private
 
   def set_hotel
-    @hotel = Hotel.find(params[:hotel_id])
+    @hotel = @comment.hotel
   end
 
   def set_comment

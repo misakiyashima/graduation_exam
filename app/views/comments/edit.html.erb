@@ -21,7 +21,7 @@
   </div>
 
   <div class="actions">
-    <%= button_to "削除", hotel_comment_path(@hotel, @comment), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: "delete-comment-link" %>
+    <%= button_to "削除", comment_path(@comment), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: "delete-comment-link" %>
     <i class="bi bi-trash-fill"></i>
   </div>
 <% end %>
