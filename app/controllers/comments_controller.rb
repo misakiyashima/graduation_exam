@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:edit, :update, :destroy]
-  before_action :set_hotel, only: [:create, :destroy]
+  before_action :set_hotel, only: [:create]
 
   def create
     client = HotelService.new(ENV['RAKUTEN_API_KEY'])
@@ -12,6 +12,7 @@ class CommentsController < ApplicationController
       return
     end
 
+    @hotel = Hotel.find(params[:hotel_id])
     @comment = @hotel.comments.build(comment_params)
     @comment.user = current_user
 
@@ -26,6 +27,7 @@ class CommentsController < ApplicationController
   end
 
   def update
+    @hotel = @comment.hotel
     if @comment.update(comment_params)
       redirect_to hotel_path(@hotel), notice: 'コメントが更新されました。'
     else
@@ -34,6 +36,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = Comment.find(params[:id])
+    @hotel = @comment.hotel
     @comment.destroy
     redirect_to hotel_path(@hotel), notice: 'コメントが削除されました。'
   end
@@ -41,7 +45,7 @@ class CommentsController < ApplicationController
   private
 
   def set_hotel
-    @hotel = @comment.hotel
+    @hotel = Hotel.find(params[:hotel_id])
   end
 
   def set_comment
