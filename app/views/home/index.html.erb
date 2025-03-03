@@ -1,28 +1,29 @@
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag 'styles', media: 'all' %>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= stylesheet_link_tag 'styles', media: 'all' %>
 </head>
 <body>
-   <div class="image-container">
-      <img src="<%= image_path('pictures/IMG_1150.JPG') %>" alt="写真1">
-      <img src="<%= image_path('pictures/IMG_1179.JPG') %>" alt="写真2">
-      <img src="<%= image_path('pictures/IMG_3290.JPG') %>" alt="写真3">
-      <img src="<%= image_path('pictures/IMG_3934.JPG') %>" alt="写真４">
-      <img src="<%= image_path('pictures/IMG_3990.JPG') %>" alt="写真５">
-   </div>
-<h1 id="title" class="center-text">スペシャルステイで至福の時間を</h1>
-<h2 class="center-text">オールインクルーシブホテル</h2>
+  <div class="image-container">
+    <img src="<%= image_path('pictures/IMG_1150.JPG') %>" alt="写真1">
+    <img src="<%= image_path('pictures/IMG_1179.JPG') %>" alt="写真2">
+    <img src="<%= image_path('pictures/IMG_3290.JPG') %>" alt="写真3">
+    <img src="<%= image_path('pictures/IMG_3934.JPG') %>" alt="写真４">
+    <img src="<%= image_path('pictures/IMG_3990.JPG') %>" alt="写真５">
+  </div>
+  <h1 id="title" class="center-text">スペシャルステイで至福の時間を</h1>
+  <h2 class="center-text">オールインクルーシブホテル</h2>
   <br>
   <%= form_with url: search_hotels_path, method: :get, local: true do |f| %>
-		<%= f.hidden_field :name, data: { autocomplete_target: 'hidden' } %>
+    <%= f.hidden_field :name, data: { autocomplete_target: 'hidden' } %>
     <div>
       <%= f.label :keyword, "キーワード" %>
       <%= f.text_field :keyword %>
     </div>
     <div>
       <%= f.submit "検索" %>
-    </div>
     </div>
   <% end %>
 
@@ -33,3 +34,8 @@
       <% end %>
     </ul>
   <% end %>
+
+  <h2>地図から探す</h2>
+  <%= render 'maps/index' %>
+</body>
+</html>
