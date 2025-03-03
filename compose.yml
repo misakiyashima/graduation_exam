@@ -28,6 +28,7 @@ services:
     environment:
       TZ: Asia/Tokyo
       RAKUTEN_API_KEY: 1092610730557101212
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
     ports:
       - "3000:3000"
     depends_on:
