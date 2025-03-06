@@ -1,7 +1,7 @@
-const { environment } = require('@rails/webpacker')
+const { environment } = require('@rails/webpacker');
 
 environment.config.set('entry', {
-  application: './app/javascript/application.js'
+  application: './app/javascript/packs/application.js',
 });
 
-module.exports = environment
+module.exports = environment;

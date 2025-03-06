@@ -1,12 +1,9 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%= stylesheet_link_tag 'styles', media: 'all' %>
-  <script>
-    console.log("Google Maps API Key:", "<%= ENV['GOOGLE_MAPS_API_KEY'] %>");
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer></script>
+  <title>地図から探す</title>
   <style>
     #map {
       height: 500px;
@@ -15,22 +12,16 @@
   </style>
 </head>
 <body>
+  <h1>宿泊施設の地図</h1>
   <div id="map"></div>
-  <script>
-    function initMap() {
-      const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 35.6895, lng: 139.6917 }, // 東京の中心座標
-        zoom: 8,
-      });
 
-      <% @hotels.each do |hotel| %>
-        const marker = new google.maps.Marker({
-          position: { lat: <%= hotel['hotelBasicInfo']['latitude'] %>, lng: <%= hotel['hotelBasicInfo']['longitude'] %> },
-          map: map,
-          title: "<%= hotel['hotelBasicInfo']['hotelName'] %>",
-        });
-      <% end %>
-    }
+  <!-- RailsからデータをJSON形式で埋め込む -->
+  <script>
+    const hotels = <%= raw @hotels.to_json %>;
+    const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
   </script>
-  </body>
+
+  <!-- JavaScriptファイルを読み込み -->
+  <%= javascript_pack_tag 'maps' %>
+</body>
 </html>

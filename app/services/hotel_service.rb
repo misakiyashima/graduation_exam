@@ -47,9 +47,12 @@ class HotelService
   def save_hotel_to_db(hotel_info)
     unless Hotel.exists?(id: hotel_info['hotelNo'])
       Hotel.create(
-        id: hotel_info['hotelNo'],
-        name: hotel_info['hotelName'],
-        hotel_information_url: hotel_info['hotelInformationUrl']
+        id: hotel_info['hotelNo'], # ホテルのID
+        name: hotel_info['hotelName'], # ホテルの名前
+        hotel_information_url: hotel_info['hotelInformationUrl'], # 詳細URL
+        hotel_image_url: hotel_info['hotelImageUrl'], # イメージ画像URL
+        hotel_special: hotel_info['hotelSpecial'], # ホテルの特徴
+        all_inclusive: true # オールインクルーシブプランであることを保存
       )
     end
   end
