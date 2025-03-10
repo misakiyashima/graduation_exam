@@ -15,11 +15,13 @@
   <h1>宿泊施設の地図</h1>
   <div id="map"></div>
 
+  <!-- RailsからデータをJSON形式で埋め込む -->
   <script>
     const hotels = <%= raw @hotels.to_json %>;
     const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
   </script>
 
+  <!-- JavaScriptファイルを読み込み -->
   <%= javascript_pack_tag 'maps' %>
 </body>
 </html>
