@@ -1,6 +1,27 @@
 class HotelsController < ApplicationController
   def index
-    @hotels = Hotel.where(all_inclusive: true)
+    client = HotelService.new(ENV['RAKUTEN_API_KEY'])
+    response = client.search_all_inclusive_hotels('オールインクルーシブ')
+
+    @hotels = response.map do |hotel|
+      hotel_info = hotel['hotel'][0]['hotelBasicInfo']
+
+      {
+        id: hotel_info['hotelNo'],
+        name: hotel_info['hotelName'],
+        latitude: hotel_info['latitude'],
+        longitude: hotel_info['longitude'],
+        hotel_information_url: hotel_info['hotelInformationUrl'],
+        hotel_image_url: hotel_info['hotelImageUrl'],
+        hotel_special: hotel_info['hotelSpecial']
+      }
+    end
+
+    # 検索結果がない場合の対応
+    if @hotels.blank?
+      flash[:alert] = "「オールインクルーシブ」で該当する宿泊施設はありません。"
+      @hotels = []
+    end
   end
 
   def show

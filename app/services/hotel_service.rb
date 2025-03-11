@@ -3,7 +3,7 @@ class HotelService
   base_uri 'https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426'
 
   def initialize(api_key)
-    @api_key = api_key  # 引数として渡された API キーを使用
+    @api_key = api_key
   end
 
   def search_all_inclusive_hotels(keyword)
@@ -16,8 +16,14 @@ class HotelService
       }
     }
     response = self.class.get('', options)
-    parsed_response = response.parsed_response
-    parsed_response['hotels']
+
+    if response.success?
+      parsed_response = response.parsed_response
+      parsed_response['hotels'] || []
+    else
+      Rails.logger.error("API Request Failed: #{response.code} - #{response.message}")
+      []
+    end
   end
 
   def get_hotel_details(hotel_no, fields: [])
@@ -30,30 +36,37 @@ class HotelService
         'elements' => fields.join(',')
       }
     }
-    response = self.class.get(detail_base_uri, options)  
-    
-    # デバッグ用のログを追加 
-    Rails.logger.info "API Response: #{response.body}"
+    response = self.class.get(detail_base_uri, options)
 
-    parsed_response = response.parsed_response
-    if parsed_response['hotels'] && parsed_response['hotels'][0] && parsed_response['hotels'][0]['hotel']
-      hotel_info = parsed_response['hotels'][0]['hotel'][0]['hotelBasicInfo']
-      hotel_info
+    if response.success?
+      parsed_response = response.parsed_response
+      if parsed_response['hotels'] && parsed_response['hotels'][0] && parsed_response['hotels'][0]['hotel']
+        parsed_response['hotels'][0]['hotel'][0]['hotelBasicInfo']
+      else
+        Rails.logger.warn("Hotel details not found for hotelNo: #{hotel_no}")
+        nil
+      end
     else
+      Rails.logger.error("Hotel details request failed: #{response.code} - #{response.message}")
       nil
     end
   end
 
   def save_hotel_to_db(hotel_info)
-    unless Hotel.exists?(id: hotel_info['hotelNo'])
-      Hotel.create(
-        id: hotel_info['hotelNo'], # ホテルのID
-        name: hotel_info['hotelName'], # ホテルの名前
-        hotel_information_url: hotel_info['hotelInformationUrl'], # 詳細URL
-        hotel_image_url: hotel_info['hotelImageUrl'], # イメージ画像URL
-        hotel_special: hotel_info['hotelSpecial'], # ホテルの特徴
-        all_inclusive: true # オールインクルーシブプランであることを保存
-      )
-    end
+    latitude = hotel_info['latitude'].to_f
+    longitude = hotel_info['longitude'].to_f
+
+    Hotel.create!(
+      id: hotel_info['hotelNo'],
+      name: hotel_info['hotelName'],
+      hotel_information_url: hotel_info['hotelInformationUrl'],
+      hotel_image_url: hotel_info['hotelImageUrl'],
+      hotel_special: hotel_info['hotelSpecial'],
+      latitude: latitude,
+      longitude: longitude,
+      all_inclusive: true
+    )
+  rescue ActiveRecord::RecordNotUnique
+    Rails.logger.info("Hotel already exists: #{hotel_info['hotelNo']}")
   end
 end

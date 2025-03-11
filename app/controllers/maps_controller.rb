@@ -3,17 +3,18 @@ class MapsController < ApplicationController
     @google_maps_api_key = ENV['GOOGLE_MAPS_API_KEY']
     hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])
 
-    # APIから「オールインクルーシブ」の宿を取得
-    api_hotels = hotel_service.search_all_inclusive_hotels('オールインクルーシブ')
-
-    # データベースに保存 & キャッシュとして活用
-    @hotels = api_hotels.map do |hotel|
+    # APIから宿泊施設を取得
+    @hotels = hotel_service.search_all_inclusive_hotels('オールインクルーシブ').map do |hotel|
       hotel_info = hotel['hotel'][0]['hotelBasicInfo']
-      
-      # save_hotel_to_dbを呼び出して保存
-      hotel_service.save_hotel_to_db(hotel_info)
-      
-      hotel_info
+      {
+        id: hotel_info['hotelNo'],
+        name: hotel_info['hotelName'],
+        latitude: hotel_info['latitude'],
+        longitude: hotel_info['longitude'],
+        hotel_information_url: hotel_info['hotelInformationUrl'],
+        hotel_image_url: hotel_info['hotelImageUrl'],
+        hotel_special: hotel_info['hotelSpecial']
+      }
     end
   end
 end
