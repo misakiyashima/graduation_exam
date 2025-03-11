@@ -12,7 +12,6 @@
   </style>
 </head>
 <body>
-  <h1>宿泊施設の地図</h1>
   <div id="map"></div>
 
   <!-- RailsからデータをJSON形式で埋め込む -->
@@ -21,14 +20,14 @@
     const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
     console.log("Hotels data:", hotels); // デバッグ用
   </script>
-
+  
   <!-- Google Maps APIのスクリプトを非同期で読み込む -->
   <script>
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
     script.async = true;
     script.defer = true;
-    document.head.appendChild(script);
+    document.body.appendChild(script);
   </script>
 </body>
 </html>

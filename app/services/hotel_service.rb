@@ -24,6 +24,20 @@ class HotelService
       Rails.logger.error("API Request Failed: #{response.code} - #{response.message}")
       []
     end
+
+    hotels.map do |hotel|
+      hotel_info = hotel['hotel'][0]['hotelBasicInfo']
+      coordinates = CoordinateConverter.to_wgs84(hotel_info['latitude'].to_f, hotel_info['longitude'].to_f)
+      {
+        id: hotel_info['hotelNo'],
+        name: hotel_info['hotelName'],
+        latitude: coordinates[:latitude],
+        longitude: coordinates[:longitude],
+        hotel_information_url: hotel_info['hotelInformationUrl'],
+        hotel_image_url: hotel_info['hotelImageUrl'],
+        hotel_special: hotel_info['hotelSpecial']
+      }
+    end
   end
 
   def get_hotel_details(hotel_no, fields: [])
