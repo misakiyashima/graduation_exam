@@ -3,7 +3,7 @@ class HotelService
   base_uri 'https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426'
 
   def initialize(api_key)
-    @api_key = api_key
+    @api_key = api_key # 引数として渡された API キーを使用
   end
 
   def search_all_inclusive_hotels(keyword)
@@ -16,28 +16,8 @@ class HotelService
       }
     }
     response = self.class.get('', options)
-
-    if response.success?
-      parsed_response = response.parsed_response
-      parsed_response['hotels'] || []
-    else
-      Rails.logger.error("API Request Failed: #{response.code} - #{response.message}")
-      []
-    end
-
-    hotels.map do |hotel|
-      hotel_info = hotel['hotel'][0]['hotelBasicInfo']
-      coordinates = CoordinateConverter.to_wgs84(hotel_info['latitude'].to_f, hotel_info['longitude'].to_f)
-      {
-        id: hotel_info['hotelNo'],
-        name: hotel_info['hotelName'],
-        latitude: coordinates[:latitude],
-        longitude: coordinates[:longitude],
-        hotel_information_url: hotel_info['hotelInformationUrl'],
-        hotel_image_url: hotel_info['hotelImageUrl'],
-        hotel_special: hotel_info['hotelSpecial']
-      }
-    end
+    parsed_response = response.parsed_response
+    parsed_response['hotels']
   end
 
   def get_hotel_details(hotel_no, fields: [])
@@ -51,21 +31,13 @@ class HotelService
       }
     }
     response = self.class.get(detail_base_uri, options)
-
-    if response.success?
-      parsed_response = response.parsed_response
-      if parsed_response['hotels'] && parsed_response['hotels'][0] && parsed_response['hotels'][0]['hotel']
-        parsed_response['hotels'][0]['hotel'][0]['hotelBasicInfo']
-      else
-        Rails.logger.warn("Hotel details not found for hotelNo: #{hotel_no}")
-        nil
-      end
-    else
-      Rails.logger.error("Hotel details request failed: #{response.code} - #{response.message}")
-      nil
-    end
+    # デバッグ用のログを追加
+    Rails.logger.info "API Response: #{response.body}"
+    parsed_response = response.parsed_response
+    hotel_info = parsed_response.dig('hotels', 0, 'hotel', 0, 'hotelBasicInfo')
+    hotel_info ? hotel_info : nil
   end
-
+  
   def save_hotel_to_db(hotel_info)
     latitude = hotel_info['latitude'].to_f
     longitude = hotel_info['longitude'].to_f
