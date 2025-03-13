@@ -1,4 +1,4 @@
-// Google Mapsの初期化関数をグローバルスコープに設定
+
 window.initMap = function () {
   const map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 35.6895, lng: 139.6917 }, // 東京の中心座標
