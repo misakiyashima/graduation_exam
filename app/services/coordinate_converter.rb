@@ -3,10 +3,16 @@ class CoordinateConverter
   SHIFT = Math::PI * R_MAJOR
 
   # Webメルカトル座標系 (EPSG:3857) -> WGS84座標系に変換
-  def self.to_wgs84(x, y)
-    lon = (x / SHIFT) * 180.0
-    lat = (y / SHIFT) * 180.0
-    lat = 180.0 / Math::PI * (2.0 * Math.atan(Math.exp(lat * Math::PI / 180.0)) - Math::PI / 2.0)
-    { latitude: lat, longitude: lon }
+  def self.to_wgs84(dms_latitude, dms_longitude)
+    latitude = dms_to_decimal(dms_latitude)
+    longitude = dms_to_decimal(dms_longitude)
+    { latitude: latitude, longitude: longitude }
+  end
+
+  private
+
+  def self.dms_to_decimal(dms)
+    d, m, s = dms.split(/[^\d\w]+/).map(&:to_f)
+    d + (m / 60) + (s / 3600)
   end
 end

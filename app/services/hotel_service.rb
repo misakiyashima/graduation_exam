@@ -16,7 +16,10 @@ class HotelService
       }
     }
     response = self.class.get('', options)
+    Rails.logger.info "API Request: #{options}"
+    Rails.logger.info "API Response: #{response.body}"
     parsed_response = response.parsed_response
+    Rails.logger.info "Parsed Response: #{parsed_response.inspect}"
     parsed_response['hotels']
   end
 

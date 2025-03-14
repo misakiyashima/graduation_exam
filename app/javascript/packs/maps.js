@@ -1,39 +1,34 @@
-
-window.initMap = function () {
-  const map = new google.maps.Map(document.getElementById("map"), {
+// Google Mapsの初期化関数
+function initMap() {
+  const map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 35.6895, lng: 139.6917 }, // 東京の中心座標
-    zoom: 8,
+    zoom: 8
   });
 
-  if (Array.isArray(hotels) && hotels.length > 0) {
-    hotels.forEach(hotel => {
-      if (hotel.latitude && hotel.longitude) {
-        const marker = new google.maps.Marker({
-          position: {
-            lat: parseFloat(hotel.latitude),
-            lng: parseFloat(hotel.longitude),
-          },
-          map: map,
-          title: hotel.name,
-        });
+  // マーカーを地図に追加
+  hotels.forEach(hotel => {
+    console.log('Hotel Data:', hotel); // ホテルデータのデバッグ用ログ
 
-        const infoWindow = new google.maps.InfoWindow({
-          content: `<div>
-                      <h3>${hotel.name}</h3>
-                      <img src="${hotel.hotel_image_url}" alt="${hotel.name}" style="width:100px;height:auto;">
-                      <p>${hotel.hotel_special}</p>
-                      <a href="${hotel.hotel_information_url}" target="_blank">詳細を見る</a>
-                    </div>`,
-        });
+    const lat = parseFloat(hotel.latitude);
+    const lng = parseFloat(hotel.longitude);
 
-        marker.addListener("click", () => {
-          infoWindow.open(map, marker);
-        });
-      } else {
-        console.error(`Missing coordinates for hotel: ${hotel.name}`);
-      }
+    if (isNaN(lat) || isNaN(lng)) {
+      console.error(`Invalid coordinates for hotel: ${hotel.name}`);
+      return;
+    }
+
+    const marker = new google.maps.Marker({
+      position: { lat: lat, lng: lng },
+      map: map,
+      title: hotel.name
     });
-  } else {
-    console.error("No hotels data available.");
-  }
-};
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: hotel.info_content
+    });
+
+    marker.addListener("click", () => {
+      infoWindow.open(map, marker);
+    });
+  });
+}

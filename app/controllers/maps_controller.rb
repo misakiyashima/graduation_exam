@@ -5,17 +5,25 @@ class MapsController < ApplicationController
 
     # オールインクルーシブの宿泊施設を取得
     api_hotels = hotel_service.search_all_inclusive_hotels('オールインクルーシブ')
+    Rails.logger.info "Fetched Hotels from API in MapsController: #{api_hotels.inspect}"
 
-    # 緯度・経度をWGS84に変換し、マーカー情報を準備
-    @hotels = api_hotels.map do |hotel|
-      hotel_info = hotel['hotel'][0]['hotelBasicInfo']
-      coordinates = CoordinateConverter.to_wgs84(hotel_info['latitude'].to_f, hotel_info['longitude'].to_f)
-      {
-        name: hotel_info['hotelName'],
-        latitude: coordinates[:latitude],
-        longitude: coordinates[:longitude],
-        info_content: "<h3>#{hotel_info['hotelName']}</h3><p>#{hotel_info['hotelSpecial']}</p>"
-      }
+    # データが存在するかチェック
+    if api_hotels.present?
+      @hotels = api_hotels.map do |hotel|
+        hotel_info = hotel['hotel'][0]['hotelBasicInfo']
+        Rails.logger.info "Hotel Info in MapsController: #{hotel_info.inspect}"
+        coordinates = CoordinateConverter.to_wgs84(hotel_info['latitude'], hotel_info['longitude'])
+        {
+          name: hotel_info['hotelName'],
+          latitude: coordinates[:latitude],
+          longitude: coordinates[:longitude],
+          info_content: "<h3>#{hotel_info['hotelName']}</h3><p>#{hotel_info['hotelSpecial']}</p>"
+        }
+      end
+    else
+      Rails.logger.error "No hotels fetched from API in MapsController"
+      @hotels = []
     end
+    Rails.logger.info "Hotels Data in MapsController: #{@hotels.inspect}"
   end
 end

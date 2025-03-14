@@ -17,9 +17,11 @@
   <script>
     // Google Maps APIキー
     const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
+    console.log('Google Maps APIキー:', GOOGLE_MAPS_API_KEY);
 
     // 宿泊施設データをRailsから取得
     const hotels = <%= raw @hotels.to_json %>;
+    console.log('Hotels Data:', hotels);
 
     // Google Mapsの初期化関数
     function initMap() {
@@ -30,8 +32,20 @@
 
       // マーカーを地図に追加
       hotels.forEach(hotel => {
+        console.log('Hotel Data:', hotel);
+
+        const lat = parseFloat(hotel.latitude);
+        const lng = parseFloat(hotel.longitude);
+
+        console.log(`Coordinates for ${hotel.name}: lat=${lat}, lng=${lng}`);
+
+        if (isNaN(lat) || isNaN(lng)) {
+          console.error(`Invalid coordinates for hotel: ${hotel.name}`);
+          return;
+        }
+
         const marker = new google.maps.Marker({
-          position: { lat: parseFloat(hotel.latitude), lng: parseFloat(hotel.longitude) },
+          position: { lat: lat, lng: lng },
           map: map,
           title: hotel.name
         });
@@ -55,4 +69,3 @@
   </script>
 </body>
 </html>
-
