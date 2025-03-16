@@ -17,10 +17,16 @@ function initMap() {
       return;
     }
 
+    console.log(`Creating marker for: ${hotel.name} at lat=${lat}, lng=${lng}`);
+
     const marker = new google.maps.Marker({
       position: { lat: lat, lng: lng },
       map: map,
-      title: hotel.name
+      title: hotel.name,
+      icon: {
+        url: "https://maps.google.com/mapfiles/kml/shapes/lodging.png",
+        scaledSize: new google.maps.Size(32, 32) // アイコンのサイズを大きく設定
+      }
     });
 
     const infoWindow = new google.maps.InfoWindow({
@@ -32,3 +38,10 @@ function initMap() {
     });
   });
 }
+
+// Google Maps APIの読み込み
+const script = document.createElement('script');
+script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
+script.async = true;
+script.defer = true;
+document.body.appendChild(script);

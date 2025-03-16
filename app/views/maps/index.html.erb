@@ -12,6 +12,7 @@
   </style>
 </head>
 <body>
+  <h1>オールインクルーシブホテルを地図から探す</h1>
   <div id="map"></div>
 
   <script>
@@ -21,25 +22,28 @@
 
     // 宿泊施設データをRailsから取得
     const hotels = <%= raw @hotels.to_json %>;
-    console.log('Hotels Data:', hotels);
+    console.log('Hotels Data in Maps/index.html.erb:', hotels); // コンソールにデータを表示
 
     // Google Mapsの初期化関数
     function initMap() {
       const map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 35.6895, lng: 139.6917 }, // 東京の中心座標
-        zoom: 8
+        center: { lat: 36.2048, lng: 138.2529 }, // 日本の中心座標に設定
+        zoom: 5 // ズームレベルを広げて設定
       });
 
+      console.log('Map initialized');
+
       // マーカーを地図に追加
-      hotels.forEach(hotel => {
-        console.log('Hotel Data:', hotel);
+      hotels.forEach((hotel, index) => {
+        console.log(`Hotel Data [${index}]:`, hotel); // 各ホテルのデータをコンソールに表示
 
         const lat = parseFloat(hotel.latitude);
         const lng = parseFloat(hotel.longitude);
 
         console.log(`Coordinates for ${hotel.name}: lat=${lat}, lng=${lng}`);
 
-        if (isNaN(lat) || isNaN(lng)) {
+        // 緯度と経度の範囲チェック
+        if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
           console.error(`Invalid coordinates for hotel: ${hotel.name}`);
           return;
         }
@@ -50,6 +54,8 @@
           title: hotel.name
         });
 
+        console.log(`Creating marker for: ${hotel.name} at lat=${lat}, lng=${lng}`);
+
         const infoWindow = new google.maps.InfoWindow({
           content: hotel.info_content
         });
@@ -58,6 +64,8 @@
           infoWindow.open(map, marker);
         });
       });
+
+      console.log('All markers added to map');
     }
 
     // Google Maps APIの読み込み
