@@ -42,13 +42,13 @@
 
         console.log(`Coordinates for ${hotel.name}: lat=${lat}, lng=${lng}`);
 
-        // 緯度と経度の範囲チェック
         if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
           console.error(`Invalid coordinates for hotel: ${hotel.name}`);
           return;
         }
 
-        const marker = new google.maps.Marker({
+        // AdvancedMarkerElementの使用
+        const marker = new google.maps.marker.AdvancedMarkerElement({
           position: { lat: lat, lng: lng },
           map: map,
           title: hotel.name
