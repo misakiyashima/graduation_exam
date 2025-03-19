@@ -16,7 +16,7 @@
   <div id="map"></div>
 
   <script>
-    const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
+    const GOOGLE_MAPS_API_KEY = "AIzaSyB40dUJlpgK6K_yevnhaRQYhasaR-FYW0E";
     const hotels = <%= raw @hotels.to_json %>;
 
     function initMap() {
@@ -54,7 +54,7 @@
 
     document.addEventListener("DOMContentLoaded", function() {
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
+      script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB40dUJlpgK6K_yevnhaRQYhasaR-FYW0E&callback=initMap";
       script.async = true;
       script.defer = true;
       document.body.appendChild(script);

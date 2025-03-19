@@ -121,6 +121,7 @@ GEM
       logger
     faraday-net_http (3.3.0)
       net-http
+    geokit (1.14.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -420,6 +421,7 @@ DEPENDENCIES
   dotenv-rails
   faraday (~> 2.12.0)
   faraday-net_http (~> 3.3.0)
+  geokit
   hashie (~> 5.0.0)
   hotwire-rails
   httparty

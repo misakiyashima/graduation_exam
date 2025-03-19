@@ -20,7 +20,7 @@ module Myapp
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Add app/controllers to autoload paths
-    config.autoload_paths += ["#{config.root}/app/controllers"]
+    config.autoload_paths += ["#{config.root}/app/controllers", "#{config.root}/app/services"]
 
     # Configuration for the application, engines, and railties goes here.
     #

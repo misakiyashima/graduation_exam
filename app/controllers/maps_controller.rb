@@ -1,11 +1,19 @@
+require_relative '../services/coordinate_converter'
+
 class MapsController < ApplicationController
   def index
-    @google_maps_api_key = ENV['GOOGLE_MAPS_API_KEY']
-    hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])
+    begin
+    require_relative '../services/coordinate_converter'
+    Rails.logger.info "CoordinateConverter loaded successfully"
+  rescue LoadError => e
+    Rails.logger.error "Failed to load CoordinateConverter: #{e.message}"
+  end
+
+    @google_maps_api_key = "AIzaSyB40dUJlpgK6K_yevnhaRQYhasaR-FYW0E"
+    hotel_service = HotelService.new("1092610730557101212")
 
     Rails.logger.info "MapsController is being called"
     api_hotels = hotel_service.search_all_inclusive_hotels('オールインクルーシブ')
-    Rails.logger.info "Number of hotels fetched: #{api_hotels.size}"
 
     if api_hotels.present?
       @hotels = api_hotels.map do |hotel|
