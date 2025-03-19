@@ -1,22 +1,15 @@
-require_relative '../services/coordinate_converter'
-
 class MapsController < ApplicationController
   def index
-    begin
-    require_relative '../services/coordinate_converter'
-    Rails.logger.info "CoordinateConverter loaded successfully"
-  rescue LoadError => e
-    Rails.logger.error "Failed to load CoordinateConverter: #{e.message}"
-  end
+    @google_maps_api_key = ENV['GOOGLE_MAPS_API_KEY']
 
-    @google_maps_api_key = "AIzaSyB40dUJlpgK6K_yevnhaRQYhasaR-FYW0E"
-    hotel_service = HotelService.new("1092610730557101212")
+    keyword = 'オールインクルーシブ'
+    Rails.logger.info "Fetching all hotels with keyword: '#{keyword}'"
 
-    Rails.logger.info "MapsController is being called"
-    api_hotels = hotel_service.search_all_inclusive_hotels('オールインクルーシブ')
+    hotel_service = HotelService.new(ENV['RAKUTEN_API_KEY'])
+    all_hotels = hotel_service.fetch_all_hotels(keyword)
 
-    if api_hotels.present?
-      @hotels = api_hotels.map do |hotel|
+    if all_hotels.present?
+      @hotels = all_hotels.map do |hotel|
         hotel_info = hotel['hotel'][0]['hotelBasicInfo']
         coordinates = CoordinateConverter.to_wgs84(hotel_info['latitude'], hotel_info['longitude'])
 
@@ -28,9 +21,8 @@ class MapsController < ApplicationController
         }
       end
     else
-      Rails.logger.error "No hotels fetched from API in MapsController"
+      Rails.logger.error "No hotels fetched from API"
       @hotels = []
     end
-    Rails.logger.info "Hotels Data size in MapsController: #{@hotels.size}"
   end
 end

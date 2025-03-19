@@ -16,7 +16,8 @@
   <div id="map"></div>
 
   <script>
-    const GOOGLE_MAPS_API_KEY = "AIzaSyB40dUJlpgK6K_yevnhaRQYhasaR-FYW0E";
+    // 環境変数からGoogle Maps APIキーを注入
+    const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
     const hotels = <%= raw @hotels.to_json %>;
 
     function initMap() {
@@ -54,11 +55,15 @@
 
     document.addEventListener("DOMContentLoaded", function() {
       const script = document.createElement('script');
-      script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB40dUJlpgK6K_yevnhaRQYhasaR-FYW0E&callback=initMap";
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
       script.async = true;
       script.defer = true;
       document.body.appendChild(script);
     });
   </script>
 </body>
+<div>
+<%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
+</div>
 </html>
+
