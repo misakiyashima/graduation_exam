@@ -20,12 +20,16 @@
     const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
     const hotels = <%= raw @hotels.to_json %>;
 
+    console.log("Hotels data on page load:", hotels); // デバッグ用: 初期データ確認
+
     function initMap() {
       const mapElement = document.getElementById('map');
       if (!mapElement) {
         console.error("Map element not found");
         return;
       }
+
+      console.log("Initializing map..."); // デバッグ用: 地図初期化確認
 
       const map = new google.maps.Map(mapElement, {
         center: { lat: 36.2048, lng: 138.2529 },
@@ -36,31 +40,56 @@
         const lat = parseFloat(hotel.latitude);
         const lng = parseFloat(hotel.longitude);
 
-        console.log(`Coordinates for ${hotel.name}: lat=${lat}, lng=${lng}`);
+        console.log(`Processing hotel [${index}]:`, hotel); // デバッグ用: 各ホテルデータ確認
 
         if (isNaN(lat) || isNaN(lng)) {
           console.error(`Invalid coordinates for hotel: ${hotel.name}`);
           return;
         }
 
+        console.log(`Creating marker for hotel: ${hotel.name}, HotelNo: ${hotel.hotelNo}, Coordinates: lat=${lat}, lng=${lng}`);
+        
         const marker = new google.maps.Marker({
           position: { lat: lat, lng: lng },
           map: map,
           title: hotel.name
         });
 
-        console.log(`Marker created for: ${hotel.name}`);
+        console.log(`Marker created for hotel: ${hotel.name}, linked to HotelNo: ${hotel.hotelNo}`);
+
+        // クリックイベントを追加して詳細ページに遷移
+        marker.addListener('click', () => {
+          console.log(`Marker clicked for hotel: ${hotel.name}, HotelNo: ${hotel.hotelNo}`); // デバッグ用
+
+          if (!hotel.hotelNo) {
+            console.error(`HotelNo is undefined for hotel: ${hotel.name}`);
+            alert(`Error: Hotel information is missing for ${hotel.name}`);
+            return;
+          }
+
+          console.log(`Redirecting to hotel detail page: /hotels/${hotel.hotelNo}`); // デバッグ用
+          window.location.href = `/hotels/${hotel.hotelNo}`;
+        });
       });
+
+      console.log("Map initialization complete."); // デバッグ用: 地図初期化完了確認
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+      console.log("DOM fully loaded."); // デバッグ用: DOMロード確認
+      
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
       script.async = true;
       script.defer = true;
+
+      script.onload = () => console.log("Google Maps API script loaded successfully."); // デバッグ用: APIロード成功確認
+      script.onerror = () => console.error("Failed to load Google Maps API script."); // デバッグ用: APIロード失敗確認
+
       document.body.appendChild(script);
     });
-  </script>
+</script>
+
 </body>
 <div>
 <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>

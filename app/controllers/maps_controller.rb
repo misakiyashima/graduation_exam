@@ -14,6 +14,7 @@ class MapsController < ApplicationController
         coordinates = CoordinateConverter.to_wgs84(hotel_info['latitude'], hotel_info['longitude'])
 
         {
+          hotelNo: hotel_info['hotelNo'], # ここで hotelNo を含める
           name: hotel_info['hotelName'],
           latitude: coordinates[:latitude],
           longitude: coordinates[:longitude],
