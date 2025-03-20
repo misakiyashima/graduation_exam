@@ -53,7 +53,7 @@ production:
   adapter: mysql2
   encoding: utf8mb4
   pool: 5
-  database: default_schema
+  database: pukiuw1ym3dlr7dd
   username: ml62v5er45se2lhr
   password: dlzud31zu1v5ykiz
   host: nba02whlntki5w2p.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
