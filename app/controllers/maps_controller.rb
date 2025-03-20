@@ -34,9 +34,6 @@ class MapsController < ApplicationController
   # APIからホテル情報を取得
   hotel_info = hotel_service.get_hotel_details(hotel_no, fields: ['hotelName', 'hotelSpecial', 'hotelImageUrl', 'hotelInformationUrl'])
 
-  Rails.logger.debug "Params ID: #{hotel_no}" # パラメータとして渡されたID
-  Rails.logger.debug "Raw Hotel Info: #{hotel_info.inspect}" # APIからの生データ
-
   # ホテル情報が見つからない場合の処理
   if hotel_info.nil?
     Rails.logger.error "Hotel details not found for ID: #{hotel_no}"
