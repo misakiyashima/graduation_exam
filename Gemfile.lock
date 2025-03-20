@@ -457,5 +457,8 @@ DEPENDENCIES
   web-console
   webpacker (~> 5.4)
 
+RUBY VERSION
+   ruby 3.2.3p157
+
 BUNDLED WITH
    2.5.23
