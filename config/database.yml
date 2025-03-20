@@ -51,9 +51,9 @@ test:
 production:
   <<: *default
   adapter: mysql2
-  encoding: utf8
+  encoding: utf8mb4
   pool: 5
-  database: <%= ENV['HEROKU_DB_DATABASE_NAME'] %>
-  username: <%= ENV['JAWSDB_USERNAME'] %>
-  password: <%= ENV['JAWSDB_PASSWORD'] %>
-  host: <%= ENV['JAWSDB_HOST'] %>
+  database: default_schema
+  username: ml62v5er45se2lhr
+  password: dlzud31zu1v5ykiz
+  host: nba02whlntki5w2p.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
