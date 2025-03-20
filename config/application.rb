@@ -7,7 +7,9 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 # Load environment variables from .env file
-Dotenv::Rails.load
+if Rails.env.development? || Rails.env.test?
+  Dotenv::Rails.load
+end
 
 module Myapp
   class Application < Rails::Application
@@ -34,3 +36,4 @@ module Myapp
     config.action_controller.raise_on_missing_callback_actions = false
   end
 end
+
