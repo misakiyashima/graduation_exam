@@ -99,5 +99,7 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-  Dotenv::Railtie.load
+  if Rails.env.development? || Rails.env.test?
+    Dotenv::Railtie.load
+  end
 end
