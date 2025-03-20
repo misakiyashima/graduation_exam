@@ -33,8 +33,11 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   
   # Maps controller route
-  get '/maps', to: 'maps#index'
-  
+  resources :maps, only: [:index] do
+    member do
+      get 'details' # マーカークリック後に遷移するエンドポイント
+    end
+  end
   # Defines the root path route ("/")
   # root "posts#index"
   end

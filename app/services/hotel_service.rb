@@ -27,7 +27,6 @@ class HotelService
     hotels
   end
 
-  # ホテル詳細情報を取得
   def get_hotel_details(hotel_no, fields: [])
     detail_base_uri = 'https://app.rakuten.co.jp/services/api/Travel/HotelDetailSearch/20170426'
     options = {
@@ -40,10 +39,10 @@ class HotelService
     }
 
     response = self.class.get(detail_base_uri, options)
-    return nil unless response.success?
+    return nil unless response.success? # レスポンスが成功でない場合はnilを返す
 
     parsed_response = response.parsed_response
-    parsed_response.dig('hotels', 0, 'hotel', 0, 'hotelBasicInfo')
+    parsed_response.dig('hotels', 0, 'hotel', 0, 'hotelBasicInfo') # ホテル基本情報を返す
   end
 
   def fetch_all_hotels(keyword)

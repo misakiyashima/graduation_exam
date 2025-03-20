@@ -36,8 +36,6 @@ class TagsController < ApplicationController
   end
   end
 
-
-
   def destroy
     hotel_tag = HotelTag.find(params[:id])
     if hotel_tag.destroy

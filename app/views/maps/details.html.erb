@@ -1,0 +1,14 @@
+<li class="hotel-item">
+  <h2><%= @hotel['hotelName'] %></h2>
+  <img src="<%= @hotel['hotelImageUrl'] %>" alt="<%= @hotel['hotelName'] %>">
+  <p><%= @hotel['hotelSpecial'] %></p>
+
+  <%= render 'tags/tags', hotel: @hotel %>
+
+  <%= link_to 'みんなの旅ログをみる', hotel_path(@hotel['hotelNo']) %>
+  <a href="<%= @hotel['hotelInformationUrl'] %>" target="_blank">宿詳細情報</a>
+  <%= render 'bookmark_buttons', hotel: @hotel %>
+</li>
+<div>
+  <%= link_to 'マップ一覧に戻る', maps_path, class: 'btn btn-primary' %>
+</div>
