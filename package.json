@@ -40,6 +40,7 @@
     "stimulus-autocomplete": "^3.1.0"
   },
   "engines": {
-    "node": ">=16 <=20"
+    "node": ">=16 <=22",
+    "yarn": "1.22.22"
   }
 }
