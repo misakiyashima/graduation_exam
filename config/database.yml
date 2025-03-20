@@ -50,8 +50,10 @@ test:
 #
 production:
   <<: *default
-  database: <%= ENV['HEROKU_DB_DATABASE_NAME'] %>
+  adapter: mysql2
   encoding: utf8
-  host: <%= ENV['JAWSDB_HOST'] %>
+  pool: 5
+  database: <%= ENV['HEROKU_DB_DATABASE_NAME'] %>
   username: <%= ENV['JAWSDB_USERNAME'] %>
   password: <%= ENV['JAWSDB_PASSWORD'] %>
+  host: <%= ENV['JAWSDB_HOST'] %>
