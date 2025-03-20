@@ -13,8 +13,10 @@
     "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
     "build:css": "yarn build:css:compile && yarn build:css:prefix",
     "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\"",
-    "prestart": "NODE_OPTIONS=--openssl-legacy-provider"
+    "prestart": "NODE_OPTIONS=--openssl-legacy-provider",
+    "build:secure": "NODE_OPTIONS=--openssl-legacy-provider yarn build"
   },
+
   "dependencies": {
     "@babel/plugin-proposal-logical-assignment-operators": "^7.20.7",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
