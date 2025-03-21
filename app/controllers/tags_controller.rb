@@ -29,6 +29,7 @@ class TagsController < ApplicationController
 
   if @hotel_tag.save
     redirect_to root_path, notice: "タグが追加されました"
+
   else
     @hotel_id = hotel_id
     set_tags
