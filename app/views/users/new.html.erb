@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-10 col-lg-8 mx-auto">
+    <div class="col-12 col-md-10 col-lg-8 mx-auto">
       <h1>ユーザー登録</h1>
       <%= form_with model: @user do |f| %>
         <div class="mb-3">
@@ -19,12 +19,12 @@
           <%= f.label :パスワード確認, class: "form-label" %>
           <%= f.password_field :password_confirmation, class: "form-control" %>
         </div>
-        <%= f.submit "登録", class: "btn btn-primary" %>
+        <%= f.submit "登録", class: "btn btn-primary w-100" %>
       <% end %>
       <div class='text-center'>
         <%= link_to 'ログインページへ', login_path %>
         <br>
-        <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
+        <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary mt-2' %>
       </div>
     </div>
   </div>
