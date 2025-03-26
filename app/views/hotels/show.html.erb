@@ -5,17 +5,16 @@
       <article class="card">
         <div class="card-body">
           <div class="row">
-            <div class="col-md-3">
-              <%= image_tag @hotel["hotelImageUrl"], width: "300", height: "200", class: "card-img-top img-fluid" %>
+
+          <div class="col-md-3">
+            <%= image_tag hotel_info["hotelImageUrl"], width: "300", height: "200", class: "card-img-top img-fluid" %>
             </div>
-            <div class="col-md-9">
-              <h3 style="display: inline;"><%= @hotel["hotelName"] %></h3>
-              <ul class="list-inline">
-              </ul>
-            </div>
-          </div>
-          <p><%= simple_format(@hotel["hotelSpecial"]) %></p>
-          <p><%= link_to '詳細情報', @hotel["hotelInformationUrl"], target: '_blank' %></p>
+              <div class="col-md-9">
+                <h3 style="display: inline;"><%= hotel_info["hotelName"] %></h3>
+              </div>
+              <p><%= simple_format(hotel_info["hotelSpecial"]) %></p>
+              <p><%= link_to '詳細情報', hotel_info["hotelInformationUrl"], target: '_blank' %></p>
+
           <table class="table">
             <tbody id="table-comment">
               <%= render partial: 'comments/comment', locals: { comments: @comments } %>

@@ -12,10 +12,11 @@ class CommentsController < ApplicationController
       return
     end
 
-    @hotel = Hotel.find(params[:hotel_id])
-    @comment = @hotel.comments.build(comment_params)
+    # APIから取得したホテル情報を直接利用
+    @comment = Comment.new(comment_params)
     @comment.user = current_user
-
+    @comment.hotel_id = params[:hotel_id] # 楽天APIのhotel_idを設定
+    
     if @comment.save
       redirect_to hotel_path(@hotel), notice: 'コメントが投稿されました。'
     else
