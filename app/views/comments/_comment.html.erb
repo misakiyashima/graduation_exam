@@ -3,6 +3,9 @@
     <div>
       <p><strong><%= comment.user.name %></strong></p> <!-- 投稿者の名前を表示 -->
       <p><%= comment.body %></p>
+      <small class="text-muted">
+        投稿日時: <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %>
+      </small>
     </div>
     <% if comment.user == current_user %>
       <div>

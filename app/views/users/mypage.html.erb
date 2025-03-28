@@ -10,19 +10,21 @@
   </div>
 
   <div class="row">
+    <!-- お気に入り一覧へのリンク -->
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">お気に入り一覧</h5>
-          <p><%= link_to 'お気に入りを見る', bookmarks_path, class: 'btn btn-primary btn-sm' %></p>
+          <p><%= link_to 'お気に入りを見る', bookmarks_hotels_path, class: 'btn btn-primary btn-sm' %></p>
         </div>
       </div>
     </div>
+    <!-- 自分のコメント投稿一覧へのリンク -->
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">コメント投稿一覧</h5>
-          <p><%= link_to 'コメントを見る', comments_path(user_id: @user.id), class: 'btn btn-primary btn-sm' %></p>
+          <h5 class="card-title">わたしの旅ログ一覧</h5>
+          <p><%= link_to '旅ログを見る', mypage_comments_path, class: 'btn btn-primary btn-sm' %></p>
         </div>
       </div>
     </div>

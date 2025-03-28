@@ -2,6 +2,10 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:edit, :update, :destroy]
   before_action :set_hotel, only: [:create]
 
+  def index
+    @comments = current_user.comments.includes(:hotel)
+  end
+
   def create
     client = HotelService.new(ENV['RAKUTEN_API_KEY'])
     hotel_info = client.get_hotel_details(params[:hotel_id], fields: ['hotelName', 'hotelImageUrl', 'hotelInformationUrl', 'hotelSpecial'])

@@ -1,0 +1,46 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'mycomments', media: 'all', "data-turbo-track": "reload" %>
+<% end %>
+
+<div class="container py-5">
+  <h1 class="mb-4">my旅ログ一覧</h1>
+  
+<% if @comments.any? %>
+  <% @comments.each do |comment| %>
+    <div class="card mb-3">
+      <div class="card-header">
+        <% if comment.hotel.present? %>
+          <h2 class="card-title"><%= comment.hotel.name %></h2>
+        <% else %>
+          <h2 class="card-title">不明な施設</h2>
+        <% end %>
+      </div>
+      <div class="card mb-3 comment-item">
+        <div class="card-body">
+          <% if comment.hotel.present? %>
+            <img src="<%= comment.hotel.hotel_image_url %>" 
+                 alt="<%= comment.hotel.name %>" 
+                 class="img-fluid mycomment-img mb-3">
+            <p><%= comment.hotel.hotel_special %></p>
+            <p>
+              <%= link_to '施設詳細を見る', hotel_path(comment.hotel.id), class: 'btn btn-primary' %>
+            </p>
+          <% end %>
+          <hr>
+          <p><strong>コメント：</strong> <%= comment.body %></p>
+          <small class="text-muted">
+            投稿日時: <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %>
+          </small>
+          <div class="mt-3">
+            <%= link_to '編集', edit_comment_path(comment), class: 'btn btn-secondary' %>
+          </div>
+        </div> <!-- card-body -->
+      </div> <!-- card mb-3 comment-item -->
+    </div> <!-- card mb-3 -->
+  <% end %>
+<% else %>
+  <p>コメントが投稿されていません。</p>
+<% end %>
+  
+  <%= link_to 'マイページに戻る', mypage_path, class: 'btn btn-secondary mt-3' %>
+</div>

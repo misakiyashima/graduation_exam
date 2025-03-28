@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :require_login, only: [:mypage]
+
   def new
     @user = User.new
   end
@@ -12,6 +14,12 @@ class UsersController < ApplicationController
       flash.now[:alert] = "登録に失敗しました。もう一度確認をお願いします"
       render :new
     end
+  end
+
+  def mypage
+    @user = current_user
+    @bookmarks = @user.bookmarks.includes(:hotel)
+    @comments = @user.comments.includes(:hotel)
   end
 
   private
