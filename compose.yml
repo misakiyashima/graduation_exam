@@ -29,6 +29,7 @@ services:
       TZ: Asia/Tokyo
       RAKUTEN_API_KEY: ${RAKUTEN_API_KEY}
       GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
+      RAILS_ENV: test
     ports:
       - "3000:3000"
     depends_on:
