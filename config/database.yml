@@ -30,7 +30,7 @@ test:
   pool: 5
   username: root
   password: password
-  host: 172.20.0.2
+  host: db
   database: myapp_test
   port: 3306
 
