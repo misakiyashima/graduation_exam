@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:edit, :update, :destroy]
-  before_action :set_hotel, only: [:create]
 
   def index
     @comments = current_user.comments.includes(:hotel)
@@ -9,18 +8,22 @@ class CommentsController < ApplicationController
   def create
     client = HotelService.new(ENV['RAKUTEN_API_KEY'])
     hotel_info = client.get_hotel_details(params[:hotel_id], fields: ['hotelName', 'hotelImageUrl', 'hotelInformationUrl', 'hotelSpecial'])
-
-    if hotel_info.nil?
+    
+    unless hotel_info
       flash[:alert] = "ホテルが見つかりませんでした。"
       redirect_to hotels_path
       return
     end
 
-    # APIから取得したホテル情報を直接利用
+    # DBにホテルが存在しなければ、必要最小限の情報のみをキャッシュする
+    @hotel = Hotel.find_or_create_by(id: params[:hotel_id]) do |hotel|
+      hotel.name = hotel_info['hotelName']
+    end
+
     @comment = Comment.new(comment_params)
-    @comment.user = current_user
-    @comment.hotel_id = params[:hotel_id] # 楽天APIのhotel_idを設定
-    
+    @comment.user  = current_user
+    @comment.hotel = @hotel  # 外部キー制約を満たすために、キャッシュしたホテルを関連付けます
+
     if @comment.save
       redirect_to hotel_path(@hotel), notice: 'コメントが投稿されました。'
     else
@@ -48,10 +51,6 @@ class CommentsController < ApplicationController
   end
 
   private
-
-  def set_hotel
-    @hotel = Hotel.find(params[:hotel_id])
-  end
 
   def set_comment
     @comment = Comment.find(params[:id])

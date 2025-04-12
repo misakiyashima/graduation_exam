@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_11_061122) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_12_072935) do
   create_table "bookmarks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "hotel_id"
@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_11_061122) do
     t.text "hotel_special"
     t.decimal "latitude", precision: 10
     t.decimal "longitude", precision: 10
+    t.string "external_id"
   end
 
   create_table "tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
