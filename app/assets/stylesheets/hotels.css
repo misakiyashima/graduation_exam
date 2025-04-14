@@ -32,8 +32,9 @@
 }
 
 .custom-class {
-  display: flex;
-  justify-content: flex-start; /* 左側に配置 */
-  align-items: center;
-  width: 100%; /* 必要に応じてフォームの幅を設定 */
+    display: inline-block; /* フレックスを解除 */
+    width: auto; /* ボタンの幅を自動調整 */
+    max-width: 200px; /* 必要に応じて最大幅を指定 */
+    text-align: center; /* 中央揃え */
+    padding: 10px; /* 適切な余白を追加 */
 }

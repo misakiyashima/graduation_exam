@@ -46,9 +46,10 @@ h2 {
 }
 
 form {
-    display: flex; /* フォーム内の要素を横並びにする */
-    justify-content: flex-start; /* 左寄せに変更 */
-    text-align: left; /* テキストを左寄せに変更（必要に応じて） */
+    display: inline-block;
+    width: auto; /* 必要に応じて幅を自動調整 */
+    margin: 0;
+    padding: 0;
 }
 
 ul {
