@@ -36,18 +36,23 @@ ul {
   margin-top: 10px;
 }
 
-.custom-class {
-  display: inline-block; /* フレックスを解除 */
-  width: auto; /* 幅を適切に調整 */
-  max-width: 200px; /* 必要に応じて最大幅を指定 */
-  padding: 10px; /* ボタン内の余白を調整 */
-  text-align: center; /* ボタンテキストを中央揃え */
-  border: 1px solid #ccc; /* （仮）ボタンの外枠を設定して範囲を確認 */
-}
-
-form {
+/* フォームのスタイル */
+form.bookmark-form {
   display: inline-block; /* フォーム幅を適切に調整 */
   width: auto;
-  margin: 0;
+  margin: 0 auto; /* フォームを中央揃えにする */
   padding: 0;
+  text-align: center;
+  max-width: 200px; /* 必要に応じて幅の制限を追加 */
+}
+
+/* ボタンのスタイル */
+button.bookmark-button {
+  display: inline-block;
+  width: auto; /* ボタンの幅を自動調整 */
+  padding: 10px 20px; /* ボタン内の余白を調整 */
+  text-align: center;
+  background-color: #f8f8f8; /* 背景色を指定 */
+  border: 1px solid #ccc; /* ボーダーを設定 */
+  cursor: pointer; /* ポインタを変更 */
 }
