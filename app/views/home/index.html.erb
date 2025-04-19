@@ -16,6 +16,7 @@
   <h1 id="title" class="center-text">スペシャルステイで至福の時間を</h1>
   <h2 class="center-text">オールインクルーシブホテル</h2>
   <br>
+  <div class="center-text">
   <%= form_with url: search_hotels_path, method: :get, local: true do |f| %>
     <%= f.hidden_field :name, data: { autocomplete_target: 'hidden' } %>
     <div>
@@ -26,6 +27,7 @@
       <%= f.submit "検索" %>
     </div>
   <% end %>
+</div>
 
   <% if @hotels.present? %>
     <ul>
