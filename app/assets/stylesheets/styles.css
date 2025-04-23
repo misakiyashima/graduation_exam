@@ -92,6 +92,19 @@ footer a {
 }
 
 .center-form {
-  display: inline-block; /* インラインブロックにする */
-  width: auto;           /* 必要に応じて幅を指定 */
+  display: flex;
+  flex-direction: column; /* 縦並びを維持 */
+  align-items: center; /* 内部の要素を中央揃え */
+  width: 400px; /* 必要なら幅を設定 */
+  margin: 0 auto; /* フォーム全体を中央揃え */
+}
+
+.center-form div {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+input[type="text"] {
+  text-align: center;
 }
