@@ -45,12 +45,6 @@ h2 {
     justify-content: center;
 }
 
-form {
-    display: inline-block;
-    width: auto; /* 必要に応じて幅を自動調整 */
-    margin: 0;
-    padding: 0;
-}
 
 ul {
     list-style-type: none; /* リストのスタイルをリセット */
@@ -91,20 +85,22 @@ footer a {
    margin: 10px; /* 画像の間にスペースを作る */
 }
 
-.center-form {
-  display: flex;
-  flex-direction: column; /* 縦並びを維持 */
-  align-items: center; /* 内部の要素を中央揃え */
-  width: 400px; /* 必要なら幅を設定 */
-  margin: 0 auto; /* フォーム全体を中央揃え */
+/* もしグローバルな form のスタイルが不要ならコメントアウトまたは削除
+form {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    padding: 0;
 }
+*/
 
-.center-form div {
+form.center-form {
   display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-input[type="text"] {
-  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;           /* 固定幅を指定 */
+  margin: 0;              /* margin auto ではなく */
+  align-self: center;     /* 親の stretch を打ち消し、横方向中央に配置 */
+  padding: 10px;
+  box-sizing: border-box;
 }
