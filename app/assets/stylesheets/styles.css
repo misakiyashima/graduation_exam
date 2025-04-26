@@ -15,8 +15,9 @@ nav li {
 
 body {
     display: flex;
-    flex-direction: column; /* 縦方向に並べる */
-    min-height: 100vh; /* ビューポートの高さを最小値に設定 */
+    flex-direction: column;
+    align-items: center; 
+    min-height: 100vh;
     margin: 0;
     background-color: #CCFFCC;
 }
@@ -85,20 +86,48 @@ footer a {
    margin: 10px; /* 画像の間にスペースを作る */
 }
 
-form {
-    display: inline-block;
-    width: auto;
-    margin: 0;
-    padding: 0;
+/* リセット */
+form.center-form label,
+form.center-form input,
+form.center-form button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* フォーム自体はラッパー（400px固定）内で中央寄せ */
 form.center-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px;           /* 固定幅を指定 */
-  margin: 0;              /* margin auto ではなく */
-  align-self: center;     /* 親の stretch を打ち消し、横方向中央に配置 */
+  width: 400px;
+  margin: 0 auto;
   padding: 10px;
   box-sizing: border-box;
+}
+
+/* 各行の調整 */
+form.center-form > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* 1行目のラベルとテキストフィールド調整 */
+form.center-form label {
+  margin-right: 5px;
+}
+
+form.center-form input[type="text"] {
+  width: 70%; /* 調整用 */
+  text-align: center;
+}
+
+/* 検索ボタンの調整 */
+form.center-form input[type="submit"] {
+  margin: 0;
+  padding: 5px 10px;
+  /* 必要なら、固定幅なども検討 */
 }
