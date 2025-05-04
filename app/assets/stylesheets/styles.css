@@ -86,7 +86,7 @@ footer a {
    margin: 10px; /* 画像の間にスペースを作る */
 }
 
-/* フォーム自体は400px固定で中央 */
+/* フォーム自体 */
 form.center-form {
   display: flex;
   flex-direction: column;
@@ -96,52 +96,34 @@ form.center-form {
   box-sizing: border-box;
 }
 
-/* 各行はフォームの全幅（400px）を使う */
+/* 各行を中央寄せ */
 form.center-form > div {
   display: flex;
   width: 100%;
   align-items: center;
+  justify-content: center;
   margin-bottom: 10px;
 }
 
-/* 1行目：ラベルとテキスト入力 */
-/* ラベルは自動幅、テキスト入力は余った幅を埋める */
-form.center-form > div:first-child {
-  justify-content: flex-start; /* 左寄せにすると、ラベルと入力をぎっしり並べやすい */
+/* 入力行（ラベルとテキストフィールド） */
+form.center-form .input-row {
+  justify-content: center; /* 中央に揃える */
 }
 
-form.center-form label {
-  margin-right: 5px;
+/* 固定幅とラベルの右寄せ */
+form.center-form .input-row label {
+  width: 80px;
+  text-align: right;
+  margin-right: 10px;
   flex: 0 0 auto;
 }
 
-form.center-form input[type="text"] {
-  flex: 1 1 auto;
+form.center-form .input-row input[type="text"] {
+  flex: 1;
   text-align: center;
 }
 
-/* 2行目：検索ボタンの行は中央揃え */
-form.center-form > div:nth-child(2) {
-  justify-content: center;
-}
-
-form.center-form input[type="submit"] {
-  /* 必要なら余計な余白・パディングをリセット */
-  margin: 0;
-  padding: 5px 10px;
-}
-
-form.center-form .input-row {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
+/* ボタン行は中央 */
 form.center-form .button-row {
-  display: flex;
   justify-content: center;
-  align-items: center;
-  width: 100%;
 }
