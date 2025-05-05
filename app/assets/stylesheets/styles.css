@@ -127,3 +127,9 @@ form.center-form .input-row input[type="text"] {
 form.center-form .button-row {
   justify-content: center;
 }
+
+div.form-wrapper {
+  width: 400px;
+  margin: 0 auto;
+  border: 1px dashed red;  /* 境界が見えるように */
+}
