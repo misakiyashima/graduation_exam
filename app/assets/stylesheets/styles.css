@@ -105,9 +105,12 @@ form.center-form > div {
   margin-bottom: 10px;
 }
 
-/* 入力行（ラベルとテキストフィールド） */
 form.center-form .input-row {
-  justify-content: center; /* 中央に揃える */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;   /* ここで幅を制限。例として300px */
+  margin: 0 auto 10px; /* 自動マージンで中央寄せ */
 }
 
 /* 固定幅とラベルの右寄せ */
