@@ -18,12 +18,12 @@
   <br>
 
   <div style="width: 400px; margin: 0 auto;">
-    <div class="input-row">
-      <%= f.label :keyword, "キーワード" %>
-    <%= f.text_field :keyword %>
-    </div>
   <%= form_with url: search_hotels_path, method: :get, local: true, html: { class: "center-form" } do |f| %>
     <%= f.hidden_field :name, data: { autocomplete_target: 'hidden' } %>
+    <div class="input-row">
+      <%= f.label :keyword, "キーワード" %>
+      <%= f.text_field :keyword %>
+    </div>
     <div class="button-row">
       <%= f.submit "検索" %>
     </div>
