@@ -22,6 +22,8 @@ class HotelsController < ApplicationController
       flash[:alert] = "「オールインクルーシブ」で該当する宿泊施設はありません。"
       @hotels = []
     end
+    # Kaminari のページネーションを追加（1ページあたり10件表示）
+    @hotels = Kaminari.paginate_array(@hotels).page(params[:page]).per(10)
   end
 
   def show
@@ -52,6 +54,8 @@ class HotelsController < ApplicationController
       flash[:alert] = "検索結果がありません。"
       @hotels = []
     end
+    # Kaminari のページネーションを追加（1ページあたり10件表示）
+    @hotels = Kaminari.paginate_array(@hotels).page(params[:page]).per(10)
     render :index
   end
 
