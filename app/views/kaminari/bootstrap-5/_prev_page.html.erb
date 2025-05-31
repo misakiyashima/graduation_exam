@@ -1,0 +1,9 @@
+<% if current_page.to_i == 1 %>
+  <li class="page-item disabled">
+    <span class="page-link">&lsaquo; Prev</span>
+  </li>
+<% else %>
+  <li class="page-item">
+    <%= link_to raw("&lsaquo; Prev"), url_for(page: current_page.to_i - 1), class: "page-link" %>
+  </li>
+<% end %>

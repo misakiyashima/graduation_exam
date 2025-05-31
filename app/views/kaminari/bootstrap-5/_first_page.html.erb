@@ -1,0 +1,9 @@
+<% if current_page.to_i == 1 %>
+  <li class="page-item disabled">
+    <span class="page-link">&laquo; First</span>
+  </li>
+<% else %>
+  <li class="page-item">
+    <%= link_to raw("&laquo; First"), url_for(page: 1), class: "page-link" %>
+  </li>
+<% end %>

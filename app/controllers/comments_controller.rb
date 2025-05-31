@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
 
     @comment = Comment.new(comment_params)
     @comment.user  = current_user
-    @comment.hotel = @hotel  # 外部キー制約を満たすために、キャッシュしたホテルを関連付けます
+    @comment.hotel = @hotel  # 外部キー制約を満たすために、キャッシュしたホテルを関連付け
 
     if @comment.save
       redirect_to hotel_path(@hotel), notice: 'コメントが投稿されました。'
@@ -45,7 +45,7 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    @hotel = @comment.hotel
+    @hotel = @comment.hotel #ホテル情報を取得してからリダイレクト先を指定
     @comment.destroy
     redirect_to hotel_path(@hotel), notice: 'コメントが削除されました。'
   end
