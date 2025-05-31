@@ -1,3 +1,7 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag "tags", media: "all", "data-turbo-track": "reload" %>
+<% end %>
+
 <div>
   <% if hotel['tags'].present? %>
     <ul class="tag-list">
@@ -6,7 +10,7 @@
       <% end %>
     </ul>
   <% else %>
-    <pタグがありません。</p>
+    <p>タグがありません。</p>
   <% end %>
   <% if current_user %>
     <%= link_to 'タグを追加', new_tag_path(hotel_id: hotel['hotelNo']) %>

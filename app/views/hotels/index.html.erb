@@ -1,3 +1,6 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag "hotels", media: "all", "data-turbo-track": "reload" %>
+<% end %>
 <%= form_with url: search_hotels_path, method: :get, local: true do %>
   <div>
     <%= label_tag :keyword, "キーワード" %>

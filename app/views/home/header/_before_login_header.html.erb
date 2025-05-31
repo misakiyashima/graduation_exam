@@ -1,11 +1,18 @@
-    <header>
-      <nav>
-        <ul>
-          <li><%= link_to 'オールインクルーシブとは？', explanation_path %></li>
-          <li><a>みんなの旅ログ</a></li>
-          <li><a>施設登録</a></li>
-          <li><%= link_to 'ログイン', login_path %></li>
-          <li><%= link_to '新規登録', new_user_path %><li>
-        </ul>
-      </nav>
-    </header>
+<header>
+  <nav>
+    <ul class="header-nav d-flex align-items-center m-0 p-0 list-unstyled">
+      <li>
+        <%= link_to 'オールインクルーシブとは？', explanation_path, class: "nav-link" %>
+      </li>
+      <li class="ms-3">
+        <a class="nav-link">みんなの旅ログ</a>
+      </li>
+      <li class="ms-auto me-2">
+        <%= link_to 'ログイン', login_path, class: "btn btn-primary" %>
+      </li>
+      <li>
+        <%= link_to '新規登録', new_user_path, class: "btn btn-primary" %>
+      </li>
+    </ul>
+  </nav>
+</header>
