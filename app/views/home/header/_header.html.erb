@@ -3,7 +3,7 @@
         <ul>
           <li><%= link_to 'オールインクルーシブとは？', explanation_path %></li>
           <li><%= link_to 'マイページ', mypage_path, class: "btn btn-primary" %></li>
-          <li><%= link_to 'お気に入り', bookmarks_hotels_path, class: 'nav-link' %></li>
+          <li><%= link_to 'お気に入り', bookmarks_hotels_path, class: "btn btn-primary" %></li>
           <li class="logout-button"><%= button_to 'ログアウト', logout_path, method: :delete, data: { turbo: true } %></li>
         </ul>
       </nav>
