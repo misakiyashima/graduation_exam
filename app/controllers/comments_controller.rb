@@ -1,8 +1,13 @@
 class CommentsController < ApplicationController
+  skip_before_action :require_login, only: [:all]
   before_action :set_comment, only: [:edit, :update, :destroy]
 
   def index
     @comments = current_user.comments.includes(:hotel)
+  end
+
+  def all
+    @comments = Comment.includes(:user, :hotel).order(created_at: :desc)
   end
 
   def create

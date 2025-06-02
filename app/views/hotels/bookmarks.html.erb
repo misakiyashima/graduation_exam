@@ -1,20 +1,18 @@
-<% content_for(:title, 'お気に入り') %>
-<div class="container pt-3">
-  <div class="row">
-    <div class="col-lg-10 offset-lg-1">
-
-  <!-- 検索一覧 -->
-  <div class="row">
-    <div class="col-12">
-      <div class="row">
-        <% if @bookmark_hotels.present? %>
-          <% @bookmark_hotels.each do |bookmark| %>
-            <%= render partial: 'bookmark_hotel', locals: { bookmark: bookmark } %>
-          <% end %>
-        <% else %>
-          <p>お気に入り登録はありません</p>
+<div class="row">
+  <div class="col-12">
+    <div class="row">
+      <% if @bookmark_hotels.present? %>
+        <% @bookmark_hotels.each do |bookmark| %>
+          <%= render partial: 'bookmark_hotel', locals: { bookmark: bookmark } %>
         <% end %>
-        <br>
+      <% else %>
+        <p>お気に入り登録はありません</p>
+      <% end %>
+
+      <div class="col-auto mt-3">
+        <%= link_to 'マイページへ', mypage_path, class: 'btn btn-secondary' %>
+      </div>
+      <div class="col-auto mt-3">
         <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
       </div>
     </div>

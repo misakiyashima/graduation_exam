@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   get 'mypage', to: 'users#mypage'
   get 'mypage/comments', to: 'comments#index', as: 'mypage_comments'
+  get '/public_comments', to: 'comments#all', as: 'public_comments'
 
   get 'search', to: 'home#search'
   get 'explanation', to: 'home#explanation', as: 'explanation'
