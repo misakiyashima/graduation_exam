@@ -2,6 +2,9 @@
       <nav>
         <ul>
           <li><%= link_to 'オールインクルーシブとは？', explanation_path %></li>
+          <li class="ms-3">
+            <%= link_to 'みんなの旅ログ', public_comments_path, class: "btn btn-primary" %>
+          </li>
           <li><%= link_to 'マイページ', mypage_path, class: "btn btn-primary" %></li>
           <li><%= link_to 'お気に入り', bookmarks_hotels_path, class: "btn btn-primary" %></li>
           <li class="logout-button"><%= button_to 'ログアウト', logout_path, method: :delete, data: { turbo: true } %></li>

@@ -13,8 +13,8 @@
     <p>タグがありません。</p>
   <% end %>
   <% if current_user %>
-    <%= link_to 'タグを追加', new_tag_path(hotel_id: hotel['hotelNo']), class: "btn btn-primary d-inline-block" %>
+    <%= link_to 'タグを追加', new_tag_path(hotel_id: hotel['hotelNo'], return_to: request.fullpath), class: "btn btn-primary d-inline-block" %>
   <% else %>
-    <%= link_to 'タグを追加', login_path %>
+    <%= link_to 'タグを追加', login_path, class: 'btn btn-primary d-inline-block' %>
   <% end %>
 </div>
