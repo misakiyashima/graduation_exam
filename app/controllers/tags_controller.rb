@@ -9,6 +9,7 @@ class TagsController < ApplicationController
 
   def create
   hotel_id = hotel_tag_params[:hotel_id]
+  return_to = params[:return_to]
   tag_name = params[:hotel_tag][:tag_id]
 
   # 楽天APIからホテル情報を取得
@@ -28,7 +29,7 @@ class TagsController < ApplicationController
   @hotel_tag = HotelTag.new(hotel_id: hotel_id, tag_id: tag.id)
 
   if @hotel_tag.save
-    redirect_to root_path, notice: "タグが追加されました"
+    redirect_to return_to.present? ? return_to : root_path, notice: "タグが追加されました"
 
   else
     @hotel_id = hotel_id
