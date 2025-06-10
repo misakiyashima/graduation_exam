@@ -33,12 +33,13 @@ class HotelsController < ApplicationController
   end
 
   def search
+    session[:last_search_url] = request.fullpath
     client = HotelService.new(ENV['RAKUTEN_API_KEY'])
     response = client.search_all_inclusive_hotels(params[:keyword])
     @hotels = response.map do |hotel|
       hotel_info = hotel['hotel'][0]['hotelBasicInfo']
       tags = HotelTag.where(hotel_id: hotel_info['hotelNo']).includes(:tag).map { |ht| ht.tag.name }
-      hotel_info.merge('tags' => tags)
+      hotel_info.merge('id' => hotel_info['hotelNo'], 'tags' => tags)
     end if response.present?
 
     if @hotels.blank?

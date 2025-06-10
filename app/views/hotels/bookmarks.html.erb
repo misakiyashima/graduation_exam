@@ -16,7 +16,7 @@
         <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
       </div>
       <div class="mb-3">
- 　　　　 <%= link_to '検索結果に戻る', (params[:return_to] || hotels_path), class: "btn btn-secondary" %>
+ 　　　　 <%= link_to '検索結果に戻る', (session[:last_search_url] || hotels_path), class: "btn btn-secondary" %>
 　　　</div>
     </div>
   </div>
