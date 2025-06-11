@@ -5,7 +5,7 @@ class HotelsController < ApplicationController
 
     @hotels = response.map do |hotel|
       hotel_info = hotel['hotel'][0]['hotelBasicInfo']
-      hotel_info.merge('tags' => [], 'hotelNo' => hotel_info['hotelNo'])
+      hotel_info.merge('id' => hotel_info['hotelNo'], 'tags' => [])
     end
 
     # 検索結果がない場合の対応
