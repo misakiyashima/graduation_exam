@@ -22,7 +22,7 @@
           
           <%= render 'tags/tags', hotel: hotel %>
           <%= link_to 'みんなの旅ログをみる', hotel_path(id: hotel["id"], return_to: request.fullpath), class: "btn btn-primary d-inline-block" %>
-          <a href="<%= hotel['hotelInformationUrl'] %>" target="_blank">宿詳細情報</a>
+          <a href="<%= hotel['hotelInformationUrl'] %>" target="_blank">詳細情報(楽天トラベル)</a>
           <%= render 'bookmark_buttons', hotel: hotel %>
         </li>
       <% end %>    
