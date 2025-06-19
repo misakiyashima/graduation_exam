@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_12_072935) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_19_104148) do
   create_table "bookmarks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "hotel_id"
@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_12_072935) do
     t.bigint "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["hotel_id"], name: "index_hotel_tags_on_hotel_id"
     t.index ["tag_id"], name: "index_hotel_tags_on_tag_id"
   end
