@@ -28,6 +28,8 @@ class TagsController < ApplicationController
   tag = Tag.find_or_create_by(name: tag_name)
   @hotel_tag = HotelTag.new(hotel_id: hotel_id, tag_id: tag.id)
 
+  @hotel_tag.user_id = current_user.id if current_user
+
   if @hotel_tag.save
     redirect_to return_to.present? ? return_to : root_path, notice: "タグが追加されました"
 
