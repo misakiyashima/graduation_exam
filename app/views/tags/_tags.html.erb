@@ -3,7 +3,7 @@
 <% end %>
 
 <div>
-  <%# ホテルタグをまとめてロード（N+1 が気になるなら includes(:tag) などで対策してね） %>
+  <%# ホテルタグをまとめてロード（N+1 includes(:tag) などで対策） %>
   <% hotel_tags = HotelTag.includes(:tag).where(hotel_id: hotel['hotelNo']) %>
 
   <% if hotel_tags.any? %>
