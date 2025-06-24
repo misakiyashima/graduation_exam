@@ -15,8 +15,10 @@
             <%# 自分のタグだけを削除リンクに %>
             <%= link_to tag_name,
                         tag_path(ht),
-                        method: :delete,
-                        data: { confirm: "本当にこのタグを削除しますか？" } %>
+                        data: { 
+                        "turbo_method" => "delete", 
+                        "turbo_confirm" => "本当にこのタグを削除しますか？" 
+                        } %>
           <% else %>
             <%# 他人のタグ・未ログイン時はただのテキスト %>
             <span><%= tag_name %></span>
@@ -32,11 +34,11 @@
   <% if current_user %>
     <%= link_to 'タグを追加',
                 new_tag_path(hotel_id: hotel['hotelNo'], return_to: request.fullpath),
-                class: "btn btn-primary" %>
+                class: "btn btn-primary d-inline-block" %>
   <% else %>
     <%= link_to 'タグを追加',
                 login_path,
-                class: 'btn btn-primary' %>
+                class: 'btn btn-primary d-inline-block' %>
   <% end %>
 </div>
 

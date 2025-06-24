@@ -16,7 +16,7 @@ class TagsController < ApplicationController
   hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"])
   hotel_info = hotel_service.get_hotel_details(hotel_id)
 
-  if hotel_info.present?f
+  if hotel_info.present?
     # ホテル情報を保存
     hotel_service.save_hotel_to_db(hotel_info)
   else

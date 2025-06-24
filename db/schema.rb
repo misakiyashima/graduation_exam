@@ -39,9 +39,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_104148) do
     t.bigint "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.index ["hotel_id"], name: "index_hotel_tags_on_hotel_id"
     t.index ["tag_id"], name: "index_hotel_tags_on_tag_id"
+    t.index ["user_id"], name: "index_hotel_tags_on_user_id"
   end
 
   create_table "hotels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -93,4 +94,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_19_104148) do
   add_foreign_key "comments", "users"
   add_foreign_key "hotel_tags", "hotels"
   add_foreign_key "hotel_tags", "tags"
+  add_foreign_key "hotel_tags", "users"
 end
