@@ -1,0 +1,15 @@
+/* custom.css */
+
+/* — Bootstrap は application.css 側で読み込む前提 — */
+
+/* legend 要素のフォント太字 */
+legend {
+  font-weight: bold;
+}
+
+/* display 用のクラス例 */
+.display-1 {
+  font-family: 'Arial, sans-serif';
+  font-style: italic;
+  font-weight: 700;
+}
