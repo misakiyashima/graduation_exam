@@ -116,8 +116,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "webpacker", "~> 5.4"
-
 gem "kaminari-bootstrap", "~> 3.0"
-
-gem "importmap-rails", "~> 2.1"
