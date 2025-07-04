@@ -9,10 +9,6 @@ nav li {
   margin-right: 20px; /* 項目間のスペースを調整 */
 }
 
-.logout-button {
-     margin-left: auto; /* ログアウトボタンを右寄せにする */ 
-     }
-
 body {
     display: flex;
     flex-direction: column;
@@ -86,3 +82,23 @@ footer a {
    margin: 10px; /* 画像の間にスペースを作る */
 }
 
+header {
+  width: 100%; /* ヘッダー全体を幅100%に */
+}
+
+/* nav ul を横幅いっぱいにしてフレックス */
+nav ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+.logout-button {
+  margin-left: auto;
+}
