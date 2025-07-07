@@ -42,7 +42,7 @@ gem 'httparty'
 
 gem 'dotenv-rails', groups: [:development, :test]
 
-gem 'hotwire-rails'
+# gem 'hotwire-rails'
 
 gem 'pry-byebug', group: :development
 
