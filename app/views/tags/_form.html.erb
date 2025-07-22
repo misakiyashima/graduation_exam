@@ -1,4 +1,3 @@
-<turbo-frame id="application">
 <%= form_with model: @hotel_tag, url: tags_path, method: :post do |form| %>
 <%= hidden_field_tag :return_to, params[:return_to] || request.fullpath %>
   <div>
@@ -9,7 +8,7 @@
     <%= form.text_field :tag_id %>
   </div>
   <div>
-    <%= form.submit "タグを追加" %>
+    <%= form.submit "タグを追加", calss: "btn btn-primary" %>
   </div>
 <% end %>
 
@@ -26,4 +25,3 @@
 <div class="mb-3">
   <%= link_to '戻る', (params[:return_to] || hotels_path), class: "btn btn-secondary" %>
 </div>
-</turbo-frame>

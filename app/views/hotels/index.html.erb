@@ -19,8 +19,9 @@
           <h2><%= hotel['hotelName'] %></h2>
           <img src="<%= hotel['hotelImageUrl'] %>" alt="<%= hotel['hotelName'] %>">
           <p><%= hotel['hotelSpecial'] %></p>
-          
+        <%= turbo_frame_tag dom_id(hotel, :tags) do %>
           <%= render 'tags/tags', hotel: hotel %>
+        <% end %>
           <%= link_to 'みんなの旅ログをみる', hotel_path(id: hotel["id"], return_to: request.fullpath), class: "btn btn-primary d-inline-block" %>
           <a href="<%= hotel['hotelInformationUrl'] %>" target="_blank">詳細情報(楽天トラベル)</a>
           <%= render 'bookmark_buttons', hotel: hotel %>
