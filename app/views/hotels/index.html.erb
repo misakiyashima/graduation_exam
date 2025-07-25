@@ -11,7 +11,6 @@
   </div>
 <% end %>
 
-<turbo-frame id="hotels">
   <% if @hotels.present? %>
     <ul class="hotel-list">
       <% @hotels.each do |hotel| %>
@@ -20,7 +19,7 @@
           <img src="<%= hotel['hotelImageUrl'] %>" alt="<%= hotel['hotelName'] %>">
           <p><%= hotel['hotelSpecial'] %></p>
 
-        <% turbo_frame_tag "hotel_#{hotel['hotelNo']}_tags" do %>
+        <%= turbo_frame_tag "hotel_#{hotel['hotelNo']}_tags" do %>
           <%= render 'tags/tags', hotel: hotel %>
         <% end %>
 
@@ -33,7 +32,6 @@
   <% else %>
     <p>No, such word</p>
   <% end %>
-</turbo-frame>
 
    <div class="mt-3">
     <%= paginate @hotels, theme: 'bootstrap-5' %>
