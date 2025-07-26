@@ -38,6 +38,7 @@
   <% else %>
     <%= link_to 'タグを追加',
                 login_path,
+                data: {turbo: false},
                 class: 'btn btn-primary d-inline-block' %>
   <% end %>
 </div>

@@ -41,11 +41,16 @@ class TagsController < ApplicationController
   end
 
   def destroy
-    hotel_tag = HotelTag.find(params[:id])
-    if hotel_tag.destroy
-      redirect_to root_path, notice: "タグが削除されました", status: :see_other
-    else
-      redirect_to root_path, alert: "タグの削除に失敗しました", status: :see_other
+    @hotel_tag = HotelTag.find(params[:id])
+    @hotel_tag.destroy
+
+    respond_to do |format|
+      format.html do
+        redirect_to request.referer || root_path, notice: "タグが削除されました"
+      end
+
+      format.turbo_stream do
+      end
     end
   end
 
