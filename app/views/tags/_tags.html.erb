@@ -14,8 +14,9 @@
           <% if current_user && ht.user_id == current_user.id %>
             <%# 自分のタグだけを削除リンクに %>
             <%= link_to tag_name,
-                tag_path(ht.id),
+                tag_path(ht),
                 data: { turbo_method: :delete,
+                        disable_with: "削除中…",
                         turbo_confirm: "タグを削除しますか？" },
                         class: "tag-link" %>
           <% else %>
