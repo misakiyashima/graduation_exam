@@ -9,17 +9,22 @@
   <% if hotel_tags.any? %>
     <ul class="tag-list">
       <% hotel_tags.each do |ht| %>
+        <li id="<%= dom_id(ht) %>" class="tag">
         <% tag_name = ht.tag.name %>
         <li class="tag">
           <% if current_user && ht.user_id == current_user.id %>
+
             <%# 自分のタグだけを削除リンクに %>
             <%= link_to tag_name,
                 tag_path(ht),
-                data: { turbo_method: :delete,
+                data: { turbo_frame: frame_id,
+                        turbo_method: :delete,
                         disable_with: "削除中…",
-                        turbo_confirm: "タグを削除しますか？" },
+                        turbo_confirm: "タグを削除しますか？" 
+                        },
                         class: "tag-link" %>
           <% else %>
+
             <%# 他人のタグ・未ログイン時はただのテキスト %>
             <span><%= tag_name %></span>
           <% end %>
@@ -34,7 +39,7 @@
   <% if current_user %>
     <%= link_to 'タグを追加',
                 new_tag_path(hotel_id: hotel['hotelNo'], return_to: request.fullpath),
-                data: { turbo_frame: "hotel_#{hotel['hotelNo']}_tags" }, 
+                data: { turbo_frame: frame_id }, 
                 class: "btn btn-primary d-inline-block" %>
   <% else %>
     <%= link_to 'タグを追加',
