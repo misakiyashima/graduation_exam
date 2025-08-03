@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   end
 
   def search
-    client = HotelService.new (ENV['1092610730557101212'])
+    client = HotelService.new (ENV["1092610730557101212"])
     @hotels = client.search_all_inclusive_hotels (params[:keyword])
     if @hotels.empty?
       flash[:alert] = "検索結果がありません。"
@@ -13,7 +13,7 @@ class HomeController < ApplicationController
   end
 
   def explanation
-    # フッターの内容を表示するためのアクション
-     render partial: 'home/footer/explanation'
+     # フッターの内容を表示するためのアクション
+     render partial: "home/footer/explanation"
   end
 end

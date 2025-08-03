@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
-  before_action :require_login, only: [:new, :create, :destroy]
-  before_action :set_tags, only: [:new, :create]
+  before_action :require_login, only: [ :new, :create, :destroy ]
+  before_action :set_tags, only: [ :new, :create ]
 
   def new
     @hotel_tag = HotelTag.new

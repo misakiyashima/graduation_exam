@@ -4,8 +4,8 @@ class Hotel < ApplicationRecord
   has_many :users, through: :bookmarks
   has_many :hotel_tags
   has_many :tags, through: :hotel_tags
-  
-  validates :all_inclusive, inclusion: { in: [true, false] }
+
+  validates :all_inclusive, inclusion: { in: [ true, false ] }
 
   # Scope: オールインクルーシブプランの宿泊施設を簡単に取得
   scope :all_inclusive, -> { where(all_inclusive: true) }

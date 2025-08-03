@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_login, only: [:mypage]
+  before_action :require_login, only: [ :mypage ]
 
   def new
     @user = User.new

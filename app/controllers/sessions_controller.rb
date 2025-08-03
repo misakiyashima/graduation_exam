@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   protect_from_forgery with: :exception
-  
+
   def new
   end
 
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
     redirect_to root_path, notice: "ログアウトしました"
   end
   def failure
-    flash[:notice] = 'キャンセルしました'
+    flash[:notice] = "キャンセルしました"
     redirect_to new_user_path
   end
 end

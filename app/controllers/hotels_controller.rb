@@ -1,11 +1,11 @@
 class HotelsController < ApplicationController
   def index
-    client = HotelService.new(ENV['RAKUTEN_API_KEY'])
-    response = client.search_all_inclusive_hotels('オールインクルーシブ')
+    client = HotelService.new(ENV["RAKUTEN_API_KEY"])
+    response = client.search_all_inclusive_hotels("オールインクルーシブ")
 
     @hotels = response.map do |hotel|
-      hotel_info = hotel['hotel'][0]['hotelBasicInfo']
-      hotel_info.merge('id' => hotel_info['hotelNo'], 'tags' => [])
+      hotel_info = hotel["hotel"][0]["hotelBasicInfo"]
+      hotel_info.merge("id" => hotel_info["hotelNo"], "tags" => [])
     end
 
     # 検索結果がない場合の対応
@@ -18,15 +18,15 @@ class HotelsController < ApplicationController
   end
 
   def show
-    client = HotelService.new(ENV['RAKUTEN_API_KEY'])
-    hotel_info = client.get_hotel_details(params[:id], fields: ['hotelName', 'hotelImageUrl', 'hotelInformationUrl', 'hotelSpecial'])
+    client = HotelService.new(ENV["RAKUTEN_API_KEY"])
+    hotel_info = client.get_hotel_details(params[:id], fields: [ "hotelName", "hotelImageUrl", "hotelInformationUrl", "hotelSpecial" ])
     if hotel_info.nil?
       flash[:alert] = "ホテルの詳細情報が見つかりません。"
       redirect_to hotels_path
     else
       @hotel_id = params[:id]
       @hotel = hotel_info
-      @hotel_information_url = @hotel['hotelInformationUrl']
+      @hotel_information_url = @hotel["hotelInformationUrl"]
       @comments = Comment.where(hotel_id: params[:id])
       @comment = Comment.new
     end
@@ -34,12 +34,12 @@ class HotelsController < ApplicationController
 
   def search
     session[:last_search_url] = request.fullpath
-    client = HotelService.new(ENV['RAKUTEN_API_KEY'])
+    client = HotelService.new(ENV["RAKUTEN_API_KEY"])
     response = client.search_all_inclusive_hotels(params[:keyword])
     @hotels = response.map do |hotel|
-      hotel_info = hotel['hotel'][0]['hotelBasicInfo']
-      tags = HotelTag.where(hotel_id: hotel_info['hotelNo']).includes(:tag).map { |ht| ht.tag.name }
-      hotel_info.merge('id' => hotel_info['hotelNo'], 'tags' => tags)
+      hotel_info = hotel["hotel"][0]["hotelBasicInfo"]
+      tags = HotelTag.where(hotel_id: hotel_info["hotelNo"]).includes(:tag).map { |ht| ht.tag.name }
+      hotel_info.merge("id" => hotel_info["hotelNo"], "tags" => tags)
     end if response.present?
 
     if @hotels.blank?

@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby '3.2.3'
+ruby "3.2.3"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1"
@@ -38,56 +38,56 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem 'httparty'
+gem "httparty"
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 
 # gem 'hotwire-rails'
 
-gem 'pry-byebug', group: :development
+gem "pry-byebug", group: :development
 
-gem 'better_errors', '~> 2.10.1'
+gem "better_errors", "~> 2.10.1"
 
-gem 'sorcery', '~> 0.17.0'
+gem "sorcery", "~> 0.17.0"
 
-gem 'rouge', '~> 4.4.0'
+gem "rouge", "~> 4.4.0"
 
-gem 'bcrypt', '~> 3.1.20'
+gem "bcrypt", "~> 3.1.20"
 
-gem 'oauth', '~> 1.1.0'
+gem "oauth", "~> 1.1.0"
 
-gem 'oauth2', '~> 2.0.9'
+gem "oauth2", "~> 2.0.9"
 
-gem 'oauth-tty', '~> 1.0.5'
+gem "oauth-tty", "~> 1.0.5"
 
-gem 'snaky_hash', '~> 2.0.1'
+gem "snaky_hash", "~> 2.0.1"
 
-gem 'version_gem', '~> 1.1.4'
+gem "version_gem", "~> 1.1.4"
 
-gem 'faraday', '~> 2.12.0'
+gem "faraday", "~> 2.12.0"
 
-gem 'jwt', '~> 2.9.1'
+gem "jwt", "~> 2.9.1"
 
-gem 'hashie', '~> 5.0.0'
+gem "hashie", "~> 5.0.0"
 
-gem 'faraday-net_http', '~> 3.3.0'
+gem "faraday-net_http", "~> 3.3.0"
 
-gem 'uri', '~> 0.13.1'
+gem "uri", "~> 0.13.1"
 
-gem 'pry'
-gem 'pry-rails'
-gem 'pry-nav'
+gem "pry"
+gem "pry-rails"
+gem "pry-nav"
 
-#gem 'devise'
-gem 'omniauth'
-gem 'omniauth-twitter'
-gem 'omniauth-rails_csrf_protection'
+# gem 'devise'
+gem "omniauth"
+gem "omniauth-twitter"
+gem "omniauth-rails_csrf_protection"
 
-gem 'geokit'
+gem "geokit"
 
-gem 'kaminari'
+gem "kaminari"
 
-gem 'bootstrap5-kaminari-views'
+gem "bootstrap5-kaminari-views"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -100,9 +100,9 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # RSpec for testing
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
-  gem 'faker'
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do

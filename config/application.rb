@@ -7,9 +7,9 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 # Load environment variables from .env file
-#if Rails.env.development? || Rails.env.test?
-  #Dotenv::Rails.load
-#end
+# if Rails.env.development? || Rails.env.test?
+# Dotenv::Rails.load
+# end
 
 module Myapp
   class Application < Rails::Application
@@ -19,10 +19,10 @@ module Myapp
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    #config.autoload_lib(ignore: %w[assets tasks])
+    # config.autoload_lib(ignore: %w[assets tasks])
 
     # Add app/controllers to autoload paths
-    #config.autoload_paths += ["#{config.root}/app/controllers", "#{config.root}/app/services", "#{config.root}/app/models"]
+    # config.autoload_paths += ["#{config.root}/app/controllers", "#{config.root}/app/services", "#{config.root}/app/models"]
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -34,6 +34,6 @@ module Myapp
 
     # Add the following line to disable the raise on missing callback actions
     config.action_controller.raise_on_missing_callback_actions = false
-    #config.eager_load_paths += ["#{config.root}/app/models"]
+    # config.eager_load_paths += ["#{config.root}/app/models"]
   end
 end
