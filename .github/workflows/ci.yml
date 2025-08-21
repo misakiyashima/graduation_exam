@@ -1,19 +1,16 @@
-# .github/workflows/ci.yml
+name: CI Pipeline
 
-name: CI Pipeline                     
-on:                                   
+on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
-jobs:                                
-  test:                               
+jobs:
+  test:
     runs-on: ubuntu-latest
 
-    services:                         
+    services:
       mysql:
         image: mysql:8.0
         env:
@@ -21,7 +18,7 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping"
+          --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
@@ -42,24 +39,37 @@ jobs:
           node-version: '16.x'
           cache: 'yarn'
 
-      - name: Install packages and build assets
+      - name: Install dependencies & Chrome
         run: |
-          sudo apt-get update && sudo apt-get install --no-install-recommends -y \
-            google-chrome-stable curl default-mysql-client libjemalloc2 libvips
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y \
+            curl default-mysql-client libjemalloc2 libvips-dev wget gnupg
+          # Google Chrome のリポジトリ追加
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y google-chrome-stable
           yarn install --frozen-lockfile
           yarn build:css
           yarn build:js
           bundle install --jobs 4 --retry 3
-          bundle exec rails db:create db:schema:load RAILS_ENV=test
+
+      - name: Prepare database
+        env:
+          RAILS_ENV: test
+        run: |
+          bundle exec rails db:create db:schema:load
 
       - name: Run Rails tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: mysql2://127.0.0.1:3306
-        run: bundle exec rails test
+        run: |
+          bundle exec rails test
 
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v3
+      - name: Upload screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
         with:
+          name: screenshots
           path: tmp/screenshots
           if-no-files-found: ignore
