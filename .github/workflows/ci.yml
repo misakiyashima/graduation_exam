@@ -1,3 +1,5 @@
+# .github/workflows/ci.yml
+
 name: CI Pipeline
 
 on:
@@ -39,16 +41,32 @@ jobs:
           node-version: '16.x'
           cache: 'yarn'
 
-      - name: Install dependencies & Chrome
+      - name: Install apt dependencies
         run: |
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y \
-            curl default-mysql-client libjemalloc2 libvips-dev wget gnupg
-          # Google Chrome のリポジトリ追加
-          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+            curl default-mysql-client libjemalloc2 libvips-dev wget gnupg unzip
+
+      - name: Install Google Chrome & Chromedriver
+        run: |
+          # Add Google’s signing key and repo
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub \
+            | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
+            > /etc/apt/sources.list.d/google-chrome.list'
           sudo apt-get update
-          sudo apt-get install --no-install-recommends -y google-chrome-stable
+          sudo apt-get install --no-install-recommends -y \
+            google-chrome-stable
+          # Install matching chromedriver
+          CHROME_VERSION=$(google-chrome --product-version | cut -d'.' -f1)
+          wget -qO /tmp/chromedriver.zip \
+            "https://chromedriver.storage.googleapis.com/${CHROME_VERSION}.0.XXXXXX/chromedriver_linux64.zip"
+          unzip /tmp/chromedriver.zip -d $HOME/bin
+          chmod +x $HOME/bin/chromedriver
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Install Ruby gems & build JS/CSS
+        run: |
           yarn install --frozen-lockfile
           yarn build:css
           yarn build:js
@@ -63,6 +81,7 @@ jobs:
       - name: Run Rails tests
         env:
           RAILS_ENV: test
+          DATABASE_URL: mysql2://127.0.0.1:3306/${{ matrix.app_name }}_test
         run: |
           bundle exec rails test
 
