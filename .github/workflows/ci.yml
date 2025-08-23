@@ -45,27 +45,28 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y \
-            curl default-mysql-client libjemalloc2 libvips-dev wget gnupg unzip
+            default-mysql-client libjemalloc2 libvips-dev wget gnupg unzip
 
       - name: Install Google Chrome & Chromedriver
         run: |
-          # Add Google’s signing key and repo
-          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub \
+          # Chrome repo
+          wget -qO - https://dl.google.com/linux/linux_signing_key.pub \
             | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
-            > /etc/apt/sources.list.d/google-chrome.list'
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
+            | sudo tee /etc/apt/sources.list.d/google-chrome.list
           sudo apt-get update
-          sudo apt-get install --no-install-recommends -y \
-            google-chrome-stable
-          # Install matching chromedriver
-          CHROME_VERSION=$(google-chrome --product-version | cut -d'.' -f1)
-          wget -qO /tmp/chromedriver.zip \
-            "https://chromedriver.storage.googleapis.com/${CHROME_VERSION}.0.XXXXXX/chromedriver_linux64.zip"
-          unzip /tmp/chromedriver.zip -d $HOME/bin
-          chmod +x $HOME/bin/chromedriver
-          echo "$HOME/bin" >> $GITHUB_PATH
+          sudo apt-get install --no-install-recommends -y google-chrome-stable
 
-      - name: Install Ruby gems & build JS/CSS
+          # 対応する Chromedriver を LATEST_RELEASE から動的取得
+          CHROME_VER=$(google-chrome --version | grep -oP '\d+\.\d+' | head -1)
+          CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VER})
+          wget -qO /tmp/chromedriver.zip \
+            "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip /tmp/chromedriver.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
+      - name: Install Ruby gems & build assets
         run: |
           yarn install --frozen-lockfile
           yarn build:css
@@ -78,12 +79,11 @@ jobs:
         run: |
           bundle exec rails db:create db:schema:load
 
-      - name: Run Rails tests
+      - name: Run system tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: mysql2://127.0.0.1:3306/${{ matrix.app_name }}_test
         run: |
-          bundle exec rails test
+          bundle exec rails test:system
 
       - name: Upload screenshots on failure
         if: failure()
