@@ -22,7 +22,6 @@ jobs:
         run: bundle install --jobs 4 --retry 3
 
       - name: Run Brakeman
-        # --exit-on-warn フラグを外すことで、警告があっても exit code 0 のままに
         run: bundle exec brakeman
 
   lint:
