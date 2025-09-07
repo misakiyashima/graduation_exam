@@ -52,8 +52,6 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_DATABASE: test
-        ports:
-          - 3306:3306
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -62,7 +60,7 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DATABASE_HOST: 127.0.0.1
+      DATABASE_HOST: mysql
       DATABASE_USERNAME: root
       DATABASE_PASSWORD:
 
@@ -83,8 +81,15 @@ jobs:
           yarn install --frozen-lockfile
           bundle install --jobs 4 --retry 3
 
-      - name: Prepare database
-        run: bundle exec rails db:create db:schema:load
+      - name: Wait for MySQL
+        run: |
+          until mysqladmin ping -h mysql --silent; do
+            echo "Waiting for MySQL…"
+            sleep 1
+          done
+
+      - name: Load schema
+        run: bundle exec rails db:schema:load
 
       - name: Run unit tests
         run: bundle exec rails test
