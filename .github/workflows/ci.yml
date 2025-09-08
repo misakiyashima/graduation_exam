@@ -1,4 +1,4 @@
-name: Fast Checks
+name: CI
 
 on:
   push:
@@ -7,51 +7,34 @@ on:
     branches: [main]
 
 jobs:
-  scan_ruby:
-    name: scan_ruby
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby
+      - name: Set up Ruby (with bundler cache)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
+          bundler-cache: true
 
-      - name: Install gems
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Run Brakeman
-        run: bundle exec brakeman
-
-  lint:
-    name: lint
-    needs: scan_ruby
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-
-      - name: Install gems
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Run RuboCop
-        run: bundle exec rubocop --fail-level warning
+      - name: Brakeman & RuboCop
+        run: |
+          bundle exec brakeman
+          bundle exec rubocop --fail-level warning
 
   test:
-    name: test
-    needs: lint
+    needs: check
     runs-on: ubuntu-latest
+
     services:
       mysql:
         image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -60,36 +43,23 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DATABASE_HOST: mysql
+      DATABASE_HOST: 127.0.0.1
       DATABASE_USERNAME: root
       DATABASE_PASSWORD:
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby
+      - name: Set up Ruby (with bundler cache)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install apt dependencies
-        run: sudo apt-get update && sudo apt-get install -y default-mysql-client
-
-      - name: Install gems & build assets
+      - name: Prepare & Test
         run: |
-          yarn install --frozen-lockfile
-          bundle install --jobs 4 --retry 3
-
-      - name: Wait for MySQL
-        run: |
-          until mysqladmin ping -h mysql --silent; do
-            echo "Waiting for MySQL…"
-            sleep 1
-          done
-
-      - name: Load schema
-        run: bundle exec rails db:schema:load
-
-      - name: Run unit tests
-        run: bundle exec rails test
+          sudo apt-get update && sudo apt-get install -y default-mysql-client
+          # MySQLコンテナの起動待ち（必要ならsleepを調整）
+          sleep 10
+          bundle exec rails db:schema:load
+          bundle exec rails test
