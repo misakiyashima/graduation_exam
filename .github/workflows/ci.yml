@@ -7,59 +7,68 @@ on:
     branches: [main]
 
 jobs:
-  check:
+  scan_ruby:
+    name: scan_ruby
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Ruby (with bundler cache)
+      - name: Set up Ruby & install gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+      - name: Run Brakeman
+        run: bundle exec brakeman
 
-      - name: Brakeman & RuboCop
-        run: |
-          bundle exec brakeman
-          bundle exec rubocop --fail-level warning
+  lint:
+    name: lint
+    needs: scan_ruby
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: Run RuboCop
+        run: bundle exec rubocop --fail-level warning
 
   test:
-    needs: check
+    name: test
+    needs: lint
     runs-on: ubuntu-latest
-
     services:
-      mysql:
+      db:
         image: mysql:8.0
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
-          MYSQL_DATABASE: test
-        ports:
-          - 3306:3306
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: myapp_test
+        # Rails からはホスト名 “db” でアクセス
         options: >-
-          --health-cmd="mysqladmin ping --silent"
+          --health-cmd="mysqladmin ping -h db -u root -ppassword --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
 
     env:
       RAILS_ENV: test
-      DATABASE_HOST: 127.0.0.1
+      DATABASE_HOST: db
       DATABASE_USERNAME: root
-      DATABASE_PASSWORD:
+      DATABASE_PASSWORD: password
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Ruby (with bundler cache)
+      - name: Set up Ruby & install gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
-      - name: Prepare & Test
+      - name: Prepare & run tests
         run: |
-          sudo apt-get update && sudo apt-get install -y default-mysql-client
-          # MySQLコンテナの起動待ち（必要ならsleepを調整）
+          # MySQL サービスが立ち上がるまで軽く待機
           sleep 10
+          # db:create をスキップし、スキーマだけロード
           bundle exec rails db:schema:load
+          # テスト実行
           bundle exec rails test
