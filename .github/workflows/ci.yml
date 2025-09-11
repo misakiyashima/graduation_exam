@@ -38,13 +38,16 @@ jobs:
     name: test
     needs: lint
     runs-on: ubuntu-latest
+
     services:
       db:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: myapp_test
-        # Rails からはホスト名 “db” でアクセス
+        # コンテナの 3306 をホストにエクスポートする
+        ports:
+          - 3306:3306
         options: >-
           --health-cmd="mysqladmin ping -h db -u root -ppassword --silent"
           --health-interval=10s
@@ -59,16 +62,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Ruby & install gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-      - name: Prepare & run tests
+
+      - name: Waiting for MySQL
         run: |
-          # MySQL サービスが立ち上がるまで軽く待機
-          sleep 10
-          # db:create をスキップし、スキーマだけロード
+          for i in {1..20}; do
+            mysqladmin ping -h db -u root -ppassword --silent && break
+            echo "waiting mysql… ($i/20)"
+            sleep 2
+          done
+
+      - name: Load schema & run tests
+        run: |
           bundle exec rails db:schema:load
-          # テスト実行
           bundle exec rails test
