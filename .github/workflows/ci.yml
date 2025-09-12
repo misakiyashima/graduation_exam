@@ -12,11 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Ruby & install gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
       - name: Run Brakeman
         run: bundle exec brakeman
 
@@ -26,11 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Ruby
+
+      - name: Set up Ruby & install gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
       - name: Run RuboCop
         run: bundle exec rubocop --fail-level warning
 
@@ -45,9 +49,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: myapp_test
-        # コンテナの 3306 をホストにエクスポートする
-        ports:
-          - 3306:3306
         options: >-
           --health-cmd="mysqladmin ping -h db -u root -ppassword --silent"
           --health-interval=10s
@@ -63,21 +64,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby & install gems
+      - name: Set up Ruby & install MySQL client
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+        run: sudo apt-get update && sudo apt-get install -y default-mysql-client
 
-      - name: Waiting for MySQL
+      - name: Prepare DB & run tests
         run: |
-          for i in {1..20}; do
-            mysqladmin ping -h db -u root -ppassword --silent && break
-            echo "waiting mysql… ($i/20)"
+          # MySQLが立ち上がるまで待機
+          until mysqladmin ping -h db -u root -ppassword --silent; do
+            echo "Waiting for MySQL…"
             sleep 2
           done
-
-      - name: Load schema & run tests
-        run: |
-          bundle exec rails db:schema:load
+          # DBがなければ作成、なければスキーマ適用（Rails 6.1+）
+          bundle exec rails db:prepare
           bundle exec rails test
