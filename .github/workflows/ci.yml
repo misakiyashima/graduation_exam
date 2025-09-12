@@ -64,20 +64,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby & install MySQL client
+      - name: Set up Ruby & cache gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Install MySQL client
         run: sudo apt-get update && sudo apt-get install -y default-mysql-client
 
-      - name: Prepare DB & run tests
+      - name: Wait for MySQL
         run: |
-          # MySQLが立ち上がるまで待機
-          until mysqladmin ping -h db -u root -ppassword --silent; do
-            echo "Waiting for MySQL…"
+          for i in {1..15}; do
+            mysqladmin ping -h db -u root -ppassword --silent && break
+            echo "Waiting for MySQL ($i/15)…"
             sleep 2
           done
-          # DBがなければ作成、なければスキーマ適用（Rails 6.1+）
+
+      - name: Prepare DB and run tests
+        run: |
+          # Rails 6.1+ なら db:prepare で create+schema:load を一発実行
           bundle exec rails db:prepare
           bundle exec rails test
