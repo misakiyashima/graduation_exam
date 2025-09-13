@@ -83,6 +83,5 @@ jobs:
 
       - name: Prepare DB and run tests
         run: |
-          # Rails 6.1+ なら db:prepare で create+schema:load を一発実行
-          bundle exec rails db:prepare
+          bundle exec rails db:schema:load
           bundle exec rails test
