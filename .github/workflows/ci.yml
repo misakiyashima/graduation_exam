@@ -8,38 +8,31 @@ on:
 
 jobs:
   scan_ruby:
-    name: scan_ruby
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Ruby & install gems
+      - name: Set up Ruby & cache gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
       - name: Run Brakeman
         run: bundle exec brakeman
 
   lint:
-    name: lint
     needs: scan_ruby
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Ruby & install gems
+      - name: Set up Ruby & cache gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
       - name: Run RuboCop
         run: bundle exec rubocop --fail-level warning
 
   test:
-    name: test
     needs: lint
     runs-on: ubuntu-latest
 
@@ -47,10 +40,10 @@ jobs:
       db:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_DATABASE: myapp_test
         options: >-
-          --health-cmd="mysqladmin ping -h db -u root -ppassword --silent"
+          --health-cmd="mysqladmin ping -h db -u root --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
@@ -59,7 +52,7 @@ jobs:
       RAILS_ENV: test
       DATABASE_HOST: db
       DATABASE_USERNAME: root
-      DATABASE_PASSWORD: password
+      DATABASE_PASSWORD:
 
     steps:
       - uses: actions/checkout@v4
@@ -76,12 +69,12 @@ jobs:
       - name: Wait for MySQL
         run: |
           for i in {1..15}; do
-            mysqladmin ping -h db -u root -ppassword --silent && break
-            echo "Waiting for MySQL ($i/15)…"
+            mysqladmin ping -h db -u root --silent && break
+            echo "Waiting for MySQL… ($i/15)"
             sleep 2
           done
 
-      - name: Prepare DB and run tests
+      - name: Load schema & run tests
         run: |
           bundle exec rails db:schema:load
           bundle exec rails test
