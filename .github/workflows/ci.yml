@@ -45,6 +45,7 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_ROOT_HOST: '%'
+          MYSQL_DATABASE: myapp_test
         options: >-
           --health-cmd="mysqladmin ping -h db -u root --silent"
           --health-interval=10s
@@ -79,10 +80,6 @@ jobs:
             echo "Waiting for MySQL… ($i/30)"
             sleep 2
           done
-
-      - name: Create test database manually
-        run: |
-          mysql -h db -u root -e "CREATE DATABASE IF NOT EXISTS \`myapp_test\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
       - name: Load schema & run tests
         run: |
