@@ -56,7 +56,7 @@ jobs:
       RAILS_ENV: test
       DATABASE_HOST: db
       DATABASE_USERNAME: root
-      DATABASE_PASSWORD:
+      DATABASE_PASSWORD: ""
       DISABLE_DATABASE_ENVIRONMENT_CHECK: "true"
 
     steps:
@@ -81,7 +81,10 @@ jobs:
             sleep 2
           done
 
-      - name: Load schema & run tests
+      - name: Migrate the database
         run: |
-          bundle exec rails db:schema:load
+          bundle exec rails db:migrate
+
+      - name: Run tests
+        run: |
           bundle exec rails test
