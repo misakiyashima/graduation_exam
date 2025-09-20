@@ -40,23 +40,23 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      db:
+      mysql:
         image: mysql:8.0
+        ports:
+          - 3306:3306
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_ROOT_HOST: '%'
           MYSQL_DATABASE: myapp_test
         options: >-
-          --health-cmd="mysqladmin ping -h db -u root --silent"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -u root --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
 
     env:
       RAILS_ENV: test
-      DATABASE_HOST: db
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: ""
+      DATABASE_URL: mysql2://root@127.0.0.1:3306/myapp_test
       DISABLE_DATABASE_ENVIRONMENT_CHECK: "true"
 
     steps:
@@ -76,15 +76,17 @@ jobs:
       - name: Wait for MySQL to be ready
         run: |
           for i in {1..30}; do
-            mysqladmin ping -h db -u root --silent && break
+            mysqladmin ping -h 127.0.0.1 -u root --silent && break
             echo "Waiting for MySQL… ($i/30)"
             sleep 2
           done
 
-      - name: Migrate the database
+      - name: Prepare database
         run: |
-          bundle exec rails db:migrate
+          # ar_internal_metadata に test 環境を書き込む
+          bundle exec rails db:environment:set RAILS_ENV=test
+          # スキーマをロード
+          bundle exec rails db:schema:load
 
       - name: Run tests
-        run: |
-          bundle exec rails test
+        run: bundle exec rails test
