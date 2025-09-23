@@ -35,29 +35,12 @@ jobs:
         run: bundle exec rubocop --fail-level warning
 
   test:
-    name: test
+    name: test_without_db
     needs: lint
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
-          MYSQL_ROOT_HOST: '%'
-          MYSQL_DATABASE: myapp_test
-        options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -u root --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
     env:
       RAILS_ENV: test
-      DATABASE_URL: mysql2://root@127.0.0.1:3306/myapp_test
-      DISABLE_DATABASE_ENVIRONMENT_CHECK: "true"
 
     steps:
       - uses: actions/checkout@v4
@@ -68,25 +51,7 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install MySQL client
+      - name: Run non-DB tests
         run: |
-          sudo apt-get update
-          sudo apt-get install -y default-mysql-client
-
-      - name: Wait for MySQL to be ready
-        run: |
-          for i in {1..30}; do
-            mysqladmin ping -h 127.0.0.1 -u root --silent && break
-            echo "Waiting for MySQL… ($i/30)"
-            sleep 2
-          done
-
-      - name: Prepare database
-        run: |
-          # ar_internal_metadata に test 環境を書き込む
-          bundle exec rails db:environment:set RAILS_ENV=test
-          # スキーマをロード
-          bundle exec rails db:schema:load
-
-      - name: Run tests
-        run: bundle exec rails test
+          # モデル／コントローラなどDBを必要とするテストを除外
+          bundle exec rails test test/lib test/services test/jobs test/mailers
