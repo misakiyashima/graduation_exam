@@ -51,7 +51,13 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Run non-DB tests
+      - name: Run non-DB tests (pure Ruby, no Rails init)
         run: |
-          # モデル／コントローラなどDBを必要とするテストを除外
-          bundle exec rails test test/lib test/services test/jobs test/mailers
+          set -e
+          files=$(find test/lib test/services test/jobs test/mailers -name '*_test.rb' -print)
+          if [ -z "$files" ]; then
+            echo "No non-DB test files found; nothing to run."
+          else
+            # 実行前に Bundler/LoadPath を確実にセット
+            bundle exec ruby -Itest -e "ARGV.each{|f| load f}" -- $files
+          fi
