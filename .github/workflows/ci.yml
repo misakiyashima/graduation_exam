@@ -53,11 +53,23 @@ jobs:
 
       - name: Run non-DB tests (pure Ruby, no Rails init)
         run: |
-          set -e
-          files=$(find test/lib test/services test/jobs test/mailers -name '*_test.rb' -print)
-          if [ -z "$files" ]; then
+          set -euo pipefail
+          # 対象ディレクトリを順にチェックしてテストファイルを集める（存在しないディレクトリを参照しない）
+          dirs="test/lib test/services test/jobs test/mailers"
+          files=""
+          for d in $dirs; do
+            if [ -d "$d" ]; then
+              found=$(find "$d" -type f -name '*_test.rb' -print)
+              if [ -n "$found" ]; then
+                files="$files $found"
+              fi
+            fi
+          done
+          # 実行
+          if [ -z "${files// /}" ]; then
             echo "No non-DB test files found; nothing to run."
+            exit 0
           else
-            # 実行前に Bundler/LoadPath を確実にセット
+            # Bundler 環境で ruby を使って Rails を初期化せずに各ファイルをロードして実行
             bundle exec ruby -Itest -e "ARGV.each{|f| load f}" -- $files
           fi
