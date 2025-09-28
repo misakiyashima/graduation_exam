@@ -35,7 +35,7 @@ jobs:
         run: bundle exec rubocop --fail-level warning
 
   test:
-    name: test_without_db
+    name: test
     needs: lint
     runs-on: ubuntu-latest
 
