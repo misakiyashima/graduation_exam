@@ -54,7 +54,6 @@ jobs:
       - name: Run non-DB tests (pure Ruby, no Rails init)
         run: |
           set -euo pipefail
-          # 対象ディレクトリを順にチェックしてテストファイルを集める（存在しないディレクトリを参照しない）
           dirs="test/lib test/services test/jobs test/mailers"
           files=""
           for d in $dirs; do
