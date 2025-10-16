@@ -16,88 +16,103 @@
   <div id="map"></div>
 
 <script>
-    // Google Maps APIキーを環境変数から取得
-    const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
-    const hotels = <%= raw @hotels.to_json %>;
+  // Google Maps APIキーを環境変数から取得（view 側で埋め込み）
+  const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
+  const hotels = (function () {
+    try {
+      return <%= raw(@hotels.to_json) %> || [];
+    } catch (e) {
+      console.error("Failed to parse hotels JSON:", e);
+      return [];
+    }
+  })();
 
-    // 初期デバッグ: ホテルデータの確認
-    console.log("Hotels data on page load:", hotels);
+  console.log("Hotels data on page load:", hotels);
 
-    function initMap() {
-        const mapElement = document.getElementById('map');
-        if (!mapElement) {
-            console.error("Map element not found");
+  // グローバルに割り当て（Google Maps callback から参照）
+  window.initMap = function initMap() {
+    try {
+      const mapElement = document.getElementById('map');
+      if (!mapElement) {
+        console.error("Map element not found");
+        return;
+      }
+
+      console.log("Initializing map...");
+
+      const map = new google.maps.Map(mapElement, {
+        center: { lat: 36.2048, lng: 138.2529 },
+        zoom: 8
+      });
+
+      // マーカー作成は例外を吸収して続行
+      (Array.isArray(hotels) ? hotels : []).forEach((hotel, index) => {
+        try {
+          const lat = parseFloat(hotel?.latitude);
+          const lng = parseFloat(hotel?.longitude);
+
+          console.log(`Processing hotel [${index}]:`, hotel);
+
+          if (Number.isNaN(lat) || Number.isNaN(lng)) {
+            console.warn(`Invalid coordinates for hotel index ${index}`, hotel);
             return;
-        }
+          }
 
-        console.log("Initializing map...");
+          const marker = new google.maps.Marker({
+            position: { lat: lat, lng: lng },
+            map: map,
+            title: hotel?.name || `hotel-${index}`
+          });
 
-        // 地図の初期化
-        const map = new google.maps.Map(mapElement, {
-            center: { lat: 36.2048, lng: 138.2529 }, // 日本の中心座標
-            zoom: 8
-        });
-
-        // ホテルデータを処理してマーカーを作成
-        hotels.forEach((hotel, index) => {
-            const lat = parseFloat(hotel.latitude);
-            const lng = parseFloat(hotel.longitude);
-
-            // ホテルデータのログ出力
-            console.log(`Processing hotel [${index}]:`, hotel);
-
-            if (isNaN(lat) || isNaN(lng)) {
-                console.error(`Invalid coordinates for hotel: ${hotel.name}`);
+          marker.addListener('click', () => {
+            try {
+              console.log(`Marker clicked for hotel: ${hotel?.name}, HotelNo: ${hotel?.hotelNo}`);
+              if (!hotel?.hotelNo) {
+                console.error(`HotelNo is undefined for hotel: ${hotel?.name || index}`);
+                alert(`Error: Hotel information is missing for ${hotel?.name || 'this hotel'}`);
                 return;
+              }
+              const redirectUrl = `/maps/${hotel.hotelNo}/details`;
+              window.location.href = redirectUrl;
+            } catch (err) {
+              console.error("Error handling marker click:", err);
             }
+          });
 
-            console.log(`Creating marker for hotel: ${hotel.name}, HotelNo: ${hotel.hotelNo}, Coordinates: lat=${lat}, lng=${lng}`);
+        } catch (err) {
+          console.error("Error processing a hotel entry:", err);
+        }
+      });
 
-            // マーカーの生成
-            const marker = new google.maps.Marker({
-                position: { lat: lat, lng: lng },
-                map: map,
-                title: hotel.name
-            });
+      console.log("Map initialization complete.");
+    } catch (err) {
+      console.error("initMap failed:", err);
+    }
+  };
 
-            console.log(`Marker created for hotel: ${hotel.name}, linked to HotelNo: ${hotel.hotelNo}`);
-
-            // マーカークリック時のイベント
-            marker.addListener('click', () => {
-                console.log(`Marker clicked for hotel: ${hotel.name}, HotelNo: ${hotel.hotelNo}`);
-
-                if (!hotel.hotelNo) {
-                    console.error(`HotelNo is undefined for hotel: ${hotel.name}`);
-                    alert(`Error: Hotel information is missing for ${hotel.name}`);
-                    return;
-                }
-
-                // `details` エンドポイントにリダイレクト
-                const redirectUrl = `/maps/${hotel.hotelNo}/details`;
-                console.log(`Redirecting to hotel detail page: ${redirectUrl}`);
-                window.location.href = redirectUrl;
-            });
-        });
-
-        console.log("Map initialization complete.");
+  // DOM ready で Google Maps スクリプトを動的に追加
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM fully loaded.");
+    if (!GOOGLE_MAPS_API_KEY) {
+      console.error("Google Maps API key is missing");
+      return;
     }
 
-    // DOMコンテンツが完全に読み込まれた後にスクリプトをロード
-    document.addEventListener("DOMContentLoaded", function () {
-        console.log("DOM fully loaded.");
+    // 既に読み込まれていれば initMap を直接呼ぶ
+    if (window.google && window.google.maps) {
+      try { window.initMap(); } catch (e) { console.error(e); }
+      return;
+    }
 
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
-        script.async = true;
-        script.defer = true;
-
-        script.onload = () => console.log("Google Maps API script loaded successfully.");
-        script.onerror = () => console.error("Failed to load Google Maps API script.");
-
-        document.body.appendChild(script);
-    });
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => console.log("Google Maps API script loaded successfully.");
+    script.onerror = () => console.error("Failed to load Google Maps API script.");
+    document.body.appendChild(script);
+  });
 </script>
-
 
 </body>
 <div>
