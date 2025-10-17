@@ -45,7 +45,6 @@
         zoom: 8
       });
 
-      // マーカー作成は例外を吸収して続行
       (Array.isArray(hotels) ? hotels : []).forEach((hotel, index) => {
         try {
           const lat = parseFloat(hotel?.latitude);
