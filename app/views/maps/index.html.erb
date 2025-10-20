@@ -89,7 +89,6 @@
     }
   };
 
-  // DOM ready で Google Maps スクリプトを動的に追加
   document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded.");
     if (!GOOGLE_MAPS_API_KEY) {
@@ -97,7 +96,6 @@
       return;
     }
 
-    // 既に読み込まれていれば initMap を直接呼ぶ
     if (window.google && window.google.maps) {
       try { window.initMap(); } catch (e) { console.error(e); }
       return;
