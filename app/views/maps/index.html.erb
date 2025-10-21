@@ -15,7 +15,84 @@
   <h1>オールインクルーシブホテルを地図から探す</h1>
   <div id="map"></div>
 
+<script>
+  // Google Maps APIキーを環境変数から取得（view 側で埋め込み）
+  const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
+  const hotels = (function () {
+    try {
+      return <%= raw(@hotels.to_json) %> || [];
+    } catch (e) {
+      console.error("Failed to parse hotels JSON:", e);
+      return [];
+    }
+  })();
 
+  console.log("Hotels data on page load:", hotels);
+
+  // グローバルに割り当て（Google Maps callback から参照）
+  window.initMap = function initMap() {
+    try {
+      const mapElement = document.getElementById('map');
+      if (!mapElement) {
+        console.error("Map element not found");
+        return;
+      }
+
+      console.log("Initializing map...");
+
+      const map = new google.maps.Map(mapElement, {
+        center: { lat: 36.2048, lng: 138.2529 },
+        zoom: 8
+      });
+
+      (Array.isArray(hotels) ? hotels : []).forEach((hotel, index) => {
+        try {
+          const lat = parseFloat(hotel?.latitude);
+          const lng = parseFloat(hotel?.longitude);
+
+          console.log(`Processing hotel [${index}]:`, hotel);
+
+          if (Number.isNaN(lat) || Number.isNaN(lng)) {
+            console.warn(`Invalid coordinates for hotel index ${index}`, hotel);
+            return;
+          }
+
+          const marker = new google.maps.Marker({
+            position: { lat: lat, lng: lng },
+            map: map,
+            title: hotel?.name || `hotel-${index}`
+          });
+
+          marker.addListener('click', () => {
+            try {
+              console.log(`Marker clicked for hotel: ${hotel?.name}, HotelNo: ${hotel?.hotelNo}`);
+              if (!hotel?.hotelNo) {
+                console.error(`HotelNo is undefined for hotel: ${hotel?.name || index}`);
+                alert(`Error: Hotel information is missing for ${hotel?.name || 'this hotel'}`);
+                return;
+              }
+              const redirectUrl = `/maps/${hotel.hotelNo}/details`;
+              window.location.href = redirectUrl;
+            } catch (err) {
+              console.error("Error handling marker click:", err);
+            }
+          });
+
+        } catch (err) {
+          console.error("Error processing a hotel entry:", err);
+        }
+      });
+
+      console.log("Map initialization complete.");
+    } catch (err) {
+      console.error("initMap failed:", err);
+    }
+  };
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer>
+</script>
 
 </body>
 <div>
