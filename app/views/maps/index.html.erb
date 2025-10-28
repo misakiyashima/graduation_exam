@@ -11,6 +11,7 @@
     }
   </style>
 </head>
+
 <body>
   <h1>オールインクルーシブホテルを地図から探す</h1>
   <div id="map"></div>
@@ -18,7 +19,7 @@
 <script>
   // Google Maps APIキーを環境変数から取得（view 側で埋め込み）
   const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
-  const hotels = (function () {
+  window.hotels = (function () {
     try {
       return <%= raw(@hotels.to_json) %> || [];
     } catch (e) {
@@ -27,7 +28,7 @@
     }
   })();
 
-  console.log("Hotels data on page load:", hotels);
+  console.log("Hotels data on page load:", window.hotels);
 
   // グローバルに割り当て（Google Maps callback から参照）
   window.initMap = function initMap() {
@@ -45,7 +46,7 @@
         zoom: 8
       });
 
-      (Array.isArray(hotels) ? hotels : []).forEach((hotel, index) => {
+      (Array.isArray(window.hotels) ? window.hotels : []).forEach((hotel, index) => {
         try {
           const lat = parseFloat(hotel?.latitude);
           const lng = parseFloat(hotel?.longitude);
@@ -88,13 +89,13 @@
       console.error("initMap failed:", err);
     }
   };
+</script>
 
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer>
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer></script>
 
 </body>
+
 <div>
-<%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
+  <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
 </div>
 </html>
