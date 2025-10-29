@@ -17,7 +17,6 @@
   <div id="map"></div>
 
 <script>
-  // Google Maps APIキーを環境変数から取得（view 側で埋め込み）
   const GOOGLE_MAPS_API_KEY = "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
   window.hotels = (function () {
     try {
@@ -30,7 +29,6 @@
 
   console.log("Hotels data on page load:", window.hotels);
 
-  // グローバルに割り当て（Google Maps callback から参照）
   window.initMap = function initMap() {
     try {
       const mapElement = document.getElementById('map');
