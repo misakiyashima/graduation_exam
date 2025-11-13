@@ -11,10 +11,11 @@
 
   <div id="map"
        data-google-maps-api-key="<%= ENV['GOOGLE_MAPS_API_KEY'] %>"
-       data-hotels='<%= raw(@hotels.to_json) %>'></div>
+       data-hotels='<%= raw(@hotels.to_json(only: [:hotelNo, :name, :latitude, :longitude])) %>'></div>
 
   <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
 
+  <!-- Google Maps API をビューで直接読み込む（callback は maps.js 内の initMap を呼ぶ） -->
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap" async defer></script>
 </body>
 </html>
