@@ -15,8 +15,9 @@
 <body>
   <h1>オールインクルーシブホテルを地図から探す</h1>
 
-<div id="map" data-google-maps-api-key="<%= ENV['GOOGLE_MAPS_API_KEY'] %>" data-hotels='<%= raw(@hotels.to_json) %>'></div>
-
+  <div id="map"
+       data-google-maps-api-key="<%= ENV['GOOGLE_MAPS_API_KEY'] %>"
+       data-hotels='<%= raw(@hotels.to_json) %>'></div>
 
 <script>
   window.GOOGLE_MAPS_API_KEY = window.GOOGLE_MAPS_API_KEY || document.getElementById('map')?.dataset?.googleMapsApiKey || "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";

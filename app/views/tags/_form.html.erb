@@ -23,7 +23,8 @@
   </div>
 <% end %>
 <div class="mb-3">
-  <%= link_to '戻る', 
-      safe_return_to(params[:return_to]),
-      class: "btn btn-secondary" %>
+<%= link_to '戻る',
+    safe_return_to(params[:return_to], tags_path),
+    class: "btn btn-secondary" %>
+
 </div>
