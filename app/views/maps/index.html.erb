@@ -19,89 +19,9 @@
        data-google-maps-api-key="<%= ENV['GOOGLE_MAPS_API_KEY'] %>"
        data-hotels='<%= raw(@hotels.to_json) %>'></div>
 
-<script>
-  window.GOOGLE_MAPS_API_KEY = window.GOOGLE_MAPS_API_KEY || document.getElementById('map')?.dataset?.googleMapsApiKey || "<%= ENV['GOOGLE_MAPS_API_KEY'] %>";
-
-  try {
-    window.hotels = JSON.parse(document.getElementById('map')?.dataset?.hotels || '[]');
-  } catch (e) {
-    console.error("Failed to parse hotels JSON:", e);
-    window.hotels = [];
-  }
-
-  console.log("Hotels data on page load:", window.hotels);
-
-  if (!window.initMap) {
-    window.initMap = function initMap() {
-      try {
-        const mapElement = document.getElementById('map');
-        if (!mapElement) {
-          console.error("Map element not found");
-          return;
-        }
-
-        console.log("Initializing map...");
-
-        const map = new google.maps.Map(mapElement, {
-          center: { lat: 36.2048, lng: 138.2529 },
-          zoom: 8
-        });
-
-        (Array.isArray(window.hotels) ? window.hotels : []).forEach((hotel, index) => {
-          try {
-            const lat = parseFloat(hotel?.latitude);
-            const lng = parseFloat(hotel?.longitude);
-
-            if (Number.isNaN(lat) || Number.isNaN(lng)) {
-              console.warn(`Invalid coordinates for hotel index ${index}`, hotel);
-              return;
-            }
-
-            const marker = new google.maps.Marker({
-              position: { lat: lat, lng: lng },
-              map: map,
-              title: hotel?.name || `hotel-${index}`
-            });
-
-            marker.addListener('click', () => {
-              try {
-                if (!hotel?.hotelNo) {
-                  alert(`Error: Hotel information is missing for ${hotel?.name || 'this hotel'}`);
-                  return;
-                }
-                window.location.href = `/maps/${hotel.hotelNo}/details`;
-              } catch (err) {
-                console.error("Error handling marker click:", err);
-              }
-            });
-
-          } catch (err) {
-            console.error("Error processing a hotel entry:", err);
-          }
-        });
-
-        console.log("Map initialization complete.");
-      } catch (err) {
-        console.error("initMap failed:", err);
-      }
-    };
-  }
-
-  // Google Maps API スクリプトを二重読み込みしないようにする
-  (function loadGoogleMapsIfNeeded() {
-    const existing = Array.from(document.getElementsByTagName('script')).find(s => s.src && s.src.includes('maps.googleapis.com'));
-    if (existing) {
-      console.log('Google Maps script already present, not injecting again.');
-      return;
-    }
-
-    const s = document.createElement('script');
-    s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(window.GOOGLE_MAPS_API_KEY)}&callback=initMap`;
-    s.async = true;
-    s.defer = true;
-    document.head.appendChild(s);
-  })();
-</script>
+  <div id="map"
+     data-google-maps-api-key="<%= ENV['GOOGLE_MAPS_API_KEY'] %>"
+     data-hotels='<%= raw(@hotels.to_json) %>'></div>
 
 <div>
   <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
