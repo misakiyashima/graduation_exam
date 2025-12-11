@@ -1,3 +1,7 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'maps_details', media: 'all', "data-turbo-track": "reload" %>
+<% end %>
+
 <li class="hotel-item">
   <h2><%= @hotel['hotelName'] %></h2>
   <img src="<%= @hotel['hotelImageUrl'] %>" alt="<%= @hotel['hotelName'] %>">

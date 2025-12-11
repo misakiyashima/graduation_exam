@@ -25,9 +25,9 @@
         <% end %>
 
           <%= link_to 'みんなの旅ログをみる', 
-            hotel_path(id: hotel["id"], 
-            return_to: request.fullpath), 
-            class: "btn btn-primary d-inline-block" %>
+            hotel_path(id: hotel["id"], return_to: request.fullpath), 
+            class: "btn btn-primary d-inline-block",
+            data: { turbo: false } %>
           <a href="<%= hotel['hotelInformationUrl'] %>" target="_blank">詳細情報(楽天トラベル)</a>
           <%= render 'bookmark_buttons', hotel: hotel %>
         </li>
