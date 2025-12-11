@@ -1,0 +1,6 @@
+<%= turbo_stream.replace "hotel_#{@hotel_tag.hotel_id}_tags" do %>
+  <%= render 'tags/tags',
+             hotel: { "hotelNo" => @hotel_tag.hotel_id },
+             frame_id: "hotel_#{@hotel_tag.hotel_id}_tags" %>
+<% end %>
+

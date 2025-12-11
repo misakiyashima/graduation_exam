@@ -11,7 +11,6 @@ class TagsController < ApplicationController
     hotel_id = hotel_tag_params[:hotel_id]
     return_to = params[:return_to]
     tag_name = params[:hotel_tag][:tag_id]
-
   # 楽天APIからホテル情報を取得
     hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"])
     hotel_info = hotel_service.get_hotel_details(hotel_id)
@@ -27,16 +26,17 @@ class TagsController < ApplicationController
    # タグ作成処理
       tag = Tag.find_or_create_by(name: tag_name)
       @hotel_tag = HotelTag.new(hotel_id: hotel_id, tag_id: tag.id)
-
       @hotel_tag.user_id = current_user.id if current_user
 
     if @hotel_tag.save
-      redirect_to return_to.present? ? return_to : root_path, notice: "タグが追加されました"
-
+      respond_to do |format|
+        format.turbo_stream   
+        format.html { redirect_to return_to.present? ? return_to : root_path, notice: "タグが追加されました" }
+      end
     else
       @hotel_id = hotel_id
       set_tags
-      render :new, alert: "タグの追加に失敗しました"
+      render :new, status: :unprocessable_entity 
     end
   end
 
