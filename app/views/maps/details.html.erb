@@ -7,12 +7,25 @@
   <img src="<%= @hotel['hotelImageUrl'] %>" alt="<%= @hotel['hotelName'] %>">
   <p><%= @hotel['hotelSpecial'] %></p>
 
-  <%= render 'tags/tags', hotel: @hotel %>
+  <!-- タグ部分だけをフレームにする -->
+  <% frame_id = "hotel_#{@hotel['hotelNo']}_tags" %>
+  <div class="tag-section">
+    <%= turbo_frame_tag frame_id do %>
+      <%= render 'tags/tags', hotel: @hotel, frame_id: frame_id %>
+    <% end %>
+  </div>
 
-  <%= link_to 'みんなの旅ログをみる', hotel_path(@hotel['hotelNo']) %>
-  <a href="<%= @hotel['hotelInformationUrl'] %>" target="_blank">宿詳細情報</a>
-  <%= render 'bookmark_buttons', hotel: @hotel %>
+  <!-- フレームの外にリンクやボタンを置く -->
+  <div class="hotel-links">
+    <%= link_to 'みんなの旅ログをみる',
+      hotel_path(@hotel['hotelNo']),
+      class: "btn btn-primary d-inline-block",
+      data: { turbo: false } %>
+    <a href="<%= @hotel['hotelInformationUrl'] %>" target="_blank">詳細情報(楽天トラベル)</a>
+    <%= render 'bookmark_buttons', hotel: @hotel %>
+  </div>
 </li>
+
 <div>
   <%= link_to 'マップ一覧に戻る', maps_path, class: 'btn btn-primary' %>
   <br>
