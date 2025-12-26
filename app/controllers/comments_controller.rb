@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [ :edit, :update, :destroy ]
+  before_action :set_comment, only: [:edit, :update, :destroy]
 
   def index
     @comments = current_user.comments.includes(:hotel)
@@ -11,7 +11,10 @@ class CommentsController < ApplicationController
 
   def create
     client = HotelService.new(ENV["RAKUTEN_API_KEY"])
-    hotel_info = client.get_hotel_details(params[:hotel_id], fields: [ "hotelName", "hotelImageUrl", "hotelInformationUrl", "hotelSpecial" ])
+    hotel_info = client.get_hotel_details(
+      params[:hotel_id],
+      fields: ["hotelName", "hotelImageUrl", "hotelInformationUrl", "hotelSpecial"]
+    )
 
     unless hotel_info
       flash[:alert] = "ホテルが見つかりませんでした。"
@@ -26,12 +29,18 @@ class CommentsController < ApplicationController
 
     @comment = Comment.new(comment_params)
     @comment.user  = current_user
-    @comment.hotel = @hotel  # 外部キー制約を満たすために、キャッシュしたホテルを関連付け
+    @comment.hotel = @hotel
 
     if @comment.save
-      redirect_to hotel_path(@hotel), notice: "コメントが投稿されました。"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to hotel_path(@hotel), notice: "コメントが投稿されました。" }
+      end
     else
-      redirect_to hotel_path(@hotel), alert: "コメントの投稿に失敗しました。"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to hotel_path(@hotel), alert: "コメントの投稿に失敗しました。" }
+      end
     end
   end
 
@@ -40,6 +49,7 @@ class CommentsController < ApplicationController
 
   def update
     @hotel = @comment.hotel
+
     if @comment.update(comment_params)
       redirect_to hotel_path(@hotel), notice: "コメントが更新されました。"
     else
@@ -49,7 +59,8 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    @hotel = @comment.hotel # ホテル情報を取得してからリダイレクト先を指定
+    @hotel = @comment.hotel
+
     @comment.destroy
     redirect_to hotel_path(@hotel), notice: "コメントが削除されました。"
   end
