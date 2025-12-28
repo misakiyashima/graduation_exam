@@ -24,6 +24,9 @@
       <div class='text-center'>
         <%= link_to 'ログインページへ', login_path %>
         <br>
+        <div class="mb-3">
+          <%= link_to '戻る', 'javascript:history.back()', class: 'btn btn-secondary' %>
+        </div>
         <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary mt-2' %>
       </div>
     </div>
