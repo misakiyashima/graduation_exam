@@ -20,26 +20,3 @@
 <div>
   <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
 </div>
-<h1>みんなの旅ログ一覧</h1>
-
-<turbo-frame id="comments">
-  <% @comments.each do |comment| %>
-    <div class="comment mb-3 p-3 border">
-      <div>
-        <p><strong><%= comment.user.name %></strong></p>
-        <p><%= comment.body %></p>
-        <small class="text-muted">
-          投稿日時: <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %>
-        </small>
-      </div>
-    </div>
-  <% end %>
-</turbo-frame>
-
-<div class="mb-3">
-  <%= link_to '戻る', 'javascript:history.back()', class: 'btn btn-secondary' %>
-</div>
-<div>
-  <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
-</div>
-
