@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="turbo-visit-control" content="reload">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>地図から探す</title>
   <style>
@@ -18,11 +19,6 @@
   <div id="map"
        data-google-maps-api-key="<%= ENV['GOOGLE_MAPS_API_KEY'] %>"
        data-hotels='<%= raw(@hotels.to_json) %>'></div>
-
-  <div id="map"
-     data-google-maps-api-key="<%= ENV['GOOGLE_MAPS_API_KEY'] %>"
-     data-hotels='<%= raw(@hotels.to_json) %>'></div>
-
 <div>
   <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
 </div>
