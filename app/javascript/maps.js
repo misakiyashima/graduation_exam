@@ -1,7 +1,11 @@
+let map;        // 地図インスタンス
+let markers = []; // マーカー一覧
+
 document.addEventListener("DOMContentLoaded", () => {
   const mapElement = document.getElementById("map");
   if (!mapElement) return;
 
+  const apiKey = mapElement.dataset.googleMapsApiKey;
   const hotels = JSON.parse(mapElement.dataset.hotels || "[]");
 
   // マーカー削除
@@ -33,14 +37,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 初期化
-  if (!map) {
-    map = new google.maps.Map(mapElement, {
-      center: { lat: 36.2048, lng: 138.2529 },
-      zoom: 8,
-    });
+  // マーカーだけ更新（必要なら外部から呼べる）
+  window.updateMarkers = function (newHotels) {
+    clearMarkers();
+    addMarkers(newHotels);
+  };
+
+  // 地図初期化
+  window.initMap = function () {
+    if (!map) {
+      map = new google.maps.Map(mapElement, {
+        center: { lat: 36.2048, lng: 138.2529 },
+        zoom: 8,
+      });
+    }
+    addMarkers(hotels);
+  };
+
+  // Google Maps API を 1 回だけロード
+  if (!window.googleMapsLoaded) {
+    window.googleMapsLoaded = true;
+
+    const s = document.createElement("script");
+    s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&callback=initMap`;
+    s.async = true;
+    s.defer = true;
+    document.head.appendChild(s);
+  } else {
+    initMap();
   }
-
-  addMarkers(hotels);
 });
-
