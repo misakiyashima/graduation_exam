@@ -18,7 +18,7 @@
   <br>
 
   <div style="width: 400px; margin: 0 auto;">
-  <%= form_with url: search_hotels_path, method: :get, local: true, html: { class: "center-form" } do |f| %>
+  <%= form_with url: search_hotels_path, method: :get, data: { turbo: false }, html: { class: "center-form" } do |f| %>
     <%= f.hidden_field :name, data: { autocomplete_target: 'hidden' } %>
     <div class="input-row">
       <%= f.label :keyword, "キーワード" %>

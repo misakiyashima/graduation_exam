@@ -1,7 +1,11 @@
+<% content_for :head do %>
+  <meta name="turbo-visit-control" content="reload">
+<% end %>
+
 <% content_for :styles do %>
   <%= stylesheet_link_tag "hotels", media: "all", "data-turbo-track": "reload" %>
 <% end %>
-<%= form_with url: search_hotels_path, method: :get, local: true do %>
+<%= form_with url: search_hotels_path, method: :get, data: { turbo: false } do %>
   <div>
     <%= label_tag :keyword, "キーワード" %>
     <%= text_field_tag :keyword, params[:keyword] %>
