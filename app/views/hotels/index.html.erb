@@ -1,5 +1,6 @@
 <% content_for :head do %>
   <meta name="turbo-visit-control" content="reload">
+  <script>window.Turbo = null;</script>
 <% end %>
 
 <% content_for :styles do %>
@@ -46,5 +47,5 @@
   </div>
   <br>
   <div>
-    <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary' %>
+    <%= link_to 'ホームに戻る', root_path, class: 'btn btn-primary', data: { turbo: false } %>
   </div>
