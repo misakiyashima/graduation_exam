@@ -66,16 +66,16 @@ class HotelService
     longitude = hotel_info["longitude"].to_f
 
     begin
-      Hotel.create!(
-        id: hotel_info["hotelNo"],
-        name: hotel_info["hotelName"],
-        hotel_information_url: hotel_info["hotelInformationUrl"],
-        hotel_image_url: hotel_info["hotelImageUrl"],
-        hotel_special: hotel_info["hotelSpecial"],
-        latitude: latitude,
-        longitude: longitude,
-        all_inclusive: true
-      )
+      Hotel.find_or_create_by!(external_id: hotel_info["hotelNo"]) do |hotel|
+      hotel.name = hotel_info["hotelName"]
+      hotel.hotel_information_url = hotel_info["hotelInformationUrl"]
+      hotel.hotel_image_url = hotel_info["hotelImageUrl"]
+      hotel.hotel_special = hotel_info["hotelSpecial"]
+      hotel.latitude = hotel_info["latitude"].to_f
+      hotel.longitude = hotel_info["longitude"].to_f
+      hotel.all_inclusive = true
+    end
+
     rescue ActiveRecord::RecordNotUnique
       Rails.logger.info "Hotel already exists: #{hotel_info['hotelNo']}"
     end
