@@ -13,19 +13,21 @@ class TagsController < ApplicationController
     tag_name = params[:hotel_tag][:tag_id]
   # 楽天APIからホテル情報を取得
     hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"])
-    hotel_info = hotel_service.get_hotel_details(hotel_id)
+    hotel_info = hotel_service.get_hotel_details(hotel_no)
 
     if hotel_info.present?
     # ホテル情報を保存
-      hotel_service.save_hotel_to_db(hotel_info)
+      hotel_record = hotel_service.save_hotel_to_db(hotel_info)
     else
       redirect_to root_path, alert: "無効なホテルIDです"
       return
     end
-
-   # タグ作成処理
+  # タグ作成処理
       tag = Tag.find_or_create_by(name: tag_name)
-      @hotel_tag = HotelTag.new(hotel_id: hotel_id, tag_id: tag.id)
+      @hotel_tag = HotelTag.new(
+        hotel_id: hotel_record.id,
+        tag_id: tag.id,
+      )
       @hotel_tag.user_id = current_user.id if current_user
 
     if @hotel_tag.save

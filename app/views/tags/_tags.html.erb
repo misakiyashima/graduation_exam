@@ -4,8 +4,10 @@
 <% end %>
 
 <div>
-  <% hotel_tags = HotelTag.includes(:tag).where(hotel_id: hotel['hotelNo']) %>
-
+  <%
+  hotel_record = Hotel.find_by(external_id: hotel['hotelNo'])
+  hotel_tags = hotel_record ? hotel_record.hotel_tags.includes(:tag) : []
+  %>
   <% if hotel_tags.any? %>
     <ul class="tag-list">
       <% hotel_tags.each do |ht| %>
