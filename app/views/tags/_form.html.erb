@@ -1,4 +1,6 @@
-<%= form_with model: @hotel_tag, url: tags_path, method: :post do |form| %>
+<%= form_with model: @hotel_tag, 
+              url: tags_path, 
+              method: :post do |form| %>
 <%= hidden_field_tag :return_to, params[:return_to] || request.fullpath %>
   <div>
     <%= form.hidden_field :hotel_id, value: @hotel_id %>

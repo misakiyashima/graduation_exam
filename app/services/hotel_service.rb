@@ -3,7 +3,7 @@ class HotelService
   base_uri "https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426"
 
   def initialize(api_key)
-    @api_key = api_key # APIキーを初期化
+    @api_key = api_key
   end
 
   def search_all_inclusive_hotels(keyword, page: 1, hits: 30)
@@ -29,6 +29,7 @@ class HotelService
 
   def get_hotel_details(hotel_no, fields: [])
     detail_base_uri = "https://app.rakuten.co.jp/services/api/Travel/HotelDetailSearch/20170426"
+
     options = {
       query: {
         "applicationId" => @api_key,
@@ -39,10 +40,10 @@ class HotelService
     }
 
     response = self.class.get(detail_base_uri, options)
-    return nil unless response.success? # レスポンスが成功でない場合はnilを返す
+    return nil unless response.success?
 
     parsed_response = response.parsed_response
-    parsed_response.dig("hotels", 0, "hotel", 0, "hotelBasicInfo") # ホテル基本情報を返す
+    parsed_response.dig("hotels", 0, "hotel", 0, "hotelBasicInfo")
   end
 
   def fetch_all_hotels(keyword)
@@ -62,11 +63,9 @@ class HotelService
 
   # ホテルデータをデータベースに保存
   def save_hotel_to_db(hotel_info)
-    latitude = hotel_info["latitude"].to_f
-    longitude = hotel_info["longitude"].to_f
+    external_id = hotel_info["hotelNo"]
 
-    begin
-      Hotel.find_or_create_by!(external_id: hotel_info["hotelNo"]) do |hotel|
+    Hotel.find_or_create_by!(external_id: external_id) do |hotel|
       hotel.name = hotel_info["hotelName"]
       hotel.hotel_information_url = hotel_info["hotelInformationUrl"]
       hotel.hotel_image_url = hotel_info["hotelImageUrl"]
@@ -75,9 +74,8 @@ class HotelService
       hotel.longitude = hotel_info["longitude"].to_f
       hotel.all_inclusive = true
     end
-
-    rescue ActiveRecord::RecordNotUnique
-      Rails.logger.info "Hotel already exists: #{hotel_info['hotelNo']}"
-    end
+  rescue ActiveRecord::RecordNotUnique
+    Rails.logger.info "Hotel already exists: #{hotel_info['hotelNo']}"
   end
 end
+

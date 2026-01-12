@@ -8,9 +8,11 @@ class TagsController < ApplicationController
   end
 
   def create
-    hotel_id = hotel_tag_params[:hotel_id]
+    hotel_no = hotel_tag_params[:hotel_id] # ← ここは hotelNo が入っている
     return_to = params[:return_to]
     tag_name = params[:hotel_tag][:tag_id]
+    @hotel_id = hotel_no
+    @frame_id = "hotel_#{hotel_no}_tags"
   # 楽天APIからホテル情報を取得
     hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"])
     hotel_info = hotel_service.get_hotel_details(hotel_no)
@@ -22,6 +24,8 @@ class TagsController < ApplicationController
       redirect_to root_path, alert: "無効なホテルIDです"
       return
     end
+
+    @hotel = hotel_info
   # タグ作成処理
       tag = Tag.find_or_create_by(name: tag_name)
       @hotel_tag = HotelTag.new(

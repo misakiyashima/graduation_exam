@@ -3,17 +3,17 @@ class BookmarksController < ApplicationController
 
   def create
     hotel_no = params[:hotel_id]
-    hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"])  # APIキーを渡す
+    hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"]) 
     hotel_details = hotel_service.get_hotel_details(hotel_no)
 
     if hotel_details.present?
-      # ホテル情報をデータベースに保存
-      hotel_service.save_hotel_to_db(hotel_details)
+      # ホテル情報をDBに保存し、内部ID付きの Hotel レコードを返す
+      hotel_record = hotel_service.save_hotel_to_db(hotel_details)
 
-      # ブックマークの存在確認
-      unless current_user.bookmarks.exists?(hotel_id: params[:hotel_id])
+      # ブックマークを内部IDで存在確認
+      unless current_user.bookmarks.exists?(hotel_id: hotel_record.id)
         bookmark = current_user.bookmarks.create(
-          hotel_id: params[:hotel_id],
+          hotel_id: hotel_record.id
           hotel_no: hotel_details["hotelNo"],
           hotel_name: hotel_details["hotelName"],
           hotel_information_url: hotel_details["hotelInformationUrl"]
