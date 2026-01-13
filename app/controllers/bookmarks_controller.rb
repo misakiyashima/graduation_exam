@@ -13,7 +13,7 @@ class BookmarksController < ApplicationController
       # ブックマークを内部IDで存在確認
       unless current_user.bookmarks.exists?(hotel_id: hotel_record.id)
         bookmark = current_user.bookmarks.create(
-          hotel_id: hotel_record.id
+          hotel_id: hotel_record.id,
           hotel_no: hotel_details["hotelNo"],
           hotel_name: hotel_details["hotelName"],
           hotel_information_url: hotel_details["hotelInformationUrl"]
