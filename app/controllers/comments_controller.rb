@@ -11,10 +11,7 @@ class CommentsController < ApplicationController
 
   def create
     client = HotelService.new(ENV["RAKUTEN_API_KEY"])
-    hotel_info = client.get_hotel_details(
-      params[:hotel_id],
-      fields: ["hotelName", "hotelImageUrl", "hotelInformationUrl", "hotelSpecial"]
-    )
+    hotel_info = client.get_hotel_details(params[:hotel_id])
 
     unless hotel_info
       flash[:alert] = "ホテルが見つかりませんでした。"
@@ -22,24 +19,22 @@ class CommentsController < ApplicationController
       return
     end
 
-    # DBにホテルが存在しなければ、必要最小限の情報のみをキャッシュする
-    @hotel = Hotel.find_or_create_by(id: params[:hotel_id]) do |hotel|
-      hotel.name = hotel_info["hotelName"]
-    end
+    # 内部IDを生成 or 取得
+    hotel_record = client.save_hotel_to_db(hotel_info)
 
     @comment = Comment.new(comment_params)
     @comment.user  = current_user
-    @comment.hotel = @hotel
+    @comment.hotel = hotel_record # ← 内部IDで紐づける
 
     if @comment.save
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to hotel_path(@hotel), notice: "コメントが投稿されました。" }
+        format.html { redirect_to hotel_path(hotel_record.external_id), notice: "コメントが投稿されました。" }
       end
     else
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to hotel_path(@hotel), alert: "コメントの投稿に失敗しました。" }
+        format.html { redirect_to hotel_path(hotel_record.external_id), alert: "コメントの投稿に失敗しました。" }
       end
     end
   end
