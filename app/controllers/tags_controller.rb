@@ -8,41 +8,34 @@ class TagsController < ApplicationController
   end
 
   def create
-    hotel_no = hotel_tag_params[:hotel_id] # ← ここは hotelNo が入っている
-    return_to = params[:return_to]
-    tag_name = params[:hotel_tag][:tag_id]
+    hotel_no = hotel_tag_params[:hotel_id]
     @hotel_id = hotel_no
     @frame_id = "hotel_#{hotel_no}_tags"
-  # 楽天APIからホテル情報を取得
+
     hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"])
     hotel_info = hotel_service.get_hotel_details(hotel_no)
 
     if hotel_info.present?
-    # ホテル情報を保存
-      hotel_record = hotel_service.save_hotel_to_db(hotel_info)
+      @hotel_record = hotel_service.save_hotel_to_db(hotel_info)
     else
       redirect_to root_path, alert: "無効なホテルIDです"
       return
     end
 
-    @hotel = hotel_info
-  # タグ作成処理
-      tag = Tag.find_or_create_by(name: tag_name)
-      @hotel_tag = HotelTag.new(
-        hotel_id: hotel_record.id,
-        tag_id: tag.id,
-      )
-      @hotel_tag.user_id = current_user.id if current_user
+    tag = Tag.find_or_create_by(name: params[:hotel_tag][:tag_id])
+    @hotel_tag = HotelTag.new(
+      hotel_id: @hotel_record.id,
+      tag_id: tag.id,
+      user_id: current_user.id
+    )
 
     if @hotel_tag.save
       respond_to do |format|
-        format.turbo_stream   
-        format.html { redirect_to return_to.present? ? return_to : root_path, notice: "タグが追加されました" }
+        format.turbo_stream
+        format.html { redirect_to params[:return_to] || root_path }
       end
     else
-      @hotel_id = hotel_id
-      set_tags
-      render :new, status: :unprocessable_entity 
+      render :new, status: :unprocessable_entity
     end
   end
 
