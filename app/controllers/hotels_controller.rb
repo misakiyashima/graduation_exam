@@ -3,23 +3,31 @@ class HotelsController < ApplicationController
     client = HotelService.new(ENV["RAKUTEN_API_KEY"])
     response = client.search_all_inclusive_hotels("オールインクルーシブ")
 
-    @hotels = response.map do |hotel|
-      hotel_info = hotel["hotel"][0]["hotelBasicInfo"]
-      hotel_info.merge("id" => hotel_info["hotelNo"], "tags" => [])
-    end
+    if response.present?
+      hotel_ids = extract_hotel_ids(response)
 
-    # 検索結果がない場合の対応
-    if @hotels.blank?
+      # preload + ハッシュ化（external_id → Hotel）
+      @hotel_records = Hotel
+        .where(external_id: hotel_ids)
+        .includes(hotel_tags: :tag)
+        .index_by(&:external_id)
+
+      @hotels = build_hotels(response)
+    else
       flash[:alert] = "「オールインクルーシブ」で該当する宿泊施設はありません。"
       @hotels = []
     end
-    # Kaminari のページネーションを追加（1ページあたり10件表示）
+
     @hotels = Kaminari.paginate_array(@hotels).page(params[:page]).per(10)
   end
 
   def show
     client = HotelService.new(ENV["RAKUTEN_API_KEY"])
-    hotel_info = client.get_hotel_details(params[:id], fields: [ "hotelName", "hotelImageUrl", "hotelInformationUrl", "hotelSpecial" ])
+    hotel_info = client.get_hotel_details(
+      params[:id],
+      fields: ["hotelName", "hotelImageUrl", "hotelInformationUrl", "hotelSpecial"]
+    )
+
     if hotel_info.nil?
       flash[:alert] = "ホテルの詳細情報が見つかりません。"
       redirect_to hotels_path
@@ -27,7 +35,7 @@ class HotelsController < ApplicationController
       @hotel_id = params[:id]
       @hotel = hotel_info
       @hotel_information_url = @hotel["hotelInformationUrl"]
-      @comments = Comment.where(hotel_id: params[:id])
+      @comments = Comment.where(hotel_id: params[:id]).includes(:user)
       @comment = Comment.new
     end
   end
@@ -36,26 +44,47 @@ class HotelsController < ApplicationController
     session[:last_search_url] = request.fullpath
     client = HotelService.new(ENV["RAKUTEN_API_KEY"])
     response = client.search_all_inclusive_hotels(params[:keyword])
-    @hotels = response.map do |hotel|
-      hotel_info = hotel["hotel"][0]["hotelBasicInfo"]
-      tags = HotelTag.where(hotel_id: hotel_info["hotelNo"]).includes(:tag).map { |ht| ht.tag.name }
-      hotel_info.merge("id" => hotel_info["hotelNo"], "tags" => tags)
-    end if response.present?
 
-    if @hotels.blank?
+    if response.present?
+      hotel_ids = extract_hotel_ids(response)
+
+      # preload + ハッシュ化
+      @hotel_records = Hotel
+        .where(external_id: hotel_ids)
+        .includes(hotel_tags: :tag)
+        .index_by(&:external_id)
+
+      @hotels = build_hotels(response)
+    else
       flash[:alert] = "検索結果がありません。"
       @hotels = []
     end
-    # Kaminari のページネーションを追加（1ページあたり10件表示）
+
     @hotels = Kaminari.paginate_array(@hotels).page(params[:page]).per(10)
     render :index
   end
 
   def bookmarks
-    if current_user
-      @bookmark_hotels = current_user.bookmarks.order(created_at: :desc)
-    else
-      @bookmark_hotels = []
+    @bookmark_hotels =
+      if current_user
+        current_user.bookmarks.order(created_at: :desc)
+      else
+        []
+      end
+  end
+
+  private
+
+  #  外部ID一覧を抽出
+  def extract_hotel_ids(response)
+    response.map { |h| h["hotel"][0]["hotelBasicInfo"]["hotelNo"] }
+  end
+
+  #  APIレスポンスをビュー用の構造に整形
+  def build_hotels(response)
+    response.map do |hotel|
+      info = hotel["hotel"][0]["hotelBasicInfo"]
+      info.merge("id" => info["hotelNo"])
     end
   end
 end

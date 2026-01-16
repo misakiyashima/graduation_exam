@@ -1,48 +1,57 @@
-<%= turbo_frame_tag "hotel_#{hotel['hotelNo']}_tags_list" do %>
 <% content_for :styles do %>
   <%= stylesheet_link_tag "tags", media: "all", "data-turbo-track": "reload" %>
 <% end %>
 
-<div>
-  <%
-  hotel_record = Hotel.find_by(external_id: hotel['hotelNo'])
-  hotel_tags = hotel_record ? hotel_record.hotel_tags.includes(:tag) : []
-  %>
-  <% if hotel_tags.any? %>
-    <ul class="tag-list">
-      <% hotel_tags.each do |ht| %>
-        <% tag_name = ht.tag.name %>
-        <li id="<%= dom_id(ht) %>" class="tag">
-          <% if current_user && ht.user_id == current_user.id %>
-            <%= link_to tag_name,
-                tag_path(ht),
-                data: { turbo_frame: frame_id,
-                        turbo_method: :delete,
-                        disable_with: "削除中…",
-                        turbo_confirm: "タグを削除しますか？" },
-                class: "tag-link" %>
-          <% else %>
-            <span><%= tag_name %></span>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>タグがありません。</p>
-  <% end %>
-  <% end %>
+<%# ----------------------------- %>
+<%# タグ一覧（tags_list） %>
+<%# ----------------------------- %>
 
-<%= turbo_frame_tag "hotel_#{hotel['hotelNo']}_tags_form" do %>
-  <% if current_user %>
-    <%= link_to 'タグを追加',
-                new_tag_path(hotel_id: hotel['hotelNo'], return_to: request.fullpath),
-                data: { turbo_frame: "hotel_#{hotel['hotelNo']}_tags_form" },
-                class: "btn btn-primary d-inline-block" %>
+<%= turbo_frame_tag "hotel_#{frame_id}_tags_list" do %>
+  <% if hotel_record.nil? %>
+    <p>タグがありません。</p>
   <% else %>
-    <%= link_to 'タグを追加',
-                login_path,
-                data: { turbo: false },
-                class: 'btn btn-primary d-inline-block' %>
+    <% hotel_tags = hotel_record.hotel_tags %>
+
+    <% if hotel_tags.any? %>
+      <ul class="tag-list">
+        <% hotel_tags.each do |ht| %>
+          <li id="<%= dom_id(ht) %>" class="tag">
+            <% if current_user && ht.user_id == current_user.id %>
+              <%= link_to ht.tag.name,
+                  tag_path(ht),
+                  data: { turbo_frame: frame_id,
+                          turbo_method: :delete,
+                          disable_with: "削除中…",
+                          turbo_confirm: "タグを削除しますか？" },
+                  class: "tag-link" %>
+            <% else %>
+              <span><%= ht.tag.name %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>タグがありません。</p>
+    <% end %>
   <% end %>
 <% end %>
-</div>
+
+<%# ----------------------------- %>
+<%# タグ追加ボタン（tags_form）※常に1回だけ %>
+<%# ----------------------------- %>
+
+<%= turbo_frame_tag "hotel_#{frame_id}_tags_form" do %>
+  <% if current_user %>
+    <%= link_to 'タグを追加',
+        new_tag_path(hotel_id: hotel_record&.external_id || hotel['hotelNo'], return_to: request.fullpath),
+        data: { turbo_frame: "hotel_#{frame_id}_tags_form" },
+        class: "btn btn-primary d-inline-block" %>
+  <% else %>
+    <%= link_to 'タグを追加',
+        login_path,
+        data: { turbo: false },
+        class: 'btn btn-primary d-inline-block' %>
+  <% end %>
+<% end %>
+
+
