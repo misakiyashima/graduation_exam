@@ -1,21 +1,20 @@
-<% comments.each do |comment| %>
-  <div class="comment d-flex justify-content-between align-items-center">
-    <div>
-      <p><strong><%= comment.user.name %></strong></p> 
-      <p><%= comment.body %></p>
-      <small class="text-muted">
-        投稿日時: <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %>
-      </small>
-    </div>
-    <% if comment.user == current_user %>
-      <div>
-        <ul class="list-inline">
-          <li class="list-inline-item">
-            <%= link_to "編集", edit_comment_path(comment), class: "edit-comment-link" %>
-            <i class="bi bi-pencil-fill"></i>
-          </li>
-        </ul>
-      </div>
-    <% end %>
+<div id="<%= dom_id(comment) %>" class="comment d-flex justify-content-between align-items-center">
+  <div>
+    <p><strong><%= comment.user.name %></strong></p>
+    <p><%= comment.body %></p>
+    <small class="text-muted">
+      投稿日時: <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %>
+    </small>
   </div>
-<% end %>
+
+  <% if comment.user == current_user %>
+    <div>
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <%= link_to "編集", edit_comment_path(comment), class: "edit-comment-link" %>
+          <i class="bi bi-pencil-fill"></i>
+        </li>
+      </ul>
+    </div>
+  <% end %>
+</div>
