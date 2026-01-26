@@ -11,7 +11,7 @@
     <div>
       <ul class="list-inline">
         <li class="list-inline-item">
-          <%= link_to "編集", edit_comment_path(comment), class: "edit-comment-link" %>
+          <%= link_to "編集", edit_comment_path(comment), data: { turbo: false }, class: "edit-comment-link" %>
           <i class="bi bi-pencil-fill"></i>
         </li>
       </ul>
