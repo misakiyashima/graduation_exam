@@ -14,12 +14,13 @@
   </div>
   <p><%= simple_format(@hotel["hotelSpecial"]) %></p>
   <p><%= link_to '詳細情報(楽天トラベル)', @hotel["hotelInformationUrl"], target: '_blank' %></p>
-
+        <turbo-frame id="table-comment">
           <table class="table">
             <tbody id="table-comment">
-              <%= render partial: 'comments/comment', locals: { comments: @comments } %>
+              <%= render "comments/comments", comments: @comments %>
             </tbody>
           </table>
+          </turbo-frame>
         </div>
       </article>
     </div>
