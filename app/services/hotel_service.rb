@@ -64,18 +64,18 @@ class HotelService
   # ホテルデータをデータベースに保存
   def save_hotel_to_db(hotel_info)
     external_id = hotel_info["hotelNo"]
+    detail = get_hotel_details(external_id)
 
     Hotel.find_or_create_by!(external_id: external_id) do |hotel|
       hotel.name = hotel_info["hotelName"]
-      hotel.hotel_information_url = hotel_info["hotelInformationUrl"]
       hotel.hotel_image_url = hotel_info["hotelImageUrl"]
       hotel.hotel_special = hotel_info["hotelSpecial"]
       hotel.latitude = hotel_info["latitude"].to_f
       hotel.longitude = hotel_info["longitude"].to_f
       hotel.all_inclusive = true
+      hotel.hotel_information_url = detail["hotelInformationUrl"]
     end
   rescue ActiveRecord::RecordNotUnique
     Rails.logger.info "Hotel already exists: #{hotel_info['hotelNo']}"
   end
 end
-
