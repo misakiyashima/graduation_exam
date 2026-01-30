@@ -22,9 +22,10 @@
           <img src="<%= hotel['hotelImageUrl'] %>" alt="<%= hotel['hotelName'] %>">
           <p><%= hotel['hotelSpecial'] %></p>
       
-      <% frame_id = "hotel_#{hotel['hotelNo']}_tags" %>
+      <% frame_id = frame_id = hotel['hotelNo'].to_s %>
         <%= turbo_frame_tag frame_id do %>
           <%= render 'tags/tags',
+                hotel: hotel,
                 hotel_record: @hotel_records[hotel['hotelNo'].to_s],
                 frame_id: frame_id %>
         <% end %>
