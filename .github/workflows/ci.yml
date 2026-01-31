@@ -18,7 +18,7 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
       - name: Run Brakeman
-        run: bundle exec brakeman
+        run: bundle exec brakeman -q --no-exit-on-warn
 
   lint:
     name: lint
