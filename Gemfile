@@ -50,7 +50,7 @@ gem "better_errors", "~> 2.10.1"
 
 gem "sorcery", "~> 0.17.0"
 
-gem "rouge", "~> 4.4.0"
+gem "rouge", "~> 4.7.0"
 
 gem "bcrypt", "~> 3.1.20"
 

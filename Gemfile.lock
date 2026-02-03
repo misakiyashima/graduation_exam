@@ -320,7 +320,7 @@ GEM
     reline (0.6.1)
       io-console (~> 0.5)
     rexml (3.4.1)
-    rouge (4.4.0)
+    rouge (4.7.0)
     rspec-core (3.13.3)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
@@ -464,7 +464,7 @@ DEPENDENCIES
   pry-rails
   puma (>= 5.0)
   rails (~> 7.2.1)
-  rouge (~> 4.4.0)
+  rouge (~> 4.7.0)
   rspec-rails
   rubocop-rails-omakase
   selenium-webdriver
