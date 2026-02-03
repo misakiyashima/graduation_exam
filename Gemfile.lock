@@ -402,7 +402,7 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    uri (0.13.2)
+    uri (1.1.1)
     useragent (0.16.11)
     version_gem (1.1.6)
     web-console (4.2.1)
@@ -474,7 +474,7 @@ DEPENDENCIES
   stimulus-rails
   turbo-rails
   tzinfo-data
-  uri (~> 0.13.1)
+  uri (~> 1.1.1)
   version_gem (~> 1.1.4)
   web-console
 

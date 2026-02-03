@@ -72,7 +72,7 @@ gem "hashie", "~> 5.0.0"
 
 gem "faraday-net_http", "~> 3.3.0"
 
-gem "uri", "~> 0.13.1"
+gem "uri", "~> 1.1.1"
 
 gem "pry"
 gem "pry-rails"
