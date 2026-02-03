@@ -68,7 +68,7 @@ gem "faraday", "~> 2.12.0"
 
 gem "jwt", "~> 2.9.1"
 
-gem "hashie", "~> 5.0.0"
+gem "hashie", "~> 5.1.0"
 
 gem "faraday-net_http", "~> 3.3.0"
 
