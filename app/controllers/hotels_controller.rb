@@ -27,7 +27,7 @@ class HotelsController < ApplicationController
     # ① API からホテル情報を取得（表示用）
     @hotel = client.get_hotel_details(
       params[:id],
-      fields: ["hotelName", "hotelImageUrl", "hotelInformationUrl", "hotelSpecial"]
+      fields: ["hotelName", "hotelImageUrl", "hotelInformationUrl", "hotelSpecial", "latitude", "longitude", "hotelNo"]
     )
     if @hotel.nil?
       flash[:alert] = "ホテルの詳細情報が見つかりません。"
