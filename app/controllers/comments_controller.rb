@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     if @comment.save
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to hotel_path(hotel_record.external_id), notice: "コメントが投稿されました。" }
+        format.html { redirect_to hotel_path(@comment.hotel.external_id), notice: "コメントが投稿されました。" }
       end
     else
       respond_to do |format|
