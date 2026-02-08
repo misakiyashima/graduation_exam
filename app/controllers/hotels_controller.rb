@@ -21,31 +21,64 @@ class HotelsController < ApplicationController
     @hotels = Kaminari.paginate_array(@hotels).page(params[:page]).per(10)
   end
 
-  def show
-    client = HotelService.new(ENV["RAKUTEN_API_KEY"])
+def show
+  client = HotelService.new(ENV["RAKUTEN_API_KEY"])
 
-    # ① API からホテル情報を取得（表示用）
+  # ① params[:id] が内部IDか外部IDか判定
+  if Hotel.exists?(id: params[:id])
+    # 内部IDでアクセスされた場合
+    @hotel_record = Hotel.find(params[:id])
+    external_id = @hotel_record.external_id
+
+    # API を叩く必要はない（DB の情報で十分）
+    @hotel = {
+      "hotelName" => @hotel_record.name,
+      "hotelImageUrl" => @hotel_record.hotel_image_url,
+      "hotelSpecial" => @hotel_record.hotel_special,
+      "hotelInformationUrl" => @hotel_record.hotel_information_url,
+      "latitude" => @hotel_record.latitude,
+      "longitude" => @hotel_record.longitude
+    }
+
+  else
+    # 外部IDでアクセスされた場合
+    external_id = params[:id]
+    @hotel_record = Hotel.find_by(external_id: external_id)
+
+    # 内部IDが存在するなら内部IDへ正規化
+    if @hotel_record
+      redirect_to hotel_path(@hotel_record.id) and return
+    end
+
+    # 内部IDがない → API から取得
     @hotel = client.get_hotel_details(
-      params[:id],
-      fields: ["hotelName", "hotelImageUrl", "hotelInformationUrl", "hotelSpecial", "latitude", "longitude", "hotelNo"]
+      external_id,
+      fields: [
+        "hotelName",
+        "hotelImageUrl",
+        "hotelInformationUrl",
+        "hotelSpecial",
+        "latitude",
+        "longitude",
+        "hotelNo"
+      ]
     )
+
     if @hotel.nil?
       flash[:alert] = "ホテルの詳細情報が見つかりません。"
       redirect_to hotels_path and return
     end
 
-    # ② DB のホテルを取得（なければ保存）
-    @hotel_record = Hotel.find_by(external_id: params[:id])
-    unless @hotel_record
-      @hotel_record = client.save_hotel_to_db(@hotel)
-    end
-    # ③ コメントは DB の hotel_record に紐づく
-    @comments = @hotel_record.comments.includes(:user)
-    # ④ コメントフォーム用
-    @comment = Comment.new
-    # ⑤ コメントフォームが使う hotel_id（内部ID） 
-    @hotel_id = @hotel_record.id
+    # DB に保存して内部IDへリダイレクト
+    @hotel_record = client.save_hotel_to_db(@hotel)
+    redirect_to hotel_path(@hotel_record.id) and return
   end
+
+  # コメント表示
+  @comments = @hotel_record.comments.includes(:user)
+  @comment = Comment.new
+end
+
 
   def search
     session[:last_search_url] = request.fullpath
