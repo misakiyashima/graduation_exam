@@ -56,7 +56,7 @@ gem "bcrypt", "~> 3.1.20"
 
 gem "oauth", "~> 1.1.0"
 
-gem "oauth2", "~> 2.0.9"
+gem "oauth2", "~> 2.0.18"
 
 gem "oauth-tty", "~> 1.0.5"
 
