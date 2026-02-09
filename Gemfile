@@ -54,7 +54,7 @@ gem "rouge", "~> 4.4.0"
 
 gem "bcrypt", "~> 3.1.20"
 
-gem "oauth", "~> 1.1.0"
+gem "oauth", "~> 1.1.3"
 
 gem "oauth2", "~> 2.0.9"
 
