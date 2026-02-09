@@ -48,7 +48,7 @@ gem "pry-byebug", group: :development
 
 gem "better_errors", "~> 2.10.1"
 
-gem "sorcery", "~> 0.17.0"
+gem "sorcery", "~> 0.18.0"
 
 gem "rouge", "~> 4.4.0"
 
