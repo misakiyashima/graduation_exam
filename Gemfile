@@ -70,7 +70,7 @@ gem "jwt", "~> 2.9.1"
 
 gem "hashie", "~> 5.0.0"
 
-gem "faraday-net_http", "~> 3.3.0"
+gem "faraday-net_http", "~> 3.4.2"
 
 gem "uri", "~> 0.13.1"
 
