@@ -29,7 +29,7 @@ def show
     # 内部IDでアクセスされた場合
     @hotel_record = Hotel.find(params[:id])
     external_id = @hotel_record.external_id
-
+    
     # API を叩く必要はない（DB の情報で十分）
     @hotel = {
       "hotelName" => @hotel_record.name,
@@ -78,7 +78,6 @@ def show
   @comments = @hotel_record.comments.includes(:user)
   @comment = Comment.new
 end
-
 
   def search
     session[:last_search_url] = request.fullpath
