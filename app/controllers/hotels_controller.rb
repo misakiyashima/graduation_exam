@@ -29,6 +29,7 @@ def show
     # 内部IDでアクセスされた場合
     @hotel_record = Hotel.find(params[:id])
     external_id = @hotel_record.external_id
+    @hotel_id = @hotel_record.id
     
     # API を叩く必要はない（DB の情報で十分）
     @hotel = {
@@ -71,6 +72,7 @@ def show
 
     # DB に保存して内部IDへリダイレクト
     @hotel_record = client.save_hotel_to_db(@hotel)
+    @hotel_id = @hotel_record.id
     redirect_to hotel_path(@hotel_record.id) and return
   end
 
