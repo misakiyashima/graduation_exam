@@ -4,6 +4,12 @@
   <% @comments.each do |comment| %>
     <div class="comment mb-3 p-3 border">
       <div>
+        <p> <img src="<%= comment.hotel.hotel_image_url %>" 
+                 class="img-fluid rounded mb-2" style="max-width: 50%; height: auto;
+                 "alt="hotel image"></p>
+        <p class="fs-5 fw-bold"> <%= comment.hotel.name %></p>
+        <p><%= comment.hotel.hotel_special %></p>
+        <%= link_to "楽天で見る", comment.hotel.hotel_information_url, target: "_blank" %>
         <p><strong><%= comment.user.name %></strong></p>
         <p><%= comment.body %></p>
         <small class="text-muted">
