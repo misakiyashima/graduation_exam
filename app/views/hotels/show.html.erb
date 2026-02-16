@@ -25,10 +25,10 @@
       </article>
     </div>
   </div>
-  <%= render 'comments/form', comment: @comment, hotel: @hotel if logged_in? %>
+  <%= render 'comments/form', comment: @comment, hotel: @hotel_id if logged_in? %>
   <div class="row">
     <div class="col-lg-8 offset-lg-2">
   <div class="mb-3">
-<%= link_to '戻る', 'javascript:history.back()', class: 'btn btn-secondary' %>
+<%= link_to "検索結果に戻る", session[:last_search_url] || hotels_path %>
   </div>
 </div>
