@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
     redirect_to root_path, notice: "ログアウトしました"
   end
   def failure
-    flash[:notice] = "キャンセルしました"
+    flash[:notice] = "現在こちらからログインができません"
     redirect_to new_user_path
   end
 end
