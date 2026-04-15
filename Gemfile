@@ -83,7 +83,7 @@ gem "omniauth"
 gem "omniauth-twitter"
 gem "omniauth-rails_csrf_protection"
 
-gem 'omniauth-google-oauth2'
+gem "omniauth-google-oauth2"
 
 gem "geokit"
 
@@ -119,4 +119,3 @@ group :test do
 end
 
 gem "kaminari-bootstrap", "~> 3.0"
-
