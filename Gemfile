@@ -83,6 +83,8 @@ gem "omniauth"
 gem "omniauth-twitter"
 gem "omniauth-rails_csrf_protection"
 
+gem "omniauth-google-oauth2"
+
 gem "geokit"
 
 gem "kaminari"

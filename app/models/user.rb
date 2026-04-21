@@ -21,20 +21,29 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email.presence || "#{auth.uid}@twitter.com"
-      user.password = SecureRandom.hex(10)
-      user.password_confirmation = user.password
-      user.name = auth.info.name
-      user.skip_password_validation = true
+    user = where(provider: auth.provider, uid: auth.uid).first_or_initialize
+
+    user.provider = auth.provider
+    user.uid      = auth.uid
+    user.name     = auth.info.name if auth.info.name.present?
+    user.avatar_url = auth.info.image if auth.info.image.present?
+
+    if auth.info.email.present?
+      user.email = auth.info.email
+    else
+      user.email ||= "#{auth.uid}@twitter.com"
     end
 
     if user.new_record?
-      Rails.logger.error "User could not be created: #{user.errors.full_messages.join(", ")}"
+      user.password = SecureRandom.hex(10)
+      user.password_confirmation = user.password
+      user.skip_password_validation = true
     end
 
+    user.save!
     user
   end
+
 
   private
 

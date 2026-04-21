@@ -25,6 +25,11 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "oauth_callbacks#twitter"
   get "/auth/failure", to: "sessions#failure"
 
+  # Sorceryのgoogle認証用ルート
+  get '/auth/google_oauth2/callback', to: 'oauth_callbacks#google'
+  get "/auth/failure", to: "oauths#failure"
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

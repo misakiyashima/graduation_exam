@@ -3,7 +3,7 @@ class BookmarksController < ApplicationController
 
   def create
     hotel_no = params[:hotel_id]
-    hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"]) 
+    hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"])
     hotel_details = hotel_service.get_hotel_details(hotel_no)
 
     if hotel_details.present?
