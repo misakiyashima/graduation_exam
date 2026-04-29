@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   get "/auth/failure", to: "sessions#failure"
 
   # Sorceryのgoogle認証用ルート
-  get '/auth/google_oauth2/callback', to: 'oauth_callbacks#google'
+  get "/auth/:provider/callback", to: "oauth_callbacks#google"
   get "/auth/failure", to: "oauths#failure"
 
 
