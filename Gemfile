@@ -52,7 +52,7 @@ gem "sorcery", "~> 0.17.0"
 
 gem "rouge", "~> 4.4.0"
 
-gem "bcrypt", "~> 3.1.20"
+gem "bcrypt", "~> 3.1.22"
 
 gem "oauth", "~> 1.1.0"
 
