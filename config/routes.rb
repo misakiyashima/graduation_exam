@@ -22,11 +22,11 @@ Rails.application.routes.draw do
   resources :tags, only: [ :new, :create, :destroy ]
 
   # SorceryのTwitter認証用ルート
-  get "/auth/:provider/callback", to: "oauth_callbacks#twitter"
+  get "/auth/twitter/callback", to: "oauth_callbacks#twitter"
   get "/auth/failure", to: "sessions#failure"
 
   # Sorceryのgoogle認証用ルート
-  get "/auth/:provider/callback", to: "oauth_callbacks#google"
+  get "/auth/google_oauth2/callback", to: "oauth_callbacks#google"
   get "/auth/failure", to: "oauths#failure"
 
 
