@@ -11,7 +11,7 @@
   <% frame_id = "hotel_#{@hotel['hotelNo']}_tags" %>
   <div class="tag-section">
     <%= turbo_frame_tag frame_id do %>
-      <%= render 'tags/tags', hotel: @hotel, frame_id: frame_id %>
+      <%= render 'tags/tags', hotel: @hotel, hotel_record: @hotel_record, frame_id: frame_id %>
     <% end %>
   </div>
 
