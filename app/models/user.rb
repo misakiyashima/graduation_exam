@@ -20,25 +20,25 @@ class User < ApplicationRecord
     user if user && user.authenticate(password)
   end
 
- # SNS から返ってきた auth 情報を元にユーザーを作成 or 取得するクラスメソッド
+  # SNS から返ってきた auth 情報を元にユーザーを作成 or 取得するクラスメソッド
   def self.from_omniauth(auth)
-    #この2つで既存ユーザーを検索していく。provider:sns、uid:sns側のユーザー
+    # この2つで既存ユーザーを検索していく。provider:sns、uid:sns側のユーザー
     user = where(provider: auth.provider, uid: auth.uid).first_or_initialize
 
-    #SNSから返ってきた情報を User に反映する。
+    # SNSから返ってきた情報を User に反映する。
     user.provider = auth.provider
     user.uid      = auth.uid
     user.name     = auth.info.name if auth.info.name.present?
 
-   #googleはemail情報を返すが、twitterは返さないためダミー作成
+    # googleはemail情報を返すが、twitterは返さないためダミー作成
     if auth.info.email.present?
       user.email = auth.info.email
     else
       user.email ||= "#{auth.uid}@twitter.com"
     end
 
-    #SNSログインユーザーはパスワードを入力しないため、ランダムパスワードを生成&sorceryのバリデーションをスキップ
-    if user.new_record? #→既存ユーザーならスキップ
+    # SNSログインユーザーはパスワードを入力しないため、ランダムパスワードを生成&sorceryのバリデーションをスキップ
+    if user.new_record? # →既存ユーザーならスキップ
       user.password = SecureRandom.hex(10)
       user.password_confirmation = user.password
       user.skip_password_validation = true

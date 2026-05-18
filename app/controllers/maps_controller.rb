@@ -9,7 +9,7 @@ class MapsController < ApplicationController
     if all_hotels.present?
        # ① まず hotelNo を全部抜き出す
        hotel_nos = all_hotels.map { |h| h["hotel"][0]["hotelBasicInfo"]["hotelNo"] }
-        
+
       # ② DB の Hotel レコードを一括取得（SQL 1回）
       hotel_records = Hotel
         .where(external_id: hotel_nos)
