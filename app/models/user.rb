@@ -25,7 +25,7 @@ class User < ApplicationRecord
     #この2つで既存ユーザーを検索していく。provider:sns、uid:sns側のユーザー
     user = where(provider: auth.provider, uid: auth.uid).first_or_initialize
 
-    #SNS側の識別情報をセットする
+    #SNSから返ってきた情報を User に反映する。
     user.provider = auth.provider
     user.uid      = auth.uid
     user.name     = auth.info.name if auth.info.name.present?
@@ -38,7 +38,7 @@ class User < ApplicationRecord
     end
 
     #SNSログインユーザーはパスワードを入力しないため、ランダムパスワードを生成&sorceryのバリデーションをスキップ
-    if user.new_record?
+    if user.new_record? #→既存ユーザーならスキップ
       user.password = SecureRandom.hex(10)
       user.password_confirmation = user.password
       user.skip_password_validation = true

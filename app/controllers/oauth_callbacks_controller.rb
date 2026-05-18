@@ -24,7 +24,7 @@ class OauthCallbacksController < ApplicationController
   end
 
   def google
-    auth = request.env["omniauth.auth"]
+    auth = request.env["omniauth.auth"] #googleが返したJson形式のデータが入っている
 
     if auth.nil? || !auth["provider"] || !auth["uid"]
       redirect_to new_user_path, alert: "認証情報が取得できませんでした。"
