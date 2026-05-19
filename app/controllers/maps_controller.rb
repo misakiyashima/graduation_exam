@@ -21,7 +21,8 @@ class MapsController < ApplicationController
         info = hotel["hotel"][0]["hotelBasicInfo"]
         coordinates = CoordinateConverter.to_wgs84(info["latitude"], info["longitude"])
 
-        {
+        { 
+          hotelNo: info["hotelNo"],
           name: info["hotelName"],
           latitude: coordinates[:latitude],
           longitude: coordinates[:longitude],
