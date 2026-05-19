@@ -40,19 +40,18 @@ class MapsController < ApplicationController
     hotel_no = params[:id]
     client = HotelService.new(ENV["RAKUTEN_API_KEY"])
 
-    # API から1件取得（DB保存はしない）
-    response = client.get_hotel_details(hotel_no)
-    if response.nil?
-      flash[:alert] = "ホテル情報が見つかりません。"
+    # ここで返ってくるのは hotelBasicInfo の Hash
+    info = client.get_hotel_details(hotel_no)
+
+    if info.nil?
+      flash[:alert] = "ホテル情報が取得できませんでした。"
       redirect_to maps_path and return
     end
-
-    info = response["hotel"][0]["hotelBasicInfo"]
-
-    # DB にホテルが存在する場合のみタグ表示に使う
-    @hotel_record = Hotel.includes(hotel_tags: :tag).find_by(external_id: hotel_no)
-
-    # view 用
+  
+    # そのまま使う
     @hotel = info
+
+    # タグ用（存在する場合のみ）
+   @hotel_record = Hotel.includes(hotel_tags: :tag).find_by(external_id: hotel_no)
   end
 end
