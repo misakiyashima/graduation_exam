@@ -38,27 +38,21 @@ class MapsController < ApplicationController
 
   def details
     hotel_no = params[:id]
-    hotel_service = HotelService.new(ENV["RAKUTEN_API_KEY"])
+    client = HotelService.new(ENV["RAKUTEN_API_KEY"])
 
-    # APIからホテル情報を取得
-    hotel_info = hotel_service.get_hotel_details(hotel_no, fields: [ "hotelName", "hotelSpecial", "hotelImageUrl", "hotelInformationUrl" ])
-
-    # ホテル情報が見つからない場合の処理
-    if hotel_info.nil?
-      Rails.logger.error "Hotel details not found for ID: #{hotel_no}"
+    # API から1件取得（DB保存はしない）
+    response = client.get_hotel_details(hotel_no)
+    if response.nil?
       flash[:alert] = "ホテル情報が見つかりません。"
       redirect_to maps_path and return
     end
 
-    # ホテルタグを取得して追加
-    tags = HotelTag.where(hotel_id: hotel_no).includes(:tag).map { |hotel_tag| hotel_tag.tag.name }
-    hotel_info["tags"] = tags
+    info = response["hotel"][0]["hotelBasicInfo"]
 
-    @hotel = hotel_info
-    @hotel["hotelNo"] ||= hotel_no # 必要に応じてhotelNoを補完
+    # DB にホテルが存在する場合のみタグ表示に使う
+    @hotel_record = Hotel.includes(hotel_tags: :tag).find_by(external_id: hotel_no)
 
-    # タグ作成フォーム用のインスタンス変数
-    @hotel_tag = HotelTag.new
-    @hotel_id = hotel_no
+    # view 用
+    @hotel = info
   end
 end

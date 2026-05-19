@@ -31,7 +31,7 @@ def show
     external_id = @hotel_record.external_id
     @hotel_id = @hotel_record.id
 
-    # API を叩く必要はない（DB の情報で十分）
+    # API を叩く必要はない（DBの情報で十分）
     @hotel = {
       "hotelName" => @hotel_record.name,
       "hotelImageUrl" => @hotel_record.hotel_image_url,
