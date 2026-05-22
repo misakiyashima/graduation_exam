@@ -21,7 +21,7 @@ class MapsController < ApplicationController
         info = hotel["hotel"][0]["hotelBasicInfo"]
         coordinates = CoordinateConverter.to_wgs84(info["latitude"], info["longitude"])
 
-        { 
+        {
           hotelNo: info["hotelNo"],
           name: info["hotelName"],
           latitude: coordinates[:latitude],
@@ -47,11 +47,11 @@ class MapsController < ApplicationController
       flash[:alert] = "ホテル情報が取得できませんでした。"
       redirect_to maps_path and return
     end
-  
+
     # そのまま使う
     @hotel = info
 
-    # タグ用（存在する場合のみ）
+   # タグ用（存在する場合のみ）
    @hotel_record = Hotel.includes(hotel_tags: :tag).find_by(external_id: hotel_no)
   end
 end
