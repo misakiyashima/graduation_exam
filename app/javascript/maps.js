@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // マーカー追加
   function addMarkers(hotels) {
     hotels.forEach((hotel, i) => {
+      if (!hotel) return; // ← null をスキップ
+      
       const lat = parseFloat(hotel.latitude);
       const lng = parseFloat(hotel.longitude);
       if (Number.isNaN(lat) || Number.isNaN(lng)) return;
