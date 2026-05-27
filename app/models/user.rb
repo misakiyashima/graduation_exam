@@ -36,6 +36,8 @@ class User < ApplicationRecord
     else
       user.email ||= "#{auth.uid}@twitter.com"
     end
+    # SNSログイン時は常にパスワードバリデーションをスキップ
+    user.skip_password_validation = true
 
     # SNSログインユーザーはパスワードを入力しないため、ランダムパスワードを生成&sorceryのバリデーションをスキップ
     if user.new_record? # →既存ユーザーならスキップ
