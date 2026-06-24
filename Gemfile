@@ -64,7 +64,7 @@ gem "snaky_hash", "~> 2.0.1"
 
 gem "version_gem", "~> 1.1.4"
 
-gem "faraday", "~> 2.12.0"
+gem "faraday", "~> 2.14.1"
 
 gem "jwt", "~> 2.9.1"
 
