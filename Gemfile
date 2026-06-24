@@ -60,7 +60,7 @@ gem "oauth2", "~> 2.0.9"
 
 gem "oauth-tty", "~> 1.0.5"
 
-gem "snaky_hash", "~> 2.0.1"
+gem "snaky_hash", "~> 2.0.3"
 
 gem "version_gem", "~> 1.1.4"
 
