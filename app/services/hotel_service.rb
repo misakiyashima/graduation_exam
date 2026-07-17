@@ -1,23 +1,27 @@
 class HotelService
   include HTTParty
-  base_uri "https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426"
+  base_uri "https://openapi.rakuten.co.jp/engine/api/Travel"
 
   def initialize(api_key)
     @api_key = api_key
   end
 
   def search_all_inclusive_hotels(keyword, page: 1, hits: 30)
-    options = {
-      query: {
-        "applicationId" => @api_key,
-        "keyword" => "#{keyword} オールインクルーシブ",
-        "format" => "json",
-        "responseType" => "middle",
-        "page" => page
+    response = self.class.get(
+      "/KeywordHotelSearch/20170426",
+      {
+        headers: { "Referer" => "https://www.all-inclusive.jp", "Origin"  => "https://www.all-inclusive.jp" },
+        query: {
+          "accessKey" => ENV["RAKUTEN_ACCESS_KEY"],
+          "applicationId" => @api_key,
+          "largeClassCode" => "japan",
+          "keyword" => "オールインクルーシブ #{keyword}",
+          "format" => "json",
+          "responseType" => "middle",
+          "page" => page
+        }
       }
-    }
-
-    response = self.class.get("", options)
+    )
     return nil unless response.success?
 
     parsed_response = response.parsed_response
@@ -28,18 +32,21 @@ class HotelService
   end
 
   def get_hotel_details(hotel_no, fields: [])
-    detail_base_uri = "https://app.rakuten.co.jp/services/api/Travel/HotelDetailSearch/20170426"
-
-    options = {
-      query: {
-        "applicationId" => @api_key,
-        "hotelNo" => hotel_no,
-        "format" => "json",
-        "elements" => fields.join(",")
+    detail_base_uri = "https://openapi.rakuten.co.jp/engine/api/Travel/HotelDetailSearch/20170426"
+    response = self.class.get(
+      detail_base_uri,
+      {
+        headers: { "Referer" => "https://www.all-inclusive.jp", "Origin"  => "https://www.all-inclusive.jp" },
+        query: {
+          "accessKey" => ENV["RAKUTEN_ACCESS_KEY"],
+          "applicationId" => @api_key,
+          "hotelNo" => hotel_no,
+          "format" => "json",
+          "elements" => fields.join(",")
+        }
       }
-    }
+    )
 
-    response = self.class.get(detail_base_uri, options)
     return nil unless response.success?
 
     parsed_response = response.parsed_response
