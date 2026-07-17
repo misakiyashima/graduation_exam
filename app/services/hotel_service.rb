@@ -8,21 +8,20 @@ class HotelService
 
   def search_all_inclusive_hotels(keyword, page: 1, hits: 30)
     response = self.class.get(
-      "/SimpleHotelSearch/20170426",
+      "/KeywordHotelSearch/20170426",
       {
         headers: { "Referer" => "https://www.all-inclusive.jp", "Origin"  => "https://www.all-inclusive.jp"},
         query: {
           "accessKey" => ENV["RAKUTEN_ACCESS_KEY"],
           "applicationId" => @api_key,
-          "keyword" => "#{keyword} オールインクルーシブ",
+          "largeClassCode" => "japan",
+          "keyword" => "オールインクルーシブ #{keyword}",
           "format" => "json",
           "responseType" => "middle",
           "page" => page
         }
       }
     )
-
-    Rails.logger.info response.body
     return nil unless response.success?
 
     parsed_response = response.parsed_response
