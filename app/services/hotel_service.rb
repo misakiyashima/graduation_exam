@@ -10,7 +10,7 @@ class HotelService
     response = self.class.get(
       "/KeywordHotelSearch/20170426",
       {
-        headers: { "Referer" => "https://www.all-inclusive.jp", "Origin"  => "https://www.all-inclusive.jp"},
+        headers: { "Referer" => "https://www.all-inclusive.jp", "Origin"  => "https://www.all-inclusive.jp" },
         query: {
           "accessKey" => ENV["RAKUTEN_ACCESS_KEY"],
           "applicationId" => @api_key,
@@ -36,7 +36,7 @@ class HotelService
     response = self.class.get(
       detail_base_uri,
       {
-        headers: { "Referer" => "https://www.all-inclusive.jp", "Origin"  => "https://www.all-inclusive.jp" }, 
+        headers: { "Referer" => "https://www.all-inclusive.jp", "Origin"  => "https://www.all-inclusive.jp" },
         query: {
           "accessKey" => ENV["RAKUTEN_ACCESS_KEY"],
           "applicationId" => @api_key,
