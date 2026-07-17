@@ -1,6 +1,6 @@
 class HotelService
   include HTTParty
-  base_uri "https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426"
+  base_uri "https://openapi.rakuten.co.jp/engine/api/Travel"
 
   def initialize(api_key)
     @api_key = api_key
@@ -9,6 +9,7 @@ class HotelService
   def search_all_inclusive_hotels(keyword, page: 1, hits: 30)
     options = {
       query: {
+        "accessKey" => ENV["RAKUTEN_ACCESS_KEY"],
         "applicationId" => @api_key,
         "keyword" => "#{keyword} オールインクルーシブ",
         "format" => "json",
@@ -17,7 +18,11 @@ class HotelService
       }
     }
 
-    response = self.class.get("", options)
+    response = self.class.get(
+      "/SimpleHotelSearch/20170426",
+      options.merge(headers: { "Referer" => "https://allinclusive.jp" })
+      )
+    Rails.logger.info response.body
     return nil unless response.success?
 
     parsed_response = response.parsed_response
@@ -28,10 +33,10 @@ class HotelService
   end
 
   def get_hotel_details(hotel_no, fields: [])
-    detail_base_uri = "https://app.rakuten.co.jp/services/api/Travel/HotelDetailSearch/20170426"
-
+    detail_base_uri = "https://openapi.rakuten.co.jp/engine/api/Travel/HotelDetailSearch/20170426"
     options = {
       query: {
+        "accessKey" => ENV["RAKUTEN_ACCESS_KEY"],
         "applicationId" => @api_key,
         "hotelNo" => hotel_no,
         "format" => "json",
@@ -39,7 +44,10 @@ class HotelService
       }
     }
 
-    response = self.class.get(detail_base_uri, options)
+    response = self.class.get(
+      detail_base_uri,
+      options.merge(headers: { "Referer" => "https://allinclusive.jp" })
+    )
     return nil unless response.success?
 
     parsed_response = response.parsed_response
